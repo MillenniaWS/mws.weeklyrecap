@@ -317,8 +317,40 @@
         .director-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px dashed #CBD5E0; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .director-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 24px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; }
         
+        /* DIRECTOR SCREENING MATRIX SUMMARY BOX */
+        .director-summary-box {
+            background: #FFFFFF; border: 2px dashed #CBD5E0; border-radius: 18px;
+            padding: 18px; margin-bottom: 22px; display: flex; flex-direction: column; gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .summary-dashboard-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; flex-wrap: wrap; gap: 8px;
+        }
+        .chips-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .student-status-chip {
+            font-size: 11.5px; font-weight: 700; padding: 6px 14px; border-radius: 20px; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid #CBD5E0; transition: all 0.2s ease;
+            user-select: none;
+        }
+        .student-status-chip.grey  { background: #F1F5F9; color: #475569; border-color: #CBD5E0; }
+        .student-status-chip.green { background: #DCFCE7; color: #15803D; border-color: #86EFAC; }
+        .student-status-chip.red   { background: #FEE2E2; color: #B91C1C; border-color: #FCA5A5; }
+        .student-status-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+        /* CLICKABLE SCREENING STATUS TOGGLE BUTTON */
+        .btn-status-toggle {
+            font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 12px; cursor: pointer;
+            border: 1.5px solid; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 5px;
+            user-select: none; outline: none;
+        }
+        .btn-status-toggle.grey  { background: #E2E8F0; color: #475569; border-color: #94A3B8; }
+        .btn-status-toggle.grey:hover  { background: #CBD5E1; }
+        .btn-status-toggle.green { background: #DCFCE7; color: #16A34A; border-color: #86EFAC; }
+        .btn-status-toggle.green:hover { background: #BBF7D0; }
+
         .student-review-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 18px; padding: 20px; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: all 0.2s ease; }
-        .student-review-header { font-size: 16px; font-weight: 700; color: var(--mws-maroon); border-bottom: 1.5px dashed #CBD5E0; padding-bottom: 10px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .student-review-header { font-size: 16px; font-weight: 700; color: var(--mws-maroon); border-bottom: 1.5px dashed #CBD5E0; padding-bottom: 10px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; flex-wrap: wrap; gap: 10px; }
         .student-review-header:hover { color: var(--mws-maroon-dark); }
 
         .review-domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
@@ -927,7 +959,7 @@
             <div class="director-header">
                 <div>
                     <h2 class="director-title">Executive Director Portal</h2>
-                    <span style="font-size: 13px; color: #64748B;">Highlight text to add inline feedback notes for teachers.</span>
+                    <span style="font-size: 13px; color: #64748B;">Highlight text to add inline feedback notes for homeroom teachers.</span>
                 </div>
                 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                     <div class="user-profile-badge">
@@ -941,8 +973,8 @@
                 </div>
             </div>
 
-            <!-- EXECUTIVE SCREENING & SEARCH CONTROL BAR -->
-            <div class="input-grid" style="margin-bottom: 20px;">
+            <!-- EXECUTIVE CONTROL BAR -->
+            <div class="input-grid" style="margin-bottom: 16px;">
                 <div class="input-group">
                     <label>Select Class for Review:</label>
                     <select id="directorClassSelect" onchange="renderDirectorReviewList()">
@@ -951,14 +983,15 @@
                         <option value="DJEBEL CHELIA">DJEBEL CHELIA Class (Afi & Nanda)</option>
                     </select>
                 </div>
-                <div class="input-group">
-                    <label>Search Student:</label>
-                    <input type="text" id="directorSearchInput" placeholder="Type student name..." oninput="filterDirectorStudents()">
-                </div>
                 <div class="input-group" style="justify-content: flex-end; flex-direction: row; align-items: flex-end; gap: 8px;">
                     <button class="btn-action" style="background: #0284C7; font-size: 11.5px; padding: 8px 12px;" onclick="toggleAllDirectorCards(true)">Expand All</button>
                     <button class="btn-action" style="background: #64748B; font-size: 11.5px; padding: 8px 12px;" onclick="toggleAllDirectorCards(false)">Collapse All</button>
                 </div>
+            </div>
+
+            <!-- DIRECTOR EXECUTIVE PROGRESS DASHBOARD MATRIX -->
+            <div class="director-summary-box" id="directorSummaryDashboard">
+                <!-- Dynamically Populated Student Nickname Status Chips -->
             </div>
 
             <div id="directorReviewContainer"></div>
@@ -1142,7 +1175,7 @@
         /* UNIFIED CLASS DRAFT KEY FOR CO-HOMEROOM TEACHERS */
         function getStudentStorageKey(className, studentIndex) {
             const cleanClass = className.replace(/\s+/g, '_');
-            return `mws_recap_v28_${cleanClass}_std${studentIndex}`;
+            return `mws_recap_v29_${cleanClass}_std${studentIndex}`;
         }
 
         /* GMAIL WEB DIRECT LAUNCHER */
@@ -1493,7 +1526,7 @@
             });
         }
 
-        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE (V28) */
+        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE (V29) */
         function triggerAIGenerate(targetFieldId, categoryName) {
             const studentNick = currentStudent.nick || 'the student';
             const textarea = document.getElementById(targetFieldId);
@@ -1968,6 +2001,7 @@ ${teacherName}`;
 
             saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML);
             showToast("Inline comment saved!");
+            renderDirectorReviewList();
         }
 
         function deleteInlineComment(btnElement) {
@@ -1990,6 +2024,7 @@ ${teacherName}`;
                 const domainKey = box.dataset.domainKey;
                 saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML);
             }
+            renderDirectorReviewList();
         }
 
         function saveDirectorInlineHtml(className, studentIndex, domainKey, htmlContent) {
@@ -2000,23 +2035,58 @@ ${teacherName}`;
             localStorage.setItem(storageKey, JSON.stringify(draft));
         }
 
-        /* EXECUTIVE DIRECTOR PORTAL REVIEW LIST GENERATOR */
+        /* DIRECTOR STUDENT STATUS TOGGLE FUNCTION */
+        function toggleDirectorStudentStatus(className, studentIdx, event) {
+            if (event) event.stopPropagation();
+            
+            const storageKey = getStudentStorageKey(className, studentIdx);
+            const raw = localStorage.getItem(storageKey);
+            let draft = raw ? JSON.parse(raw) : {};
+
+            const isCurrentReviewed = draft.directorReviewed === true;
+            draft.directorReviewed = !isCurrentReviewed;
+
+            localStorage.setItem(storageKey, JSON.stringify(draft));
+            showToast(draft.directorReviewed ? "Screening marked as Completed!" : "Screening marked as Pending.", draft.directorReviewed ? "✅" : "⚪");
+            
+            renderDirectorReviewList();
+        }
+
+        /* SCROLL DIRECTLY TO STUDENT REVIEW CARD */
+        function scrollToDirectorCard(studentIdx) {
+            const card = document.getElementById(`dirStudentCard_${studentIdx}`);
+            const body = document.getElementById(`dirCardBody_${studentIdx}`);
+            const icon = document.getElementById(`dirCardIcon_${studentIdx}`);
+            
+            if (body && icon) {
+                body.style.display = 'grid';
+                icon.textContent = '▲';
+            }
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        /* EXECUTIVE DIRECTOR PORTAL REVIEW LIST & MATRIX GENERATOR */
         function renderDirectorReviewList() {
             const className = document.getElementById('directorClassSelect').value;
             const list = studentDatabase[className] || [];
             const container = document.getElementById('directorReviewContainer');
+            const summaryBox = document.getElementById('directorSummaryDashboard');
 
             container.innerHTML = '';
+            
+            let totalReviewed = 0;
+            let chipsHtml = '';
 
             list.forEach((st, idx) => {
                 const storageKey = getStudentStorageKey(className, idx);
                 const raw = localStorage.getItem(storageKey);
                 let draft = raw ? JSON.parse(raw) : {};
 
-                const card = document.createElement('div');
-                card.className = 'student-review-card';
-                card.id = `dirStudentCard_${idx}`;
-
+                const isReviewed = draft.directorReviewed === true;
+                
+                let hasRevisionNotes = false;
                 const domains = [
                     { label: 'Connection to God', key: 'txtGod', color: 'gold' },
                     { label: 'Connection to Self', key: 'txtSelf', color: 'pink' },
@@ -2028,17 +2098,42 @@ ${teacherName}`;
                     { label: 'Parental Support', key: 'txtTeacher', color: 'orange' }
                 ];
 
-                let domainGridHtml = '';
-                let hasRevisionNotes = false;
+                domains.forEach(d => {
+                    const savedInline = draft[d.key + '_inlineHtml'];
+                    if (savedInline && savedInline.includes('doc-comment-bubble')) {
+                        hasRevisionNotes = true;
+                    }
+                });
 
+                if (isReviewed) totalReviewed++;
+
+                let chipClass = 'grey';
+                let chipStatusText = 'Pending';
+                
+                if (hasRevisionNotes) {
+                    chipClass = 'red';
+                    chipStatusText = 'Revision';
+                } else if (isReviewed) {
+                    chipClass = 'green';
+                    chipStatusText = 'Completed';
+                }
+
+                chipsHtml += `
+                    <div class="student-status-chip ${chipClass}" onclick="scrollToDirectorCard(${idx})" title="Click to view ${st.full}">
+                        <span>${st.nick}</span>
+                        <span style="font-size: 10px; opacity: 0.85;">(${chipStatusText})</span>
+                    </div>
+                `;
+
+                const card = document.createElement('div');
+                card.className = 'student-review-card';
+                card.id = `dirStudentCard_${idx}`;
+
+                let domainGridHtml = '';
                 domains.forEach(d => {
                     const savedInline = draft[d.key + '_inlineHtml'];
                     const defaultText = draft[d.key] || 'No narration entered yet.';
                     const displayText = savedInline || defaultText;
-
-                    if (savedInline && savedInline.includes('doc-comment-bubble')) {
-                        hasRevisionNotes = true;
-                    }
 
                     domainGridHtml += `
                         <div class="review-domain-box ${d.color}">
@@ -2048,16 +2143,22 @@ ${teacherName}`;
                     `;
                 });
 
-                const statusTag = hasRevisionNotes 
-                    ? `<span style="font-size: 11px; background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; padding: 3px 8px; border-radius: 10px;">Revision Notes Added</span>`
-                    : `<span style="font-size: 11px; background: #F0FDF4; color: #16A34A; border: 1px solid #86EFAC; padding: 3px 8px; border-radius: 10px;">Draft Complete</span>`;
+                const statusBtnClass = isReviewed ? 'green' : 'grey';
+                const statusBtnText = isReviewed ? '✅ Screening Completed' : '⚪ Pending Review';
+
+                const revisionBadge = hasRevisionNotes 
+                    ? `<span style="font-size: 11px; background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; padding: 4px 8px; border-radius: 10px; font-weight: bold;">💬 Revision Requested</span>`
+                    : '';
 
                 card.innerHTML = `
                     <div class="student-review-header" onclick="toggleDirectorCardBody(${idx})">
                         <span>${idx + 1}. ${st.full} (${st.nick}) — ${st.grade}</span>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            ${statusTag}
-                            <span class="collapse-icon" id="dirCardIcon_${idx}">▲</span>
+                        <div style="display: flex; gap: 8px; align-items: center;" onclick="event.stopPropagation();">
+                            ${revisionBadge}
+                            <button class="btn-status-toggle ${statusBtnClass}" onclick="toggleDirectorStudentStatus('${className}', ${idx}, event)">
+                                ${statusBtnText}
+                            </button>
+                            <span class="collapse-icon" id="dirCardIcon_${idx}" onclick="toggleDirectorCardBody(${idx})">▲</span>
                         </div>
                     </div>
                     <div class="review-domain-grid" id="dirCardBody_${idx}">
@@ -2066,6 +2167,18 @@ ${teacherName}`;
                 `;
                 container.appendChild(card);
             });
+
+            summaryBox.innerHTML = `
+                <div class="summary-dashboard-header">
+                    <span>Executive Class Overview (${className})</span>
+                    <span style="font-size: 12.5px; color: var(--mws-maroon);">
+                        Screening Progress: <strong>${totalReviewed} / ${list.length} Students Completed</strong>
+                    </span>
+                </div>
+                <div class="chips-container">
+                    ${chipsHtml}
+                </div>
+            `;
         }
 
         function toggleDirectorCardBody(idx) {
@@ -2088,20 +2201,6 @@ ${teacherName}`;
                 if (body && icon) {
                     body.style.display = shouldExpand ? 'grid' : 'none';
                     icon.textContent = shouldExpand ? '▲' : '▼';
-                }
-            });
-        }
-
-        function filterDirectorStudents() {
-            const query = document.getElementById('directorSearchInput').value.toLowerCase();
-            const className = document.getElementById('directorClassSelect').value;
-            const list = studentDatabase[className] || [];
-
-            list.forEach((st, idx) => {
-                const card = document.getElementById(`dirStudentCard_${idx}`);
-                if (card) {
-                    const matches = st.full.toLowerCase().includes(query) || st.nick.toLowerCase().includes(query);
-                    card.style.display = matches ? 'block' : 'none';
                 }
             });
         }
