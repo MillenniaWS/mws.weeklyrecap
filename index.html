@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- JUDUL TAB BROWSER SUDAH DIPERBARUI -->
     <title>MWS - Weekly Recap Kindergarten</title>
 
-    <!-- WEBSITE FAVICON / TAB ICON (LOGO BARU) -->
+    <!-- WEBSITE FAVICON -->
     <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx">
     <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx">
     
@@ -33,23 +32,28 @@
         * { box-sizing: border-box; }
         body {
             font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: #F1F4F9;
+            background-color: #CBD5E1;
             color: var(--text-dark); margin: 0; padding: 25px 12px; min-height: 100vh;
         }
 
-        /* EVENLY DISTRIBUTED COLLAGE BACKGROUND */
+        /* DENSE SCATTERED WEBPAGE BACKGROUND COLLAGE */
         .bg-collage-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.12;
+            z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.88; filter: saturate(1.15);
         }
-        .collage-photo { position: absolute; border-radius: 20px; object-fit: cover; }
-        .collage-1 { top: -2%; left: -2%; width: 30vw; height: 36vh; transform: rotate(-5deg); }
-        .collage-2 { top: -4%; left: 35%; width: 30vw; height: 35vh; transform: rotate(3deg); }
-        .collage-3 { top: -2%; right: -2%; width: 30vw; height: 36vh; transform: rotate(-4deg); }
-        .collage-4 { top: 32%; left: 33%; width: 34vw; height: 36vh; transform: rotate(2deg); }
-        .collage-5 { bottom: -2%; left: -2%; width: 30vw; height: 36vh; transform: rotate(4deg); }
-        .collage-6 { bottom: -4%; left: 35%; width: 30vw; height: 35vh; transform: rotate(-3deg); }
-        .collage-7 { bottom: -2%; right: -2%; width: 30vw; height: 36vh; transform: rotate(5deg); }
+        .collage-photo { position: absolute; border-radius: 18px; object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+        .collage-1  { top: -3%; left: -2%; width: 26vw; height: 34vh; transform: rotate(-5deg); }
+        .collage-2  { top: -4%; left: 25%; width: 25vw; height: 32vh; transform: rotate(3deg); }
+        .collage-3  { top: -3%; left: 51%; width: 25vw; height: 33vh; transform: rotate(-2deg); }
+        .collage-4  { top: -4%; right: -2%; width: 25vw; height: 34vh; transform: rotate(4deg); }
+        .collage-5  { top: 31%; left: -3%; width: 25vw; height: 36vh; transform: rotate(4deg); }
+        .collage-6  { top: 30%; left: 23%; width: 27vw; height: 38vh; transform: rotate(-3deg); }
+        .collage-7  { top: 31%; right: 23%; width: 27vw; height: 37vh; transform: rotate(2deg); }
+        .collage-8  { top: 30%; right: -3%; width: 25vw; height: 36vh; transform: rotate(-4deg); }
+        .collage-9  { bottom: -3%; left: -2%; width: 26vw; height: 34vh; transform: rotate(-3deg); }
+        .collage-10 { bottom: -4%; left: 25%; width: 25vw; height: 33vh; transform: rotate(2deg); }
+        .collage-11 { bottom: -3%; left: 51%; width: 25vw; height: 34vh; transform: rotate(-4deg); }
+        .collage-12 { bottom: -4%; right: -2%; width: 25vw; height: 34vh; transform: rotate(3deg); }
 
         /* LOGIN VIEW STYLES */
         .login-wrapper {
@@ -58,34 +62,39 @@
 
         .login-card {
             background: var(--glass-bg); backdrop-filter: blur(16px);
-            border-radius: 28px; padding: 45px 40px; max-width: 460px; width: 100%;
-            text-align: center; box-shadow: 0 20px 50px rgba(122, 28, 28, 0.15);
-            border: 3px solid var(--mws-maroon); display: flex; flex-direction: column; align-items: center;
+            border-radius: 28px; padding: 45px 40px; max-width: 480px; width: 100%;
+            text-align: center; box-shadow: 0 20px 50px rgba(122, 28, 28, 0.22);
+            border: 3.5px solid var(--mws-maroon); display: flex; flex-direction: column; align-items: center;
         }
 
         .login-logo { max-width: 220px; height: auto; margin-bottom: 20px; }
         .login-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 24px; color: var(--mws-maroon); margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.8px; }
         .login-subtitle { font-size: 14px; color: #64748B; margin-bottom: 25px; line-height: 1.5; }
 
+        .portal-btn-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
         .btn-google-login {
             display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-            background: #FFFFFF; color: #374151; font-weight: 700; font-size: 15px;
-            padding: 12px 24px; border-radius: 14px; border: 2px solid #E5E7EB;
+            background: #FFFFFF; color: #374151; font-weight: 700; font-size: 14.5px;
+            padding: 12px 20px; border-radius: 14px; border: 2px solid #E5E7EB;
             cursor: pointer; width: 100%; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.2s ease;
         }
         .btn-google-login:hover { border-color: var(--mws-maroon); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(122, 28, 28, 0.12); }
+        .btn-director-login { background: var(--mws-maroon); color: #FFFFFF; border-color: var(--mws-maroon); }
+        .btn-director-login:hover { background: var(--mws-maroon-dark); color: #FFFFFF; }
+
         .google-icon-svg { width: 20px; height: 20px; }
 
         /* GOOGLE AUTHENTICATION POPUP MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
             display: none; align-items: center; justify-content: center; z-index: 999;
         }
         .modal-google-box {
-            background: #FFFFFF; border-radius: 20px; padding: 30px; width: 90%; max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: left; position: relative;
+            background: #FFFFFF; border-radius: 20px; padding: 30px; width: 90%; max-width: 480px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25); text-align: left; position: relative;
         }
         .btn-modal-close {
             position: absolute; top: 15px; right: 18px; background: none; border: none; font-size: 24px; font-weight: 700;
@@ -117,7 +126,7 @@
         .btn-logout:hover { background: var(--mws-maroon); color: #FFFFFF; }
 
         /* CONTROL PANEL & RECAP STYLES */
-        .control-panel { max-width: 1150px; margin: 0 auto 30px auto; background: var(--glass-bg); backdrop-filter: blur(12px); padding: 22px 28px; border-radius: 22px; box-shadow: 0 10px 30px rgba(122, 28, 28, 0.12); border: 2px solid var(--mws-maroon); }
+        .control-panel { max-width: 1150px; margin: 0 auto 30px auto; background: var(--glass-bg); backdrop-filter: blur(12px); padding: 22px 28px; border-radius: 22px; box-shadow: 0 10px 30px rgba(122, 28, 28, 0.18); border: 2.5px solid var(--mws-maroon); }
         
         .panel-header { 
             display: flex; justify-content: space-between; align-items: center; 
@@ -136,10 +145,8 @@
         }
         .btn-print { background: var(--mws-maroon); }
         .btn-print:hover { background: var(--mws-maroon-dark); transform: translateY(-2px); }
-        .btn-download-html { background: #16A34A; }
-        .btn-download-html:hover { background: #15803D; transform: translateY(-2px); }
-        .btn-sync { background: #0284C7; }
-        .btn-sync:hover { background: #0369A1; transform: translateY(-2px); }
+        .btn-submit-director { background: #9333EA; }
+        .btn-submit-director:hover { background: #7E22CE; transform: translateY(-2px); }
 
         .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 18px; }
         .input-group { display: flex; flex-direction: column; gap: 5px; }
@@ -158,18 +165,59 @@
 
         .master-narrations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #F8FAFC; padding: 14px; border-radius: 16px; border: 2px dashed #CBD5E0; }
         .master-item { display: flex; flex-direction: column; gap: 5px; }
-        .master-item label { font-size: 12px; font-weight: 700; color: #4A5568; }
-        .master-item textarea { height: 70px; resize: none; font-size: 12.5px; }
+        .master-item label { font-size: 12px; font-weight: 700; color: #4A5568; display: flex; justify-content: space-between; align-items: center; }
+        .master-item textarea { height: 75px; resize: none; font-size: 12.5px; }
 
+        .btn-ai-gen {
+            background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+            color: #FFFFFF; border: none; padding: 4px 10px; border-radius: 6px;
+            font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25);
+        }
+        .btn-ai-gen:hover { transform: scale(1.04); opacity: 0.95; }
+
+        /* REPORT SHEET WITH ENLARGED & DENSE TRANSLUCENT PAPER COLLAGE */
         .report-wrapper { max-width: 1100px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 35px; }
-        .page-sheet { background-color: #FFFFFF; background-image: radial-gradient(#d4d4d4 1.5px, transparent 1.5px); background-size: 22px 22px; border-radius: 26px; box-shadow: 0 15px 40px rgba(122, 28, 28, 0.08); padding: 32px 35px; box-sizing: border-box; border: 7px solid var(--mws-maroon); position: relative; }
-        .washi-tape-corner { position: absolute; top: -10px; right: 35px; width: 130px; height: 32px; background: #FFC0CB; border: 1px dashed #FF69B4; transform: rotate(5deg); z-index: 10; }
-        .domain-section-banner { background: linear-gradient(135deg, var(--mws-maroon) 0%, var(--mws-maroon-dark) 100%); color: #FFFFFF; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 20px; border-radius: 14px; margin: 8px 0 16px 0; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(122, 28, 28, 0.18); }
-        .school-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3.5px solid var(--mws-maroon); padding-bottom: 12px; margin-bottom: 20px; background: #FFFFFF; border-radius: 14px; }
-        .logo-img { max-width: 260px; height: auto; display: block; }
-        .main-recap-title { text-align: right; }
-        .recap-big-heading { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 28px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; letter-spacing: 1.2px; display: flex; align-items: center; justify-content: flex-end; }
-        .recap-theme-subtitle { font-size: 15px; font-weight: 700; color: #555; margin-top: 3px; }
+        
+        .page-sheet { 
+            background-color: #FFFFFF; 
+            border-radius: 26px; box-shadow: 0 15px 40px rgba(122, 28, 28, 0.12); 
+            padding: 32px 35px; box-sizing: border-box; border: 7px solid var(--mws-maroon); 
+            position: relative; overflow: hidden;
+        }
+
+        .sheet-collage-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; opacity: 0.20; z-index: 0; overflow: hidden;
+        }
+        .sp-photo {
+            position: absolute; border-radius: 20px; object-fit: cover; box-shadow: 0 6px 20px rgba(0,0,0,0.15); filter: contrast(1.1);
+            width: 320px; height: 240px;
+        }
+        .sp-1  { top: -2%; left: -5%; transform: rotate(-14deg); }
+        .sp-2  { top: -3%; right: -5%; transform: rotate(15deg); }
+        .sp-3  { top: 22%; left: 8%; transform: rotate(-8deg); }
+        .sp-4  { top: 25%; right: 7%; transform: rotate(11deg); }
+        .sp-5  { top: 48%; left: -3%; transform: rotate(13deg); }
+        .sp-6  { top: 50%; right: -3%; transform: rotate(-12deg); }
+        .sp-7  { top: 70%; left: 10%; transform: rotate(-9deg); }
+        .sp-8  { top: 72%; right: 10%; transform: rotate(14deg); }
+        .sp-9  { bottom: -4%; left: -4%; transform: rotate(10deg); }
+        .sp-10 { bottom: -3%; right: -4%; transform: rotate(-15deg); }
+
+        .sheet-content-relative { position: relative; z-index: 2; }
+
+        .school-header { 
+            display: flex; align-items: center; justify-content: space-between; 
+            border-bottom: 3.5px solid var(--mws-maroon); 
+            padding: 16px 24px; margin-bottom: 22px; 
+            background: #FFFFFF; border-radius: 16px; position: relative; z-index: 3;
+            gap: 20px;
+        }
+        .logo-img { max-width: 250px; height: auto; display: block; }
+        .main-recap-title { text-align: right; margin-right: 10px; }
+        .recap-big-heading { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 26px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: flex-end; }
+        .recap-theme-subtitle { font-size: 14.5px; font-weight: 700; color: #555; margin-top: 4px; }
 
         .hero-student-cover { background: #FFF0F2; border: 2.5px solid #F8B4B4; border-radius: 20px; padding: 18px 25px; margin-bottom: 20px; display: flex; align-items: center; gap: 25px; position: relative; }
         .student-main-photo-box { width: 145px; height: 145px; border-radius: 20px; background-color: #FFFFFF; border: 4px dashed var(--mws-maroon); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
@@ -183,18 +231,19 @@
         .meta-tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
         .meta-tag { background: var(--mws-maroon); color: white; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 18px; text-transform: uppercase; }
         .meta-tag.secondary { background: #FFFFFF; color: var(--mws-maroon); border: 2px solid var(--mws-maroon); }
-        .canva-sticker-badge { position: absolute; right: -10px; top: -16px; background: #FFD166; color: #7A1C1C; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 13px; padding: 8px 16px; border-radius: 25px; border: 2.5px dashed #7A1C1C; transform: rotate(6deg); display: flex; align-items: center; z-index: 10; }
+
+        .domain-section-banner { background: linear-gradient(135deg, var(--mws-maroon) 0%, var(--mws-maroon-dark) 100%); color: #FFFFFF; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 20px; border-radius: 14px; margin: 8px 0 16px 0; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(122, 28, 28, 0.18); }
 
         .cards-column-layout { display: flex; flex-direction: column; gap: 20px; }
         .section-card { border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; break-inside: avoid; page-break-inside: avoid; }
-        .section-card.gold   { background-color: var(--pastel-gold-bg);   border: 2px solid var(--pastel-gold-border); }
-        .section-card.pink   { background-color: var(--pastel-pink-bg);   border: 2px solid var(--pastel-pink-border); }
-        .section-card.blue   { background-color: var(--pastel-blue-bg);   border: 2px solid var(--pastel-blue-border); }
-        .section-card.green  { background-color: var(--pastel-green-bg);  border: 2px solid var(--pastel-green-border); }
-        .section-card.purple { background-color: var(--pastel-purple-bg); border: 2px solid var(--pastel-purple-border); }
-        .section-card.cyan   { background-color: var(--pastel-cyan-bg);   border: 2px solid var(--pastel-cyan-border); }
-        .section-card.amber  { background-color: var(--pastel-amber-bg);  border: 2px solid var(--pastel-amber-border); }
-        .section-card.orange { background-color: var(--pastel-orange-bg); border: 2px solid var(--pastel-orange-border); }
+        .section-card.gold   { background-color: rgba(254, 252, 232, 0.95); border: 2px solid var(--pastel-gold-border); }
+        .section-card.pink   { background-color: rgba(255, 241, 242, 0.95); border: 2px solid var(--pastel-pink-border); }
+        .section-card.blue   { background-color: rgba(240, 249, 255, 0.95); border: 2px solid var(--pastel-blue-border); }
+        .section-card.green  { background-color: rgba(240, 253, 244, 0.95); border: 2px solid var(--pastel-green-border); }
+        .section-card.purple { background-color: rgba(243, 232, 255, 0.95); border: 2px solid var(--pastel-purple-border); }
+        .section-card.cyan   { background-color: rgba(236, 254, 255, 0.95); border: 2px solid var(--pastel-cyan-border); }
+        .section-card.amber  { background-color: rgba(255, 251, 235, 0.95); border: 2px solid var(--pastel-amber-border); }
+        .section-card.orange { background-color: rgba(255, 247, 237, 0.95); border: 2px solid var(--pastel-orange-border); }
 
         .card-badge-header { display: inline-flex; align-items: center; padding: 6px 16px; border-radius: 16px; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 15px; color: #FFFFFF; align-self: flex-start; text-transform: uppercase; }
         .section-card.gold .card-badge-header   { background: var(--pastel-gold-pill); }
@@ -213,32 +262,57 @@
         .photo-box-left img { width: 100%; height: 100%; object-fit: cover; }
         .photo-placeholder { text-align: center; font-size: 13px; color: #888; font-weight: 700; padding: 8px; }
 
-        .narrative-box-right { flex-grow: 1; display: flex; flex-direction: column; }
+        .narrative-box-right { flex-grow: 1; display: flex; flex-direction: column; gap: 4px; }
+        .card-inline-header { display: flex; justify-content: space-between; align-items: center; }
 
         textarea { width: 100%; height: 100%; min-height: 155px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 12px; resize: vertical; font-family: 'Quicksand', -apple-system, sans-serif; font-size: 14.5px; line-height: 1.45; padding: 10px 14px; box-sizing: border-box; outline: none; background: #FFFFFF; color: var(--text-dark); }
         textarea:focus { border-color: var(--mws-maroon); }
 
         .print-text-mirror { display: none; width: 100%; background: #FFFFFF; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; color: var(--text-dark); min-height: 150px; }
-        .teacher-notes-full { width: 100%; display: flex; flex-direction: column; }
+        .teacher-notes-full { width: 100%; display: flex; flex-direction: column; gap: 4px; }
         .teacher-notes-full textarea { min-height: 150px; }
 
         .user-sync-status {
             font-size: 11px; font-weight: 700; color: #16A34A; background: #EFE; padding: 4px 8px; border-radius: 6px; border: 1px solid #86EFAC; display: inline-flex; align-items: center; gap: 4px;
         }
 
+        /* DIRECTOR PORTAL VIEW */
+        .director-portal-wrapper {
+            max-width: 1200px; margin: 0 auto; background: var(--glass-bg); backdrop-filter: blur(16px);
+            border-radius: 26px; padding: 30px; border: 3.5px solid var(--mws-maroon); box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .director-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px dashed #CBD5E0; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .director-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 24px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; }
+        .student-review-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 18px; padding: 22px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .student-review-name { font-size: 18px; font-weight: 700; color: var(--mws-maroon); border-bottom: 1.5px dashed #CBD5E0; padding-bottom: 8px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+        .review-domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+        .review-domain-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .review-domain-label { font-size: 11.5px; font-weight: 700; color: #475569; text-transform: uppercase; }
+        .review-domain-text { font-size: 13.5px; color: #1E293B; background: #FFFFFF; padding: 10px; border-radius: 8px; min-height: 60px; border: 1px solid #CBD5E0; white-space: pre-wrap; line-height: 1.4; }
+        .review-comment-input { font-size: 12.5px; padding: 8px 10px; border: 1.5px solid #FCD34D; background: #FEFCE8; border-radius: 8px; outline: none; width: 100%; color: #92400E; font-weight: 600; }
+        .review-comment-input:focus { border-color: var(--mws-maroon); }
+
+        /* EDITABLE PREVIEW TEXTAREA IN CONFIRMATION MODAL */
+        .editable-preview-textarea {
+            width: 100%; height: 190px; border: 1.5px solid #CBD5E0; border-radius: 12px;
+            padding: 12px 14px; font-family: 'Quicksand', sans-serif; font-size: 13.5px;
+            line-height: 1.5; color: #334155; outline: none; margin: 12px 0; resize: vertical;
+            background: #F8FAFC; box-sizing: border-box;
+        }
+        .editable-preview-textarea:focus { border-color: var(--mws-maroon); background: #FFFFFF; }
+
         @media screen and (max-width: 768px) {
             body { padding: 12px 8px; }
-            .control-panel { padding: 16px; border-radius: 16px; }
-            .panel-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .control-panel, .director-portal-wrapper { padding: 16px; border-radius: 16px; }
+            .panel-header, .director-header { flex-direction: column; align-items: flex-start; gap: 12px; }
             .action-btn-group { width: 100%; flex-direction: column; gap: 8px; }
             .btn-action { width: 100%; justify-content: center; }
             .page-sheet { padding: 20px 14px; border-width: 5px; border-radius: 18px; }
             .school-header { flex-direction: column; text-align: center; gap: 10px; }
             .logo-img { max-width: 200px; }
-            .main-recap-title { text-align: center; }
+            .main-recap-title { text-align: center; margin-right: 0; }
             .recap-big-heading { justify-content: center; font-size: 22px; }
             .hero-student-cover { flex-direction: column; text-align: center; padding: 18px 14px; gap: 14px; }
-            .canva-sticker-badge { position: relative; right: auto; top: auto; transform: none; margin-bottom: 5px; display: inline-flex; }
             .student-details-box { align-items: center; }
             .student-nickname-big { font-size: 32px; }
             .meta-tags-row { justify-content: center; }
@@ -247,18 +321,18 @@
             textarea { min-height: 120px; }
         }
 
+        /* PRINT PDF OPTIMIZATIONS */
         @media print {
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; }
             @page { size: A4 portrait; margin: 8mm; }
             body { background: white !important; padding: 0 !important; }
-            .bg-collage-container, .control-panel, .login-wrapper { display: none !important; }
-            #appView { display: block !important; }
+            .bg-collage-container, .control-panel, .login-wrapper, .btn-ai-gen, .director-portal-wrapper, .modal-overlay { display: none !important; }
+            #teacherAppView { display: block !important; }
             .report-wrapper { margin: 0 !important; padding: 0 !important; gap: 0 !important; max-width: 100% !important; }
             .page-sheet { box-shadow: none !important; border: 5px solid var(--mws-maroon) !important; border-radius: 16px !important; padding: 20px 24px !important; margin-bottom: 0 !important; background-color: #FFFFFF !important; }
             .page-sheet.page-2, .page-sheet.page-3 { page-break-before: always !important; break-before: page !important; margin-top: 8mm !important; }
-            .washi-tape-corner { background-color: #FFC0CB !important; }
+            .sheet-collage-overlay { opacity: 0.20 !important; display: block !important; visibility: visible !important; }
             .tape-top { background-color: #FFE680 !important; }
-            .canva-sticker-badge { background-color: #FFD166 !important; }
             .hero-student-cover { background-color: #FFF0F2 !important; }
             .domain-section-banner { background-color: var(--mws-maroon) !important; color: white !important; }
             textarea { display: none !important; }
@@ -269,40 +343,51 @@
 </head>
 <body>
 
-    <!-- EVENLY DISTRIBUTED FULL-SCREEN COLLAGE BACKGROUND -->
+    <!-- DENSE SCATTERED WEBPAGE BACKGROUND COLLAGE -->
     <div class="bg-collage-container">
         <img src="https://lh3.googleusercontent.com/d/12Qo7wDzV4vedqUciwLAVVlycx4nh6brC" class="collage-photo collage-1" alt="Bg 1">
         <img src="https://lh3.googleusercontent.com/d/16iyq0mPzRzhWyamAGKoPF01vqj0TnE7R" class="collage-photo collage-2" alt="Bg 2">
         <img src="https://lh3.googleusercontent.com/d/1YYHjwl1f9eKeu-W2lfFIlw8tI8lfCSms" class="collage-photo collage-3" alt="Bg 3">
         <img src="https://lh3.googleusercontent.com/d/1dY5vtwWr0l9qhhie7i9r6SvysIfSqTla" class="collage-photo collage-4" alt="Bg 4">
-        <img src="https://lh3.googleusercontent.com/d/1o-5nQrYYYCmZK_eEguXWXACM6xZP8Ulr" class="collage-photo collage-5" alt="Bg 5">
-        <img src="https://lh3.googleusercontent.com/d/1oE88UXJ4_0MBozzwrCFc6KXJs6unqPUL" class="collage-photo collage-6" alt="Bg 6">
-        <img src="https://lh3.googleusercontent.com/d/1qXtbSvB09Tw29kt_Fq8np8bssvywmESr" class="collage-photo collage-7" alt="Bg 7">
+        <img src="https://lh3.googleusercontent.com/d/1APXbKtdzHRqqAJqCJE916iaNraG6J5pf" class="collage-photo collage-5" alt="Bg 5">
+        <img src="https://lh3.googleusercontent.com/d/1LqFRRIeksLnfd4NoYdui-1e0kGk2GxhB" class="collage-photo collage-6" alt="Bg 6">
+        <img src="https://lh3.googleusercontent.com/d/1MH-pwfQr7zDUWAs5meyVs6GfKnI3NdVh" class="collage-photo collage-7" alt="Bg 7">
+        <img src="https://lh3.googleusercontent.com/d/1P0PAS1oK4CjTKw1CuWkxi_nxCRulULXO" class="collage-photo collage-8" alt="Bg 8">
+        <img src="https://lh3.googleusercontent.com/d/1WXmuTlyx_J5Z2SXCLJLMnQRJ1W5M1BCG" class="collage-photo collage-9" alt="Bg 9">
+        <img src="https://lh3.googleusercontent.com/d/1eAlJRU5S2nGcUTYGohmkILb_NXIn3Q3P" class="collage-photo collage-10" alt="Bg 10">
+        <img src="https://lh3.googleusercontent.com/d/1o-5nQrYYYCmZK_eEguXWXACM6xZP8Ulr" class="collage-photo collage-11" alt="Bg 11">
+        <img src="https://lh3.googleusercontent.com/d/1qXtbSvB09Tw29kt_Fq8np8bssvywmESr" class="collage-photo collage-12" alt="Bg 12">
     </div>
 
-    <!-- VIEW 1: GOOGLE LOGIN SCREEN -->
+    <!-- VIEW 1: DUAL PORTAL LOGIN SCREEN -->
     <div class="login-wrapper" id="loginView">
         <div class="login-card">
             <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="login-logo" alt="Millennia Logo">
-            <h1 class="login-title">Teacher Portal Login</h1>
-            <p class="login-subtitle">Please sign in using your official Millennia World School Google account to access student weekly recaps.</p>
+            <h1 class="login-title">Millennia Portal Login</h1>
+            <p class="login-subtitle">Please select your portal to sign in using your official school Google account (@millennia21.id).</p>
             
-            <button class="btn-google-login" onclick="openGoogleAuthModal()">
-                <svg class="google-icon-svg" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                Sign in with Google
-            </button>
+            <div class="portal-btn-grid">
+                <button class="btn-google-login" onclick="openAuthModal('TEACHER')">
+                    <svg class="google-icon-svg" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    Teacher Portal Login
+                </button>
+
+                <button class="btn-google-login btn-director-login" onclick="openAuthModal('DIRECTOR')">
+                    Director Portal Login
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- INTERACTIVE GOOGLE AUTHENTICATION MODAL -->
     <div class="modal-overlay" id="googleModal">
         <div class="modal-google-box">
-            <button class="btn-modal-close" onclick="closeGoogleAuthModal()" title="Exit">&times;</button>
+            <button class="btn-modal-close" onclick="closeAuthModal()" title="Exit">&times;</button>
 
             <div class="modal-google-header">
                 <svg class="google-icon-svg" viewBox="0 0 24 24">
@@ -311,41 +396,58 @@
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                 </svg>
-                <h3 class="modal-google-title">Google Account Sign In</h3>
+                <h3 class="modal-google-title" id="modalPortalTitle">Google Account Sign In</h3>
             </div>
 
             <div id="modalErrorBanner" class="modal-error-banner"></div>
 
-            <label style="font-size: 12px; font-weight: 700; color: #4B5563;">Name of Teacher:</label>
-            <input type="text" id="inputTeacherName" class="form-input-google" placeholder="Enter name of teacher...">
+            <label style="font-size: 12px; font-weight: 700; color: #4B5563;">Full Name:</label>
+            <input type="text" id="inputTeacherName" class="form-input-google" placeholder="Enter full name...">
             
             <label style="font-size: 12px; font-weight: 700; color: #4B5563;">School Google Email (@millennia21.id):</label>
             <input type="email" id="inputTeacherEmail" class="form-input-google" placeholder="name@millennia21.id">
 
-            <button class="btn-modal-submit" onclick="confirmGoogleLogin()">Continue to Dashboard</button>
+            <button class="btn-modal-submit" onclick="confirmGoogleLogin()">Continue to Workspace</button>
         </div>
     </div>
 
-    <!-- VIEW 2: MAIN RECAP APP -->
-    <div id="appView" style="display: none;">
+    <!-- SUBMISSION PREVIEW CONFIRMATION MODAL (EDITABLE TEXTAREA) -->
+    <div class="modal-overlay" id="confirmSubmitModal">
+        <div class="modal-google-box">
+            <button class="btn-modal-close" onclick="closeConfirmSubmitModal()" title="Exit">&times;</button>
+            <h3 class="modal-google-title" style="color: var(--mws-maroon); margin-bottom: 8px;">Confirm Class Submission to Ms. Mahrukh</h3>
+            <p style="font-size: 13px; color: #475569; margin-top: 0; margin-bottom: 5px;">
+                You are about to notify Ms. Mahrukh that narrations for all students in this class have been completed. You may edit the email text below before sending:
+            </p>
+
+            <textarea id="submitPreviewText" class="editable-preview-textarea"></textarea>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-modal-submit" style="background: #16A34A;" onclick="executeMailtoSubmission()">Yes, Send Email Notification</button>
+                <button class="btn-modal-submit" style="background: #64748B;" onclick="closeConfirmSubmitModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 2: TEACHER RECAP PORTAL APP -->
+    <div id="teacherAppView" style="display: none;">
         
         <div class="control-panel">
             <div class="panel-header">
                 <div>
                     <h2 class="panel-title">Millennia World School - Teacher Portal</h2>
-                    <span class="user-sync-status" id="syncStatusTag">● Draft Synced to Email</span>
+                    <span class="user-sync-status" id="syncStatusTag">Draft Synced to Email</span>
                 </div>
                 <div class="action-btn-group">
                     <div class="user-profile-badge">
-                        <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="user-avatar" id="userAvatar" alt="User Avatar Baru">
+                        <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="user-avatar" alt="User Avatar">
                         <div style="display: flex; flex-direction: column;">
                             <span id="userNameDisplay">Teacher</span>
                             <span id="userEmailDisplay" style="font-size: 10px; opacity: 0.75; font-weight: normal;">email@millennia21.id</span>
                         </div>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
-                    <button class="btn-action btn-sync" onclick="exportTeacherData()" title="Share/Backup Your Data">Export Data</button>
-                    <button class="btn-action btn-download-html" onclick="downloadParentHTML()">Download HTML</button>
+                    <button class="btn-action btn-submit-director" onclick="openSubmitConfirmModal()">Submit Class Narration to Ms. Mahrukh</button>
                     <button class="btn-action btn-print" onclick="prepareAndPrint()">Print PDF</button>
                 </div>
             </div>
@@ -353,7 +455,7 @@
             <div class="input-grid">
                 <div class="input-group">
                     <label>Select Class:</label>
-                    <select id="classSelect" onchange="onClassChange(); saveDraft();">
+                    <select id="classSelect" onchange="onClassChange();">
                         <option value="MAUNA KEA">MAUNA KEA Class</option>
                         <option value="SNOWDON">SNOWDON Class</option>
                         <option value="DJEBEL CHELIA">DJEBEL CHELIA Class</option>
@@ -361,66 +463,79 @@
                 </div>
                 <div class="input-group">
                     <label>Select Student:</label>
-                    <select id="studentSelect" onchange="onStudentSelect(); saveDraft();"></select>
+                    <select id="studentSelect" onchange="onStudentSelect();"></select>
                 </div>
                 <div class="input-group">
                     <label>Theme Title:</label>
-                    <input type="text" id="themeInput" value="ALL ABOUT ME" oninput="updateThemeTitle(); saveDraft();">
+                    <input type="text" id="themeInput" value="ALL ABOUT ME" oninput="updateThemeTitle(); saveActiveStudentDraft();">
                 </div>
                 <div class="input-group">
-                    <label>📅 Pick Date (Auto-Calculate):</label>
+                    <label>Pick Date (Auto-Calculate):</label>
                     <input type="date" id="datePicker" onchange="autoCalculateWeekTerm()">
                 </div>
                 <div class="input-group">
                     <label>Week / Term Output:</label>
-                    <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo(); saveDraft();">
+                    <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo(); saveActiveStudentDraft();">
                 </div>
+            </div>
+
+            <!-- UNLIMITED PAPER BACKGROUND PHOTO UPLOADER -->
+            <div class="section-subtitle-bar">
+                <span>Paper Background Photos (Printable Translucent Collage)</span>
+            </div>
+            <p style="font-size: 12.5px; color: #475569; margin: 0 0 10px 0;">
+                Select photos below to dynamically generate a scattered translucent background collage covering all paper sheets (rendered on PDF export).
+            </p>
+            <div style="margin-bottom: 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <input type="file" id="multiPaperBgInput" multiple accept="image/*" onchange="handleMultiplePaperBgFiles(event)" style="display:none;">
+                <button class="btn-action btn-print" style="background: #0284C7;" onclick="document.getElementById('multiPaperBgInput').click()">Upload Paper Background Photos (Multiple)</button>
+                <span id="paperBgCountTag" style="font-size: 12px; font-weight: bold; color: var(--mws-maroon);">0 custom paper background photos active</span>
             </div>
 
             <div class="section-subtitle-bar">
                 <span>Master Narration Hub (Auto-Generate {name})</span>
             </div>
             <p style="font-size: 13px; color: #16A34A; margin: 0 0 10px 0; font-weight: bold;">
-                *Tip: Use {name} in the text below. The text will AUTOMATICALLY update and populate the report below for your active account!
+                Tip: Write notes or click "AI Generate" to instantly create positive, clear report-card narrations for {name}!
             </p>
 
             <div class="master-narrations-grid">
                 <div class="master-item">
-                    <label>Connection to God:</label>
-                    <textarea id="masterGod" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} actively participated in morning prayers..."></textarea>
+                    <label>Connection to God: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterGod', 'Connection to God')">AI Generate</button></label>
+                    <textarea id="masterGod" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} joined in morning prayers quietly..."></textarea>
                 </div>
                 <div class="master-item">
-                    <label>Connection to Self:</label>
-                    <textarea id="masterSelf" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} demonstrated independence..."></textarea>
+                    <label>Connection to Self: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterSelf', 'Connection to Self')">AI Generate</button></label>
+                    <textarea id="masterSelf" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} showed good independence..."></textarea>
                 </div>
                 <div class="master-item">
-                    <label>Connection to Others:</label>
-                    <textarea id="masterOthers" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} interacted warmly with peers..."></textarea>
+                    <label>Connection to Others: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterOthers', 'Connection to Others')">AI Generate</button></label>
+                    <textarea id="masterOthers" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} played kindly with friends..."></textarea>
                 </div>
                 <div class="master-item">
-                    <label>Connection to Nature:</label>
-                    <textarea id="masterNature" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} cared for plants outdoors..."></textarea>
+                    <label>Connection to Nature: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterNature', 'Connection to Nature')">AI Generate</button></label>
+                    <textarea id="masterNature" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} helped care for plants..."></textarea>
                 </div>
                 <div class="master-item">
-                    <label>Rational (Resional):</label>
-                    <textarea id="masterRational" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} demonstrated logic and reasoning in class..."></textarea>
+                    <label>Rational (Resional): <button class="btn-ai-gen" onclick="triggerAIGenerate('masterRational', 'Rational')">AI Generate</button></label>
+                    <textarea id="masterRational" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} followed learning instructions well..."></textarea>
                 </div>
                 <div class="master-item">
-                    <label>Imaginal:</label>
-                    <textarea id="masterImaginal" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} showed great creativity and imagination..."></textarea>
+                    <label>Imaginal: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterImaginal', 'Imaginal')">AI Generate</button></label>
+                    <textarea id="masterImaginal" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} enjoyed drawing and art activities..."></textarea>
                 </div>
                 <div class="master-item">
-                    <label>Physical:</label>
-                    <textarea id="masterPhysical" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} engaged actively in outdoor physical games..."></textarea>
+                    <label>Physical: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterPhysical', 'Physical')">AI Generate</button></label>
+                    <textarea id="masterPhysical" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} stayed active during playground time..."></textarea>
                 </div>
                 <div class="master-item">
-                    <label>Teacher's Notes:</label>
-                    <textarea id="masterTeacher" oninput="applyMasterNarrations(); saveDraft();" placeholder="Great learning progress this week, {name}! Keep up the amazing work!"></textarea>
+                    <label>Parental Support: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterTeacher', 'Parental Support')">AI Generate</button></label>
+                    <textarea id="masterTeacher" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Parents can encourage {name} at home by practicing daily routines together..."></textarea>
                 </div>
             </div>
 
             <div class="section-subtitle-bar">
-                <span>Upload Photos (Local File OR Paste GDrive Link)</span>
+                <span>Upload Student Activity Photos</span>
             </div>
 
             <div class="photo-grid-inputs">
@@ -517,163 +632,203 @@
 
         <!-- MAIN REPORT WRAPPER -->
         <div class="report-wrapper" id="reportWrapper">
+            <!-- PAGE 1 -->
             <div class="page-sheet page-1">
-                <div class="washi-tape-corner"></div>
+                <div class="sheet-collage-overlay" id="paperOverlayP1"></div>
 
-                <div class="school-header">
-                    <img src="https://lh3.googleusercontent.com/d/1FgT-82Q6Vn6g-cm_4ExJKv8lAsIUBMp2" class="logo-img" alt="Millennia Logo">
-                    <div class="main-recap-title">
-                        <h1 class="recap-big-heading">WEEKLY RECAP</h1>
-                        <div class="recap-theme-subtitle">Theme: <span id="displayThemeTitle">ALL ABOUT ME</span></div>
-                    </div>
-                </div>
-
-                <div class="hero-student-cover">
-                    <div class="canva-sticker-badge">STUDENT OF THE WEEK</div>
-                    <div class="student-main-photo-box">
-                        <div class="tape-top"></div>
-                        <div class="student-main-photo-placeholder" id="phProfile">Upload Main Photo</div>
-                        <img id="imgProfile" style="display:none;" alt="Student Profile Photo">
-                    </div>
-                    <div class="student-details-box">
-                        <h2 class="student-nickname-big" id="displayNick">ANNA</h2>
-                        <div class="student-fullname-text" id="displayFullName">Aelianna Madeena Mecca</div>
-                        <div class="meta-tags-row">
-                            <span class="meta-tag" id="displayGrade">Grade: Pre K</span>
-                            <span class="meta-tag secondary" id="displayClass">Class: MAUNA KEA</span>
-                            <span class="meta-tag secondary" id="displayPeriod">Period: Week 3, Term 1</span>
+                <div class="sheet-content-relative">
+                    <div class="school-header">
+                        <img src="https://lh3.googleusercontent.com/d/1FgT-82Q6Vn6g-cm_4ExJKv8lAsIUBMp2" class="logo-img" alt="Millennia Logo">
+                        <div class="main-recap-title">
+                            <h1 class="recap-big-heading">WEEKLY RECAP</h1>
+                            <div class="recap-theme-subtitle">Theme: <span id="displayThemeTitle">ALL ABOUT ME</span></div>
                         </div>
                     </div>
-                </div>
 
-                <div class="domain-section-banner">SPIRITUALITY</div>
-
-                <div class="cards-column-layout">
-                    <div class="section-card gold">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Connection to God</div>
-                        <div class="card-body-horizontal">
-                            <div class="photo-box-left">
-                                <div class="photo-placeholder" id="phGod">Activity Photo</div>
-                                <img id="imgGod" style="display:none;" alt="God Photo">
-                            </div>
-                            <div class="narrative-box-right">
-                                <textarea id="txtGod" oninput="syncTextToMirrors(); saveDraft();" placeholder="Morning prayers, gratitude, moral values..."></textarea>
-                                <div class="print-text-mirror" id="mirrorTxtGod"></div>
+                    <div class="hero-student-cover">
+                        <div class="student-main-photo-box">
+                            <div class="tape-top"></div>
+                            <div class="student-main-photo-placeholder" id="phProfile">Upload Main Photo</div>
+                            <img id="imgProfile" style="display:none;" alt="Student Profile Photo">
+                        </div>
+                        <div class="student-details-box">
+                            <h2 class="student-nickname-big" id="displayNick">ANNA</h2>
+                            <div class="student-fullname-text" id="displayFullName">Aelianna Madeena Mecca</div>
+                            <div class="meta-tags-row">
+                                <span class="meta-tag" id="displayGrade">Grade: Pre K</span>
+                                <span class="meta-tag secondary" id="displayClass">Class: MAUNA KEA</span>
+                                <span class="meta-tag secondary" id="displayPeriod">Period: Week 3, Term 1</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="section-card pink">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Connection to Self</div>
-                        <div class="card-body-horizontal">
-                            <div class="photo-box-left">
-                                <div class="photo-placeholder" id="phSelf">Activity Photo</div>
-                                <img id="imgSelf" style="display:none;" alt="Self Photo">
+                    <div class="domain-section-banner">SPIRITUALITY</div>
+
+                    <div class="cards-column-layout">
+                        <div class="section-card gold">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Connection to God</div>
+                            <div class="card-body-horizontal">
+                                <div class="photo-box-left">
+                                    <div class="photo-placeholder" id="phGod">Activity Photo</div>
+                                    <img id="imgGod" style="display:none;" alt="God Photo">
+                                </div>
+                                <div class="narrative-box-right">
+                                    <div class="card-inline-header">
+                                        <span style="font-size: 11px; font-weight: bold; color: #854D0E;">Narration:</span>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtGod', 'Connection to God')">AI Generate</button>
+                                    </div>
+                                    <textarea id="txtGod" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Morning prayers, gratitude, quiet reflection..."></textarea>
+                                    <div class="print-text-mirror" id="mirrorTxtGod"></div>
+                                </div>
                             </div>
-                            <div class="narrative-box-right">
-                                <textarea id="txtSelf" oninput="syncTextToMirrors(); saveDraft();" placeholder="Independence, self-awareness..."></textarea>
-                                <div class="print-text-mirror" id="mirrorTxtSelf"></div>
+                        </div>
+
+                        <div class="section-card pink">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Connection to Self</div>
+                            <div class="card-body-horizontal">
+                                <div class="photo-box-left">
+                                    <div class="photo-placeholder" id="phSelf">Activity Photo</div>
+                                    <img id="imgSelf" style="display:none;" alt="Self Photo">
+                                </div>
+                                <div class="narrative-box-right">
+                                    <div class="card-inline-header">
+                                        <span style="font-size: 11px; font-weight: bold; color: #9F1239;">Narration:</span>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtSelf', 'Connection to Self')">AI Generate</button>
+                                    </div>
+                                    <textarea id="txtSelf" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Independence, self-awareness, personal routines..."></textarea>
+                                    <div class="print-text-mirror" id="mirrorTxtSelf"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- PAGE 2 -->
             <div class="page-sheet page-2">
-                <div class="washi-tape-corner"></div>
+                <div class="sheet-collage-overlay" id="paperOverlayP2"></div>
 
-                <div class="cards-column-layout">
-                    <div class="section-card blue">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Connection to Others</div>
-                        <div class="card-body-horizontal">
-                            <div class="photo-box-left">
-                                <div class="photo-placeholder" id="phOthers">Activity Photo</div>
-                                <img id="imgOthers" style="display:none;" alt="Others Photo">
-                            </div>
-                            <div class="narrative-box-right">
-                                <textarea id="txtOthers" oninput="syncTextToMirrors(); saveDraft();" placeholder="Social interactions, sharing..."></textarea>
-                                <div class="print-text-mirror" id="mirrorTxtOthers"></div>
+                <div class="sheet-content-relative">
+                    <div class="cards-column-layout">
+                        <div class="section-card blue">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Connection to Others</div>
+                            <div class="card-body-horizontal">
+                                <div class="photo-box-left">
+                                    <div class="photo-placeholder" id="phOthers">Activity Photo</div>
+                                    <img id="imgOthers" style="display:none;" alt="Others Photo">
+                                </div>
+                                <div class="narrative-box-right">
+                                    <div class="card-inline-header">
+                                        <span style="font-size: 11px; font-weight: bold; color: #075985;">Narration:</span>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtOthers', 'Connection to Others')">AI Generate</button>
+                                    </div>
+                                    <textarea id="txtOthers" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Playing nicely, sharing toys, helping classmates..."></textarea>
+                                    <div class="print-text-mirror" id="mirrorTxtOthers"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="section-card green">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Connection to Nature</div>
-                        <div class="card-body-horizontal">
-                            <div class="photo-box-left">
-                                <div class="photo-placeholder" id="phNature">Activity Photo</div>
-                                <img id="imgNature" style="display:none;" alt="Nature Photo">
-                            </div>
-                            <div class="narrative-box-right">
-                                <textarea id="txtNature" oninput="syncTextToMirrors(); saveDraft();" placeholder="Caring for plants, environmental..."></textarea>
-                                <div class="print-text-mirror" id="mirrorTxtNature"></div>
+                        <div class="section-card green">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Connection to Nature</div>
+                            <div class="card-body-horizontal">
+                                <div class="photo-box-left">
+                                    <div class="photo-placeholder" id="phNature">Activity Photo</div>
+                                    <img id="imgNature" style="display:none;" alt="Nature Photo">
+                                </div>
+                                <div class="narrative-box-right">
+                                    <div class="card-inline-header">
+                                        <span style="font-size: 11px; font-weight: bold; color: #166534;">Narration:</span>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtNature', 'Connection to Nature')">AI Generate</button>
+                                    </div>
+                                    <textarea id="txtNature" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Caring for plants, outdoor play, environmental awareness..."></textarea>
+                                    <div class="print-text-mirror" id="mirrorTxtNature"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="domain-section-banner">DOMAINS OF DEVELOPMENT</div>
+                        <div class="domain-section-banner">DOMAINS OF DEVELOPMENT</div>
 
-                    <div class="section-card purple">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Rational</div>
-                        <div class="card-body-horizontal">
-                            <div class="photo-box-left">
-                                <div class="photo-placeholder" id="phRational">Activity Photo</div>
-                                <img id="imgRational" style="display:none;" alt="Rational Photo">
-                            </div>
-                            <div class="narrative-box-right">
-                                <textarea id="txtRational" oninput="syncTextToMirrors(); saveDraft();" placeholder="Logical thinking, problem solving, literacy & numeracy..."></textarea>
-                                <div class="print-text-mirror" id="mirrorTxtRational"></div>
+                        <div class="section-card purple">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Rational</div>
+                            <div class="card-body-horizontal">
+                                <div class="photo-box-left">
+                                    <div class="photo-placeholder" id="phRational">Activity Photo</div>
+                                    <img id="imgRational" style="display:none;" alt="Rational Photo">
+                                </div>
+                                <div class="narrative-box-right">
+                                    <div class="card-inline-header">
+                                        <span style="font-size: 11px; font-weight: bold; color: #6B21A8;">Narration:</span>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtRational', 'Rational')">AI Generate</button>
+                                    </div>
+                                    <textarea id="txtRational" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Following directions, counting, listening to stories..."></textarea>
+                                    <div class="print-text-mirror" id="mirrorTxtRational"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- PAGE 3 -->
             <div class="page-sheet page-3">
-                <div class="washi-tape-corner"></div>
+                <div class="sheet-collage-overlay" id="paperOverlayP3"></div>
 
-                <div class="cards-column-layout">
-                    <div class="section-card cyan">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Imaginal</div>
-                        <div class="card-body-horizontal">
-                            <div class="photo-box-left">
-                                <div class="photo-placeholder" id="phImaginal">Activity Photo</div>
-                                <img id="imgImaginal" style="display:none;" alt="Imaginal Photo">
-                            </div>
-                            <div class="narrative-box-right">
-                                <textarea id="txtImaginal" oninput="syncTextToMirrors(); saveDraft();" placeholder="Creative expression, art, music, imaginative play..."></textarea>
-                                <div class="print-text-mirror" id="mirrorTxtImaginal"></div>
+                <div class="sheet-content-relative">
+                    <div class="cards-column-layout">
+                        <div class="section-card cyan">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Imaginal</div>
+                            <div class="card-body-horizontal">
+                                <div class="photo-box-left">
+                                    <div class="photo-placeholder" id="phImaginal">Activity Photo</div>
+                                    <img id="imgImaginal" style="display:none;" alt="Imaginal Photo">
+                                </div>
+                                <div class="narrative-box-right">
+                                    <div class="card-inline-header">
+                                        <span style="font-size: 11px; font-weight: bold; color: #155E75;">Narration:</span>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtImaginal', 'Imaginal')">AI Generate</button>
+                                    </div>
+                                    <textarea id="txtImaginal" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Drawing, building, pretend play, music..."></textarea>
+                                    <div class="print-text-mirror" id="mirrorTxtImaginal"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="section-card amber">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Physical</div>
-                        <div class="card-body-horizontal">
-                            <div class="photo-box-left">
-                                <div class="photo-placeholder" id="phPhysical">Activity Photo</div>
-                                <img id="imgPhysical" style="display:none;" alt="Physical Photo">
-                            </div>
-                            <div class="narrative-box-right">
-                                <textarea id="txtPhysical" oninput="syncTextToMirrors(); saveDraft();" placeholder="Gross motor, fine motor skills, outdoor activities..."></textarea>
-                                <div class="print-text-mirror" id="mirrorTxtPhysical"></div>
+                        <div class="section-card amber">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Physical</div>
+                            <div class="card-body-horizontal">
+                                <div class="photo-box-left">
+                                    <div class="photo-placeholder" id="phPhysical">Activity Photo</div>
+                                    <img id="imgPhysical" style="display:none;" alt="Physical Photo">
+                                </div>
+                                <div class="narrative-box-right">
+                                    <div class="card-inline-header">
+                                        <span style="font-size: 11px; font-weight: bold; color: #9A3412;">Narration:</span>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtPhysical', 'Physical')">AI Generate</button>
+                                    </div>
+                                    <textarea id="txtPhysical" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Running, jumping, fine motor activities, playground games..."></textarea>
+                                    <div class="print-text-mirror" id="mirrorTxtPhysical"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="section-card orange">
-                        <div class="card-washi"></div>
-                        <div class="card-badge-header">Teacher's Notes</div>
-                        <div class="teacher-notes-full">
-                            <textarea id="txtTeacher" oninput="syncTextToMirrors(); saveDraft();" placeholder="Overall notes, milestones, and encouragement for the week..."></textarea>
-                            <div class="print-text-mirror" id="mirrorTxtTeacher"></div>
+                        <div class="section-card orange">
+                            <div class="card-washi"></div>
+                            <div class="card-badge-header">Parental Support</div>
+                            <div class="teacher-notes-full">
+                                <div class="card-inline-header">
+                                    <span style="font-size: 11px; font-weight: bold; color: #C2410C;">Home Guidance & Support:</span>
+                                    <button class="btn-ai-gen" onclick="triggerAIGenerate('txtTeacher', 'Parental Support')">AI Generate</button>
+                                </div>
+                                <textarea id="txtTeacher" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Simple, practical ways parents can support learning and routines at home..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtTeacher"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -681,8 +836,54 @@
         </div>
     </div>
 
+    <!-- VIEW 3: DIRECTOR EXCLUSIVE PORTAL -->
+    <div id="directorAppView" style="display: none;">
+        <div class="director-portal-wrapper">
+            <div class="director-header">
+                <div>
+                    <h2 class="director-title">Director Portal</h2>
+                    <span style="font-size: 13px; color: #64748B;">Class Narration Review & Feedback Workspace</span>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div class="user-profile-badge">
+                        <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="user-avatar" alt="User Avatar">
+                        <span id="directorNameDisplay">Mahrukh Bashir</span>
+                        <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-grid" style="margin-bottom: 20px;">
+                <div class="input-group">
+                    <label>Select Class for Review:</label>
+                    <select id="directorClassSelect" onchange="renderDirectorReviewList()">
+                        <option value="MAUNA KEA">MAUNA KEA Class</option>
+                        <option value="SNOWDON">SNOWDON Class</option>
+                        <option value="DJEBEL CHELIA">DJEBEL CHELIA Class</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="directorReviewContainer"></div>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        /* AUTHORIZED TEACHERS & PRINCIPAL MAP (EXACT PAIRING REQUIRED) */
+        const allowedTeachersList = {
+            "latifah@millennia21.id": "latifah",
+            "nanda@millennia21.id": "nanda",
+            "widya@millennia21.id": "widya",
+            "aprimaputri@millennia21.id": "yunda",
+            "diya@millennia21.id": "diya",
+            "sindy@millennia21.id": "sindy",
+            "anggie@millennia21.id": "anggie",
+            "ikarahayu@millennia21.id": "ika",
+            "afiyanti.hardiansari@millennia21.id": "afi",
+            "hana.sajidah@millennia21.id": "ana"
+        };
+
         const studentDatabase = {
             "MAUNA KEA": [
                 { full: "Aelianna Madeena Mecca", grade: "Pre K", nick: "Anna" },
@@ -758,77 +959,69 @@
             ]
         };
 
+        const defaultPaperPhotos = [
+            "https://lh3.googleusercontent.com/d/12Qo7wDzV4vedqUciwLAVVlycx4nh6brC",
+            "https://lh3.googleusercontent.com/d/16iyq0mPzRzhWyamAGKoPF01vqj0TnE7R",
+            "https://lh3.googleusercontent.com/d/1YYHjwl1f9eKeu-W2lfFIlw8tI8lfCSms",
+            "https://lh3.googleusercontent.com/d/1dY5vtwWr0l9qhhie7i9r6SvysIfSqTla",
+            "https://lh3.googleusercontent.com/d/1APXbKtdzHRqqAJqCJE916iaNraG6J5pf",
+            "https://lh3.googleusercontent.com/d/1LqFRRIeksLnfd4NoYdui-1e0kGk2GxhB",
+            "https://lh3.googleusercontent.com/d/1MH-pwfQr7zDUWAs5meyVs6GfKnI3NdVh",
+            "https://lh3.googleusercontent.com/d/1P0PAS1oK4CjTKw1CuWkxi_nxCRulULXO",
+            "https://lh3.googleusercontent.com/d/1WXmuTlyx_J5Z2SXCLJLMnQRJ1W5M1BCG",
+            "https://lh3.googleusercontent.com/d/1eAlJRU5S2nGcUTYGohmkILb_NXIn3Q3P",
+            "https://lh3.googleusercontent.com/d/1o-5nQrYYYCmZK_eEguXWXACM6xZP8Ulr",
+            "https://lh3.googleusercontent.com/d/1qXtbSvB09Tw29kt_Fq8np8bssvywmESr"
+        ];
+
         let currentStudent = {};
         let currentTeacherEmail = "";
+        let activeStudentIndex = 0;
+        let activePaperPhotos = [...defaultPaperPhotos];
+        let activePortalMode = "TEACHER";
 
-        function getStorageKey(email) {
-            return 'mws_recap_draft_' + email.replace(/[^a-zA-Z0-9]/g, '_');
+        function getStudentStorageKey(email, className, studentIndex) {
+            const cleanClass = className.replace(/\s+/g, '_');
+            return `mws_recap_v10_${cleanClass}_std${studentIndex}`;
         }
 
         window.onload = function() {
             const savedName = localStorage.getItem('mws_teacher_name');
             const savedEmail = localStorage.getItem('mws_teacher_email');
+            const savedRole = localStorage.getItem('mws_user_role');
             const isLoggedIn = localStorage.getItem('mws_is_logged_in');
-
-            if (savedName) document.getElementById('inputTeacherName').value = savedName;
-            if (savedEmail) document.getElementById('inputTeacherEmail').value = savedEmail;
 
             if (isLoggedIn === 'true' && savedEmail) {
                 currentTeacherEmail = savedEmail;
-                document.getElementById('userNameDisplay').textContent = savedName || 'Teacher';
-                document.getElementById('userEmailDisplay').textContent = savedEmail;
-                document.getElementById('loginView').style.display = 'none';
-                document.getElementById('appView').style.display = 'block';
-                
-                onClassChange();
-                loadDraftForEmail(currentTeacherEmail);
+                activePortalMode = savedRole || 'TEACHER';
+
+                if (activePortalMode === 'DIRECTOR') {
+                    document.getElementById('directorNameDisplay').textContent = savedName || 'Mahrukh Bashir';
+                    document.getElementById('loginView').style.display = 'none';
+                    document.getElementById('directorAppView').style.display = 'block';
+                    renderDirectorReviewList();
+                } else {
+                    document.getElementById('userNameDisplay').textContent = savedName || 'Teacher';
+                    document.getElementById('userEmailDisplay').textContent = savedEmail;
+                    document.getElementById('loginView').style.display = 'none';
+                    document.getElementById('teacherAppView').style.display = 'block';
+                    renderPaperBgCollages();
+                    onClassChange();
+                }
             }
         };
 
-        function autoCalculateWeekTerm() {
-            const dateVal = document.getElementById('datePicker').value;
-            if (!dateVal) return;
-
-            const dateParts = dateVal.split('-');
-            const selDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-
-            const year = selDate.getFullYear();
-            const month = selDate.getMonth();
-
-            let term = 1;
-            let termStartMonth = 6; // July
-
-            if (month >= 6 && month <= 8) { // Jul, Aug, Sep
-                term = 1; termStartMonth = 6;
-            } else if (month >= 9 && month <= 11) { // Oct, Nov, Dec
-                term = 2; termStartMonth = 9;
-            } else if (month >= 0 && month <= 2) { // Jan, Feb, Mar
-                term = 3; termStartMonth = 0;
-            } else { // Apr, May, Jun
-                term = 4; termStartMonth = 3;
-            }
-
-            const termStartDate = new Date(year, termStartMonth, 1);
-            const diffDays = Math.floor((selDate - termStartDate) / (1000 * 60 * 60 * 24));
-            const weekNum = Math.floor(diffDays / 7) + 1;
-
-            const monthNames = ["January", "February", "March", "April", "May", "June", 
-                                "July", "August", "September", "October", "November", "December"];
-            const monthName = monthNames[month];
-
-            const formattedString = `Week ${weekNum}, Term ${term} (${monthName} ${year})`;
-
-            document.getElementById('weekTerm').value = formattedString;
-            updateMetaInfo();
-            saveDraft();
-        }
-
-        function openGoogleAuthModal() {
+        function openAuthModal(role) {
+            activePortalMode = role;
+            document.getElementById('modalPortalTitle').textContent = role === 'DIRECTOR' ? 'Director Account Sign In' : 'Teacher Account Sign In';
+            
+            document.getElementById('inputTeacherName').value = "";
+            document.getElementById('inputTeacherEmail').value = "";
             document.getElementById('modalErrorBanner').style.display = 'none';
             document.getElementById('googleModal').style.display = 'flex';
         }
 
-        function closeGoogleAuthModal() {
+        function closeAuthModal() {
             document.getElementById('modalErrorBanner').style.display = 'none';
             document.getElementById('googleModal').style.display = 'none';
         }
@@ -844,48 +1037,141 @@
             errorBanner.style.display = 'none';
 
             if (!name) {
-                errorBanner.textContent = "Please enter name of teacher.";
+                errorBanner.textContent = "Please enter full name.";
                 errorBanner.style.display = 'block';
                 nameInput.focus();
                 return;
             }
 
-            if (!email) {
-                errorBanner.textContent = "Please enter your school email address.";
-                errorBanner.style.display = 'block';
-                emailInput.focus();
-                return;
-            }
-
-            if (!email.endsWith('@millennia21.id')) {
+            if (!email || !email.endsWith('@millennia21.id')) {
                 errorBanner.textContent = "Access Denied: You must use an official @millennia21.id email address.";
                 errorBanner.style.display = 'block';
                 emailInput.focus();
                 return;
             }
 
+            /* STRICT PAIRING VALIDATION LOGIC */
+            if (activePortalMode === 'DIRECTOR') {
+                if (email !== 'mahrukh@millennia21.id' || name.toLowerCase() !== 'mahrukh bashir') {
+                    errorBanner.textContent = "Access Denied: Name and email combination does not match Director records (Mahrukh Bashir & mahrukh@millennia21.id required).";
+                    errorBanner.style.display = 'block';
+                    return;
+                }
+            } else {
+                const expectedName = allowedTeachersList[email];
+                if (!expectedName || name.toLowerCase() !== expectedName.toLowerCase()) {
+                    errorBanner.textContent = "Access Denied: Name and email combination does not match school records.";
+                    errorBanner.style.display = 'block';
+                    return;
+                }
+            }
+
             localStorage.setItem('mws_teacher_name', name);
             localStorage.setItem('mws_teacher_email', email);
+            localStorage.setItem('mws_user_role', activePortalMode);
             localStorage.setItem('mws_is_logged_in', 'true');
             currentTeacherEmail = email;
 
-            document.getElementById('userNameDisplay').textContent = name;
-            document.getElementById('userEmailDisplay').textContent = email;
             document.getElementById('googleModal').style.display = 'none';
             document.getElementById('loginView').style.display = 'none';
-            document.getElementById('appView').style.display = 'block';
 
-            onClassChange();
-            loadDraftForEmail(currentTeacherEmail);
+            if (activePortalMode === 'DIRECTOR') {
+                document.getElementById('directorNameDisplay').textContent = name;
+                document.getElementById('directorAppView').style.display = 'block';
+                renderDirectorReviewList();
+            } else {
+                document.getElementById('userNameDisplay').textContent = name;
+                document.getElementById('userEmailDisplay').textContent = email;
+                document.getElementById('teacherAppView').style.display = 'block';
+                renderPaperBgCollages();
+                onClassChange();
+            }
         }
 
         function logoutGoogle() {
             localStorage.setItem('mws_is_logged_in', 'false');
-            document.getElementById('appView').style.display = 'none';
+            document.getElementById('teacherAppView').style.display = 'none';
+            document.getElementById('directorAppView').style.display = 'none';
             document.getElementById('loginView').style.display = 'flex';
         }
 
+        /* DENSE & LARGE PAPER BACKGROUND COLLAGE GENERATOR */
+        function handleMultiplePaperBgFiles(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            activePaperPhotos = [];
+            let loadedCount = 0;
+
+            Array.from(files).forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    activePaperPhotos.push(e.target.result);
+                    loadedCount++;
+                    if (loadedCount === files.length) {
+                        renderPaperBgCollages();
+                        saveActiveStudentDraft();
+                    }
+                }
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderPaperBgCollages() {
+            const list = activePaperPhotos.length > 0 ? activePaperPhotos : defaultPaperPhotos;
+            document.getElementById('paperBgCountTag').textContent = `${list.length} custom paper background photos active`;
+
+            const pageIds = ['paperOverlayP1', 'paperOverlayP2', 'paperOverlayP3'];
+            const classList = ['sp-1', 'sp-2', 'sp-3', 'sp-4', 'sp-5', 'sp-6', 'sp-7', 'sp-8', 'sp-9', 'sp-10'];
+
+            pageIds.forEach(pId => {
+                const container = document.getElementById(pId);
+                if (!container) return;
+                container.innerHTML = '';
+                
+                for (let i = 0; i < 10; i++) {
+                    const img = document.createElement('img');
+                    img.src = list[i % list.length];
+                    img.className = `sp-photo ${classList[i]}`;
+                    container.appendChild(img);
+                }
+            });
+        }
+
+        function autoCalculateWeekTerm() {
+            const dateVal = document.getElementById('datePicker').value;
+            if (!dateVal) return;
+
+            const dateParts = dateVal.split('-');
+            const selDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+
+            const year = selDate.getFullYear();
+            const month = selDate.getMonth();
+
+            let term = 1;
+            let termStartMonth = 6;
+
+            if (month >= 6 && month <= 8) { term = 1; termStartMonth = 6; }
+            else if (month >= 9 && month <= 11) { term = 2; termStartMonth = 9; }
+            else if (month >= 0 && month <= 2) { term = 3; termStartMonth = 0; }
+            else { term = 4; termStartMonth = 3; }
+
+            const termStartDate = new Date(year, termStartMonth, 1);
+            const diffDays = Math.floor((selDate - termStartDate) / (1000 * 60 * 60 * 24));
+            const weekNum = Math.floor(diffDays / 7) + 1;
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", 
+                                "July", "August", "September", "October", "November", "December"];
+            const formattedString = `Week ${weekNum}, Term ${term} (${monthNames[month]} ${year})`;
+
+            document.getElementById('weekTerm').value = formattedString;
+            updateMetaInfo();
+            saveActiveStudentDraft();
+        }
+
         function onClassChange() {
+            saveActiveStudentDraft();
+
             const classSelect = document.getElementById('classSelect');
             const studentSelect = document.getElementById('studentSelect');
             const selectedClass = classSelect.value;
@@ -898,12 +1184,17 @@
                 opt.textContent = `${st.full} (${st.grade}) - ${st.nick}`;
                 studentSelect.appendChild(opt);
             });
+            activeStudentIndex = 0;
             onStudentSelect();
         }
 
         function onStudentSelect() {
+            saveActiveStudentDraft();
+
             const selectedClass = document.getElementById('classSelect').value;
             const idx = document.getElementById('studentSelect').value;
+            activeStudentIndex = idx;
+
             const list = studentDatabase[selectedClass] || [];
             
             if (list[idx]) {
@@ -914,7 +1205,7 @@
                 document.getElementById('displayClass').textContent = `Class: ${selectedClass}`;
                 document.getElementById('displayPeriod').textContent = `Period: ${document.getElementById('weekTerm').value}`;
                 
-                applyMasterNarrations();
+                loadStudentDraft(currentTeacherEmail, selectedClass, activeStudentIndex);
             }
         }
 
@@ -936,7 +1227,7 @@
                 reader.onload = function(e) {
                     img.src = e.target.result; img.style.display = 'block';
                     document.getElementById(phId).style.display = 'none';
-                    saveDraft();
+                    saveActiveStudentDraft();
                 }
                 reader.readAsDataURL(event.target.files[0]);
             }
@@ -951,7 +1242,7 @@
             const driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
             if (driveMatch && driveMatch[1]) directUrl = `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
             img.src = directUrl; img.style.display = 'block'; document.getElementById(phId).style.display = 'none';
-            saveDraft();
+            saveActiveStudentDraft();
         }
 
         function applyMasterNarrations() {
@@ -985,8 +1276,77 @@
             });
         }
 
-        function saveDraft() {
+        /* INSTANT AI GENERATOR (EASY FOR PARENTS, NON-SUPERLATIVE) */
+        function triggerAIGenerate(targetFieldId, categoryName) {
+            const studentNick = currentStudent.nick || 'the student';
+            let currentContent = document.getElementById(targetFieldId).value.trim();
+
+            if (!currentContent) {
+                currentContent = prompt(`AI Narration Generator (${categoryName})\n\nEnter quick notes/assessment for ${studentNick}:\n(e.g., "independent, helpful during clean up, active listener")`);
+                if (!currentContent) return;
+            }
+
+            const generatedProse = generateHumanReportNarration(categoryName, studentNick, currentContent);
+            document.getElementById(targetFieldId).value = generatedProse;
+
+            if (targetFieldId.startsWith('master')) {
+                applyMasterNarrations();
+            } else {
+                syncTextToMirrors();
+            }
+            saveActiveStudentDraft();
+        }
+
+        function generateHumanReportNarration(category, name, notes) {
+            const cleanNotes = notes.toLowerCase();
+
+            const phraseBank = {
+                "Connection to God": [
+                    `${name} joined in morning prayers and quiet reflection time nicely this week. ${name} ${cleanNotes.includes('pray') ? 'participated attentively during prayers' : 'showed good respect during spiritual routines'}.`,
+                    `${name} demonstrated good respect during daily morning reflection. ${name} continues to show kindness and gentle behavior toward others.`
+                ],
+                "Connection to Self": [
+                    `${name} showed good independence during classroom activities this week. ${name} ${notes}, managing daily tasks smoothly and taking care of personal belongings.`,
+                    `${name} is growing more confident in completing work independently. ${name} follows daily routines well and expresses needs clearly.`
+                ],
+                "Connection to Others": [
+                    `${name} played nicely with classmates and shared learning materials willingly. ${name} ${notes}, showing good cooperation and kindness during group activities.`,
+                    `${name} interacted warmly with friends this week. ${name} listened to classmates during circle time and joined in shared play time happily.`
+                ],
+                "Connection to Nature": [
+                    `${name} enjoyed outdoor time and showed care for our school surroundings. ${name} ${notes}, taking simple steps to help keep our play area tidy.`,
+                    `${name} showed good interest in nature activities. ${name} helped care for classroom plants and explored outdoor surroundings respectfully.`
+                ],
+                "Rational": [
+                    `${name} followed instructions well and completed learning activities step-by-step. ${name} ${notes}, showing good steady progress in daily tasks.`,
+                    `${name} engaged well in counting and story time activities. ${name} listened attentively and answered questions during group discussions.`
+                ],
+                "Imaginal": [
+                    `${name} enjoyed creative activities such as drawing, building, and pretend play. ${name} ${notes}, expressing thoughts clearly through hands-on art.`,
+                    `${name} showed good imagination during art and play time. ${name} enjoyed making crafts and sharing creative ideas with classmates.`
+                ],
+                "Physical": [
+                    `${name} stayed active and participated well in outdoor games. ${name} ${notes}, demonstrating good balance and motor movement during playtime.`,
+                    `${name} enjoyed playground and physical movement activities. ${name} practiced fine motor skills like cutting and gripping pencils with good effort.`
+                ],
+                "Parental Support": [
+                    `Parents can support ${name} at home by practicing simple daily routines together and talking about school activities. Encouraging ${name} to pack school items independently will also build helpful self-reliance habits.`,
+                    `To support ${name}'s progress at home, parents are encouraged to read short stories together daily and practice counting household items during play time.`
+                ]
+            };
+
+            const options = phraseBank[category] || [
+                `${name} showed steady progress and good participation this week. ${name} ${notes}, demonstrating a positive learning attitude.`
+            ];
+
+            return options[Math.floor(Math.random() * options.length)];
+        }
+
+        /* AUTO-SAVE & LOAD DRAFT PER STUDENT */
+        function saveActiveStudentDraft() {
             if (!currentTeacherEmail) return;
+            const className = document.getElementById('classSelect').value;
+            const storageKey = getStudentStorageKey(currentTeacherEmail, className, activeStudentIndex);
 
             const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
             const imgData = {};
@@ -999,12 +1359,14 @@
 
             const draft = {
                 teacherEmail: currentTeacherEmail,
+                teacherName: localStorage.getItem('mws_teacher_name') || 'Teacher',
+                studentIndex: activeStudentIndex,
+                studentNick: currentStudent.nick,
                 updatedAt: new Date().toISOString(),
-                classSelect: document.getElementById('classSelect').value,
-                studentSelectIdx: document.getElementById('studentSelect').value,
                 themeInput: document.getElementById('themeInput').value,
                 datePicker: document.getElementById('datePicker').value,
                 weekTerm: document.getElementById('weekTerm').value,
+                paperPhotos: activePaperPhotos,
                 masterGod: document.getElementById('masterGod').value,
                 masterSelf: document.getElementById('masterSelf').value,
                 masterOthers: document.getElementById('masterOthers').value,
@@ -1025,36 +1387,33 @@
             };
 
             try {
-                const storageKey = getStorageKey(currentTeacherEmail);
                 localStorage.setItem(storageKey, JSON.stringify(draft));
-                document.getElementById('syncStatusTag').textContent = '● Draft Synced for ' + currentTeacherEmail;
+                document.getElementById('syncStatusTag').textContent = `Saved (${currentStudent.nick || 'Student'})`;
             } catch (e) {
-                console.warn("Storage limit or write error", e);
+                console.warn("Storage write limit reached", e);
             }
         }
 
-        function loadDraftForEmail(email) {
-            if (!email) return;
-            const storageKey = getStorageKey(email);
+        function loadStudentDraft(email, className, studentIndex) {
+            const storageKey = getStudentStorageKey(email, className, studentIndex);
             const raw = localStorage.getItem(storageKey);
 
             if (!raw) {
-                resetFormToDefault();
-                document.getElementById('syncStatusTag').textContent = '● New Workspace Ready';
+                resetFormFieldsOnly();
+                document.getElementById('syncStatusTag').textContent = `Workspace Ready (${currentStudent.nick})`;
                 return;
             }
 
             try {
                 const draft = JSON.parse(raw);
-                if (draft.classSelect) document.getElementById('classSelect').value = draft.classSelect;
-                onClassChange();
-
-                if (draft.studentSelectIdx) document.getElementById('studentSelect').value = draft.studentSelectIdx;
-                onStudentSelect();
-
                 if (draft.themeInput !== undefined) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
                 if (draft.datePicker !== undefined) { document.getElementById('datePicker').value = draft.datePicker; }
                 if (draft.weekTerm !== undefined) { document.getElementById('weekTerm').value = draft.weekTerm; updateMetaInfo(); }
+
+                if (draft.paperPhotos && Array.isArray(draft.paperPhotos) && draft.paperPhotos.length > 0) {
+                    activePaperPhotos = draft.paperPhotos;
+                    renderPaperBgCollages();
+                }
 
                 const masters = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher'];
                 masters.forEach(m => { if (draft[m] !== undefined) document.getElementById(m).value = draft[m]; });
@@ -1083,18 +1442,13 @@
                 }
 
                 syncTextToMirrors();
-                document.getElementById('syncStatusTag').textContent = '● Loaded Draft (' + email + ')';
+                document.getElementById('syncStatusTag').textContent = `Data Loaded (${currentStudent.nick})`;
             } catch (e) {
-                console.error("Failed to load draft:", e);
+                console.error("Error loading student draft:", e);
             }
         }
 
-        function resetFormToDefault() {
-            document.getElementById('themeInput').value = "ALL ABOUT ME";
-            document.getElementById('datePicker').value = "";
-            document.getElementById('weekTerm').value = "Week 3, Term 1 (July 2026)";
-            updateThemeTitle(); updateMetaInfo();
-
+        function resetFormFieldsOnly() {
             const fields = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher',
                             'txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
             fields.forEach(f => { document.getElementById(f).value = ''; });
@@ -1109,80 +1463,133 @@
             syncTextToMirrors();
         }
 
-        function exportTeacherData() {
-            if (!currentTeacherEmail) return;
-            const storageKey = getStorageKey(currentTeacherEmail);
+        /* EDITABLE CONFIRMATION MODAL & SUBMISSION TO MS MAHRUKH */
+        function openSubmitConfirmModal() {
+            saveActiveStudentDraft();
+            const teacherName = localStorage.getItem('mws_teacher_name') || 'Teacher';
+            const className = document.getElementById('classSelect').value;
+
+            /* DIRECT DIRECTOR PORTAL LINK INCLUDED IN EMAIL BODY */
+            const portalLink = window.location.href;
+
+            const defaultMessage = `Dear Ms. Mahrukh,
+
+I have completed all Weekly Recap narrations for ${className} Class. I have also updated them based on your feedback.
+
+Kindly check the Director Portal to review the class narrations:
+${portalLink}
+
+Please let me know if there is anything else that needs to be revised.
+
+Warm regards,
+${teacherName}`;
+
+            document.getElementById('submitPreviewText').value = defaultMessage;
+            document.getElementById('confirmSubmitModal').style.display = 'flex';
+        }
+
+        function closeConfirmSubmitModal() {
+            document.getElementById('confirmSubmitModal').style.display = 'none';
+        }
+
+        function executeMailtoSubmission() {
+            const editedText = document.getElementById('submitPreviewText').value;
+            const className = document.getElementById('classSelect').value;
+
+            closeConfirmSubmitModal();
+
+            const emailSubject = encodeURIComponent(`Weekly Recap Class Narration Completed - ${className} Class`);
+            const emailBody = encodeURIComponent(editedText);
+
+            window.location.href = `mailto:mahrukh@millennia21.id?subject=${emailSubject}&body=${emailBody}`;
+        }
+
+        /* DIRECTOR PORTAL REVIEW LIST GENERATOR */
+        function renderDirectorReviewList() {
+            const className = document.getElementById('directorClassSelect').value;
+            const list = studentDatabase[className] || [];
+            const container = document.getElementById('directorReviewContainer');
+
+            container.innerHTML = '';
+
+            list.forEach((st, idx) => {
+                const storageKey = getStudentStorageKey(currentTeacherEmail, className, idx);
+                const raw = localStorage.getItem(storageKey);
+                let draft = raw ? JSON.parse(raw) : {};
+
+                const card = document.createElement('div');
+                card.className = 'student-review-card';
+                card.innerHTML = `
+                    <div class="student-review-name">
+                        <span>${idx + 1}. ${st.full} (${st.nick}) - Grade: ${st.grade}</span>
+                        <button class="btn-action btn-submit-director" style="font-size:11px; padding: 4px 10px;" onclick="sendDirectorFeedbackToTeacher('${className}', ${idx}, '${draft.teacherEmail || ''}', '${st.nick}')">Submit Comment to Teacher</button>
+                    </div>
+                    <div class="review-domain-grid">
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Connection to God:</span>
+                            <div class="review-domain-text">${draft.txtGod || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentGod || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentGod', this.value)">
+                        </div>
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Connection to Self:</span>
+                            <div class="review-domain-text">${draft.txtSelf || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentSelf || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentSelf', this.value)">
+                        </div>
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Connection to Others:</span>
+                            <div class="review-domain-text">${draft.txtOthers || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentOthers || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentOthers', this.value)">
+                        </div>
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Connection to Nature:</span>
+                            <div class="review-domain-text">${draft.txtNature || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentNature || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentNature', this.value)">
+                        </div>
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Rational:</span>
+                            <div class="review-domain-text">${draft.txtRational || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentRational || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentRational', this.value)">
+                        </div>
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Imaginal:</span>
+                            <div class="review-domain-text">${draft.txtImaginal || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentImaginal || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentImaginal', this.value)">
+                        </div>
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Physical:</span>
+                            <div class="review-domain-text">${draft.txtPhysical || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentPhysical || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentPhysical', this.value)">
+                        </div>
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">Parental Support:</span>
+                            <div class="review-domain-text">${draft.txtTeacher || 'No narration entered yet.'}</div>
+                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentTeacher || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentTeacher', this.value)">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function saveDirectorComment(className, studentIndex, fieldKey, val) {
+            const storageKey = getStudentStorageKey(currentTeacherEmail, className, studentIndex);
             const raw = localStorage.getItem(storageKey);
-            if (!raw) {
-                alert("Belum ada data draft yang tersimpan untuk email ini.");
-                return;
-            }
-            const blob = new Blob([raw], { type: 'application/json' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `Draft_Recap_${currentTeacherEmail.split('@')[0]}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            let draft = raw ? JSON.parse(raw) : {};
+            draft[fieldKey] = val;
+            localStorage.setItem(storageKey, JSON.stringify(draft));
+        }
+
+        function sendDirectorFeedbackToTeacher(className, studentIndex, teacherEmail, studentNick) {
+            const recipient = teacherEmail || "teacher@millennia21.id";
+            const subject = encodeURIComponent(`Weekly Recap Feedback for ${studentNick} (${className})`);
+            const body = encodeURIComponent(`Dear Teacher,\n\nI have reviewed and added feedback/comments for ${studentNick}'s Weekly Recap narration in class ${className}.\n\nPlease log in to the portal to view the revisions and suggestions.\n\nWarm regards,\nMahrukh Bashir`);
+
+            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
         }
 
         function prepareAndPrint() {
             syncTextToMirrors();
             window.print();
-        }
-
-        function downloadParentHTML() {
-            syncTextToMirrors();
-
-            const studentNick = currentStudent.nick || 'Student';
-            const className = document.getElementById('classSelect').value;
-            const fileName = `Weekly_Recap_${studentNick}_${className.replace(/\s+/g, '_')}.html`;
-
-            const reportClone = document.getElementById('reportWrapper').cloneNode(true);
-
-            const textareas = reportClone.querySelectorAll('textarea');
-            textareas.forEach(ta => {
-                const mirrorDiv = document.createElement('div');
-                mirrorDiv.className = 'print-text-mirror';
-                mirrorDiv.style.display = 'block';
-                mirrorDiv.style.border = '1.5px solid rgba(0,0,0,0.08)';
-                mirrorDiv.style.borderRadius = '12px';
-                mirrorDiv.style.padding = '12px 14px';
-                mirrorDiv.style.fontSize = '14px';
-                mirrorDiv.style.lineHeight = '1.45';
-                mirrorDiv.style.whiteSpace = 'pre-wrap';
-                mirrorDiv.textContent = ta.value;
-                ta.parentNode.replaceChild(mirrorDiv, ta);
-            });
-
-            const parentPageHTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MWS - Weekly Recap Kindergarten (${studentNick})</title>
-    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        ${document.querySelector('style').innerHTML}
-        body { background-color: #F8FAFC; padding: 20px 10px; }
-        .control-panel, .login-wrapper { display: none !important; }
-        #appView { display: block !important; }
-        .report-wrapper { margin: 0 auto; }
-    </style>
-</head>
-<body>
-    ${reportClone.outerHTML}
-</body>
-</html>`;
-
-            const blob = new Blob([parentPageHTML], { type: 'text/html' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
         }
     </script>
 </body>
