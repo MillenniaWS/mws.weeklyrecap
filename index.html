@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Millennia World School - Smart Automated Recap</title>
+    <!-- JUDUL TAB BROWSER SUDAH DIPERBARUI -->
+    <title>MWS - Weekly Recap Kindergarten</title>
+
+    <!-- WEBSITE FAVICON / TAB ICON (LOGO BARU) -->
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx">
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx">
+    
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -31,7 +37,7 @@
             color: var(--text-dark); margin: 0; padding: 25px 12px; min-height: 100vh;
         }
 
-        /* COLLAGE BACKGROUND */
+        /* EVENLY DISTRIBUTED COLLAGE BACKGROUND */
         .bg-collage-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.12;
@@ -47,26 +53,14 @@
 
         /* LOGIN VIEW STYLES */
         .login-wrapper {
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 20px;
         }
 
         .login-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 28px;
-            padding: 45px 40px;
-            max-width: 460px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(122, 28, 28, 0.15);
-            border: 3px solid var(--mws-maroon);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: var(--glass-bg); backdrop-filter: blur(16px);
+            border-radius: 28px; padding: 45px 40px; max-width: 460px; width: 100%;
+            text-align: center; box-shadow: 0 20px 50px rgba(122, 28, 28, 0.15);
+            border: 3px solid var(--mws-maroon); display: flex; flex-direction: column; align-items: center;
         }
 
         .login-logo { max-width: 220px; height: auto; margin-bottom: 20px; }
@@ -94,10 +88,8 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: left; position: relative;
         }
         .btn-modal-close {
-            position: absolute; top: 15px; right: 18px;
-            background: none; border: none; font-size: 24px; font-weight: 700;
-            color: #9CA3AF; cursor: pointer; line-height: 1; padding: 4px 8px;
-            border-radius: 50%; transition: all 0.2s ease;
+            position: absolute; top: 15px; right: 18px; background: none; border: none; font-size: 24px; font-weight: 700;
+            color: #9CA3AF; cursor: pointer; line-height: 1; padding: 4px 8px; border-radius: 50%; transition: all 0.2s ease;
         }
         .btn-modal-close:hover { color: var(--mws-maroon); background: #FFF0F2; }
 
@@ -116,29 +108,45 @@
 
         /* USER PROFILE BADGE */
         .user-profile-badge {
-            display: flex; align-items: center; gap: 10px; background: #FFF0F2;
-            border: 1.5px solid #F8B4B4; padding: 6px 14px; border-radius: 20px;
-            font-size: 13px; font-weight: 700; color: var(--mws-maroon);
+            display: flex; align-items: center; gap: 8px; background: #FFF0F2;
+            border: 1.5px solid #F8B4B4; padding: 5px 12px; border-radius: 20px;
+            font-size: 12.5px; font-weight: 700; color: var(--mws-maroon); white-space: nowrap;
         }
-        .user-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--mws-maroon); }
-        .btn-logout { background: transparent; border: 1px solid var(--mws-maroon); color: var(--mws-maroon); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px; cursor: pointer; margin-left: 6px; }
+        .user-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--mws-maroon); background: white; }
+        .btn-logout { background: transparent; border: 1px solid var(--mws-maroon); color: var(--mws-maroon); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px; cursor: pointer; margin-left: 4px; }
         .btn-logout:hover { background: var(--mws-maroon); color: #FFFFFF; }
 
         /* CONTROL PANEL & RECAP STYLES */
         .control-panel { max-width: 1150px; margin: 0 auto 30px auto; background: var(--glass-bg); backdrop-filter: blur(12px); padding: 22px 28px; border-radius: 22px; box-shadow: 0 10px 30px rgba(122, 28, 28, 0.12); border: 2px solid var(--mws-maroon); }
-        .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #CBD5E0; padding-bottom: 12px; margin-bottom: 18px; }
-        .panel-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 22px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; }
-        .action-btn-group { display: flex; gap: 10px; align-items: center; }
-        .btn-action { color: white; border: none; padding: 10px 20px; border-radius: 12px; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 14px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
+        
+        .panel-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            flex-wrap: wrap; gap: 14px;
+            border-bottom: 2px dashed #CBD5E0; padding-bottom: 14px; margin-bottom: 18px; 
+        }
+        .panel-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 20px; color: var(--mws-maroon); margin: 0 0 3px 0; text-transform: uppercase; line-height: 1.2; }
+        
+        .action-btn-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .btn-action { 
+            color: white; border: none; padding: 8px 14px; border-radius: 12px; 
+            font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 13px; 
+            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: all 0.2s ease; 
+            display: flex; align-items: center; justify-content: center; gap: 5px; 
+            white-space: nowrap;
+        }
         .btn-print { background: var(--mws-maroon); }
         .btn-print:hover { background: var(--mws-maroon-dark); transform: translateY(-2px); }
         .btn-download-html { background: #16A34A; }
         .btn-download-html:hover { background: #15803D; transform: translateY(-2px); }
+        .btn-sync { background: #0284C7; }
+        .btn-sync:hover { background: #0369A1; transform: translateY(-2px); }
 
-        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 18px; }
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 18px; }
         .input-group { display: flex; flex-direction: column; gap: 5px; }
-        .input-group label { font-weight: 700; font-size: 13px; color: var(--mws-maroon); }
-        .input-group select, .input-group input, .input-group textarea { padding: 9px 12px; border-radius: 10px; border: 2px solid #CBD5E0; font-family: inherit; font-size: 13.5px; background: #FFFFFF; outline: none; }
+        .input-group label { font-weight: 700; font-size: 12.5px; color: var(--mws-maroon); }
+        .input-group select, .input-group input, .input-group textarea { padding: 9px 12px; border-radius: 10px; border: 2px solid #CBD5E0; font-family: inherit; font-size: 13px; background: #FFFFFF; outline: none; }
+        .input-group input[type="date"] { cursor: pointer; color: #1F2937; font-weight: 600; }
+        
         .section-subtitle-bar { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 15px; color: var(--mws-maroon); margin: 18px 0 10px 0; text-transform: uppercase; border-bottom: 2px solid var(--mws-maroon); padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
 
         .photo-grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #FFF5F5; padding: 14px; border-radius: 16px; border: 2px dashed var(--mws-maroon); }
@@ -214,6 +222,10 @@
         .teacher-notes-full { width: 100%; display: flex; flex-direction: column; }
         .teacher-notes-full textarea { min-height: 150px; }
 
+        .user-sync-status {
+            font-size: 11px; font-weight: 700; color: #16A34A; background: #EFE; padding: 4px 8px; border-radius: 6px; border: 1px solid #86EFAC; display: inline-flex; align-items: center; gap: 4px;
+        }
+
         @media screen and (max-width: 768px) {
             body { padding: 12px 8px; }
             .control-panel { padding: 16px; border-radius: 16px; }
@@ -271,7 +283,7 @@
     <!-- VIEW 1: GOOGLE LOGIN SCREEN -->
     <div class="login-wrapper" id="loginView">
         <div class="login-card">
-            <img src="https://lh3.googleusercontent.com/d/1FgT-82Q6Vn6g-cm_4ExJKv8lAsIUBMp2" class="login-logo" alt="Millennia Logo">
+            <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="login-logo" alt="Millennia Logo">
             <h1 class="login-title">Teacher Portal Login</h1>
             <p class="login-subtitle">Please sign in using your official Millennia World School Google account to access student weekly recaps.</p>
             
@@ -319,15 +331,22 @@
         
         <div class="control-panel">
             <div class="panel-header">
-                <h2 class="panel-title">Millennia World School - Teacher Portal</h2>
+                <div>
+                    <h2 class="panel-title">Millennia World School - Teacher Portal</h2>
+                    <span class="user-sync-status" id="syncStatusTag">● Draft Synced to Email</span>
+                </div>
                 <div class="action-btn-group">
                     <div class="user-profile-badge">
-                        <img src="https://lh3.googleusercontent.com/d/1FgT-82Q6Vn6g-cm_4ExJKv8lAsIUBMp2" class="user-avatar" id="userAvatar" alt="User">
-                        <span id="userNameDisplay">Teacher</span>
+                        <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="user-avatar" id="userAvatar" alt="User Avatar Baru">
+                        <div style="display: flex; flex-direction: column;">
+                            <span id="userNameDisplay">Teacher</span>
+                            <span id="userEmailDisplay" style="font-size: 10px; opacity: 0.75; font-weight: normal;">email@millennia21.id</span>
+                        </div>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
+                    <button class="btn-action btn-sync" onclick="exportTeacherData()" title="Share/Backup Your Data">Export Data</button>
                     <button class="btn-action btn-download-html" onclick="downloadParentHTML()">Download HTML</button>
-                    <button class="btn-action btn-print" onclick="prepareAndPrint()">Export / Print PDF</button>
+                    <button class="btn-action btn-print" onclick="prepareAndPrint()">Print PDF</button>
                 </div>
             </div>
 
@@ -349,7 +368,11 @@
                     <input type="text" id="themeInput" value="ALL ABOUT ME" oninput="updateThemeTitle(); saveDraft();">
                 </div>
                 <div class="input-group">
-                    <label>Week / Date / Term:</label>
+                    <label>📅 Pick Date (Auto-Calculate):</label>
+                    <input type="date" id="datePicker" onchange="autoCalculateWeekTerm()">
+                </div>
+                <div class="input-group">
+                    <label>Week / Term Output:</label>
                     <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo(); saveDraft();">
                 </div>
             </div>
@@ -358,7 +381,7 @@
                 <span>Master Narration Hub (Auto-Generate {name})</span>
             </div>
             <p style="font-size: 13px; color: #16A34A; margin: 0 0 10px 0; font-weight: bold;">
-                *Tip: Use {name} in the text below. The text will AUTOMATICALLY update and populate the report below as you type!
+                *Tip: Use {name} in the text below. The text will AUTOMATICALLY update and populate the report below for your active account!
             </p>
 
             <div class="master-narrations-grid">
@@ -658,7 +681,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC WITH AUTO-SAVE & SESSION PERSISTENCE -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
         const studentDatabase = {
             "MAUNA KEA": [
@@ -736,8 +759,12 @@
         };
 
         let currentStudent = {};
+        let currentTeacherEmail = "";
 
-        // INITIALIZE ON PAGE LOAD
+        function getStorageKey(email) {
+            return 'mws_recap_draft_' + email.replace(/[^a-zA-Z0-9]/g, '_');
+        }
+
         window.onload = function() {
             const savedName = localStorage.getItem('mws_teacher_name');
             const savedEmail = localStorage.getItem('mws_teacher_email');
@@ -746,15 +773,55 @@
             if (savedName) document.getElementById('inputTeacherName').value = savedName;
             if (savedEmail) document.getElementById('inputTeacherEmail').value = savedEmail;
 
-            if (isLoggedIn === 'true' && savedName) {
-                document.getElementById('userNameDisplay').textContent = savedName;
+            if (isLoggedIn === 'true' && savedEmail) {
+                currentTeacherEmail = savedEmail;
+                document.getElementById('userNameDisplay').textContent = savedName || 'Teacher';
+                document.getElementById('userEmailDisplay').textContent = savedEmail;
                 document.getElementById('loginView').style.display = 'none';
                 document.getElementById('appView').style.display = 'block';
                 
                 onClassChange();
-                loadDraft();
+                loadDraftForEmail(currentTeacherEmail);
             }
         };
+
+        function autoCalculateWeekTerm() {
+            const dateVal = document.getElementById('datePicker').value;
+            if (!dateVal) return;
+
+            const dateParts = dateVal.split('-');
+            const selDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+
+            const year = selDate.getFullYear();
+            const month = selDate.getMonth();
+
+            let term = 1;
+            let termStartMonth = 6; // July
+
+            if (month >= 6 && month <= 8) { // Jul, Aug, Sep
+                term = 1; termStartMonth = 6;
+            } else if (month >= 9 && month <= 11) { // Oct, Nov, Dec
+                term = 2; termStartMonth = 9;
+            } else if (month >= 0 && month <= 2) { // Jan, Feb, Mar
+                term = 3; termStartMonth = 0;
+            } else { // Apr, May, Jun
+                term = 4; termStartMonth = 3;
+            }
+
+            const termStartDate = new Date(year, termStartMonth, 1);
+            const diffDays = Math.floor((selDate - termStartDate) / (1000 * 60 * 60 * 24));
+            const weekNum = Math.floor(diffDays / 7) + 1;
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", 
+                                "July", "August", "September", "October", "November", "December"];
+            const monthName = monthNames[month];
+
+            const formattedString = `Week ${weekNum}, Term ${term} (${monthName} ${year})`;
+
+            document.getElementById('weekTerm').value = formattedString;
+            updateMetaInfo();
+            saveDraft();
+        }
 
         function openGoogleAuthModal() {
             document.getElementById('modalErrorBanner').style.display = 'none';
@@ -797,24 +864,23 @@
                 return;
             }
 
-            // Save Login Credentials
             localStorage.setItem('mws_teacher_name', name);
             localStorage.setItem('mws_teacher_email', email);
             localStorage.setItem('mws_is_logged_in', 'true');
+            currentTeacherEmail = email;
 
             document.getElementById('userNameDisplay').textContent = name;
+            document.getElementById('userEmailDisplay').textContent = email;
             document.getElementById('googleModal').style.display = 'none';
             document.getElementById('loginView').style.display = 'none';
             document.getElementById('appView').style.display = 'block';
 
             onClassChange();
-            loadDraft();
+            loadDraftForEmail(currentTeacherEmail);
         }
 
         function logoutGoogle() {
-            // Keep saved credentials and draft data intact in localStorage!
             localStorage.setItem('mws_is_logged_in', 'false');
-
             document.getElementById('appView').style.display = 'none';
             document.getElementById('loginView').style.display = 'flex';
         }
@@ -919,8 +985,9 @@
             });
         }
 
-        // SAVE ALL DRAFT DATA TO LOCALSTORAGE
         function saveDraft() {
+            if (!currentTeacherEmail) return;
+
             const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
             const imgData = {};
             imgIds.forEach(id => {
@@ -931,9 +998,12 @@
             });
 
             const draft = {
+                teacherEmail: currentTeacherEmail,
+                updatedAt: new Date().toISOString(),
                 classSelect: document.getElementById('classSelect').value,
                 studentSelectIdx: document.getElementById('studentSelect').value,
                 themeInput: document.getElementById('themeInput').value,
+                datePicker: document.getElementById('datePicker').value,
                 weekTerm: document.getElementById('weekTerm').value,
                 masterGod: document.getElementById('masterGod').value,
                 masterSelf: document.getElementById('masterSelf').value,
@@ -955,16 +1025,25 @@
             };
 
             try {
-                localStorage.setItem('mws_recap_draft', JSON.stringify(draft));
+                const storageKey = getStorageKey(currentTeacherEmail);
+                localStorage.setItem(storageKey, JSON.stringify(draft));
+                document.getElementById('syncStatusTag').textContent = '● Draft Synced for ' + currentTeacherEmail;
             } catch (e) {
-                console.warn("Storage quota limit reached for images", e);
+                console.warn("Storage limit or write error", e);
             }
         }
 
-        // LOAD DRAFT DATA FROM LOCALSTORAGE
-        function loadDraft() {
-            const raw = localStorage.getItem('mws_recap_draft');
-            if (!raw) return;
+        function loadDraftForEmail(email) {
+            if (!email) return;
+            const storageKey = getStorageKey(email);
+            const raw = localStorage.getItem(storageKey);
+
+            if (!raw) {
+                resetFormToDefault();
+                document.getElementById('syncStatusTag').textContent = '● New Workspace Ready';
+                return;
+            }
+
             try {
                 const draft = JSON.parse(raw);
                 if (draft.classSelect) document.getElementById('classSelect').value = draft.classSelect;
@@ -973,14 +1052,23 @@
                 if (draft.studentSelectIdx) document.getElementById('studentSelect').value = draft.studentSelectIdx;
                 onStudentSelect();
 
-                if (draft.themeInput) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
-                if (draft.weekTerm) { document.getElementById('weekTerm').value = draft.weekTerm; updateMetaInfo(); }
+                if (draft.themeInput !== undefined) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
+                if (draft.datePicker !== undefined) { document.getElementById('datePicker').value = draft.datePicker; }
+                if (draft.weekTerm !== undefined) { document.getElementById('weekTerm').value = draft.weekTerm; updateMetaInfo(); }
 
                 const masters = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher'];
                 masters.forEach(m => { if (draft[m] !== undefined) document.getElementById(m).value = draft[m]; });
 
                 const texts = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
                 texts.forEach(t => { if (draft[t] !== undefined) document.getElementById(t).value = draft[t]; });
+
+                const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
+                imgIds.forEach(id => {
+                    const img = document.getElementById(id);
+                    const phId = 'ph' + id.replace('img', '');
+                    if (img) { img.src = ''; img.style.display = 'none'; }
+                    if (document.getElementById(phId)) document.getElementById(phId).style.display = 'block';
+                });
 
                 if (draft.images) {
                     Object.keys(draft.images).forEach(id => {
@@ -995,9 +1083,47 @@
                 }
 
                 syncTextToMirrors();
+                document.getElementById('syncStatusTag').textContent = '● Loaded Draft (' + email + ')';
             } catch (e) {
                 console.error("Failed to load draft:", e);
             }
+        }
+
+        function resetFormToDefault() {
+            document.getElementById('themeInput').value = "ALL ABOUT ME";
+            document.getElementById('datePicker').value = "";
+            document.getElementById('weekTerm').value = "Week 3, Term 1 (July 2026)";
+            updateThemeTitle(); updateMetaInfo();
+
+            const fields = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher',
+                            'txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
+            fields.forEach(f => { document.getElementById(f).value = ''; });
+
+            const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
+            imgIds.forEach(id => {
+                const img = document.getElementById(id);
+                const phId = 'ph' + id.replace('img', '');
+                if (img) { img.src = ''; img.style.display = 'none'; }
+                if (document.getElementById(phId)) document.getElementById(phId).style.display = 'block';
+            });
+            syncTextToMirrors();
+        }
+
+        function exportTeacherData() {
+            if (!currentTeacherEmail) return;
+            const storageKey = getStorageKey(currentTeacherEmail);
+            const raw = localStorage.getItem(storageKey);
+            if (!raw) {
+                alert("Belum ada data draft yang tersimpan untuk email ini.");
+                return;
+            }
+            const blob = new Blob([raw], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Draft_Recap_${currentTeacherEmail.split('@')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         function prepareAndPrint() {
@@ -1034,7 +1160,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Millennia World School - Weekly Recap (${studentNick})</title>
+    <title>MWS - Weekly Recap Kindergarten (${studentNick})</title>
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         ${document.querySelector('style').innerHTML}
