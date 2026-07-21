@@ -31,25 +31,18 @@
             color: var(--text-dark); margin: 0; padding: 25px 12px; min-height: 100vh;
         }
 
-        /* EVENLY DISTRIBUTED COLLAGE BACKGROUND (TOP, MIDDLE, BOTTOM, LEFT, RIGHT) */
+        /* COLLAGE BACKGROUND */
         .bg-collage-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.12;
         }
         .collage-photo { position: absolute; border-radius: 20px; object-fit: cover; }
-        /* 1: Top Left */
         .collage-1 { top: -2%; left: -2%; width: 30vw; height: 36vh; transform: rotate(-5deg); }
-        /* 2: Top Center */
         .collage-2 { top: -4%; left: 35%; width: 30vw; height: 35vh; transform: rotate(3deg); }
-        /* 3: Top Right */
         .collage-3 { top: -2%; right: -2%; width: 30vw; height: 36vh; transform: rotate(-4deg); }
-        /* 4: Middle Center */
         .collage-4 { top: 32%; left: 33%; width: 34vw; height: 36vh; transform: rotate(2deg); }
-        /* 5: Bottom Left */
         .collage-5 { bottom: -2%; left: -2%; width: 30vw; height: 36vh; transform: rotate(4deg); }
-        /* 6: Bottom Center */
         .collage-6 { bottom: -4%; left: 35%; width: 30vw; height: 35vh; transform: rotate(-3deg); }
-        /* 7: Bottom Right */
         .collage-7 { bottom: -2%; right: -2%; width: 30vw; height: 36vh; transform: rotate(5deg); }
 
         /* LOGIN VIEW STYLES */
@@ -90,7 +83,7 @@
         .btn-google-login:hover { border-color: var(--mws-maroon); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(122, 28, 28, 0.12); }
         .google-icon-svg { width: 20px; height: 20px; }
 
-        /* GOOGLE AUTHENTICATION POPUP MODAL WITH CLOSE BUTTON */
+        /* GOOGLE AUTHENTICATION POPUP MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
@@ -115,7 +108,6 @@
         .btn-modal-submit { background: var(--mws-maroon); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
         .btn-modal-submit:hover { background: var(--mws-maroon-dark); }
         
-        /* ERROR MESSAGE CONTAINER */
         .modal-error-banner {
             display: none; background: #FFF1F2; border: 1px solid #FDA4AF;
             color: #E11D48; font-size: 12.5px; font-weight: 700; padding: 8px 12px;
@@ -295,10 +287,9 @@
         </div>
     </div>
 
-    <!-- INTERACTIVE GOOGLE AUTHENTICATION MODAL (WITH EXIT X BUTTON) -->
+    <!-- INTERACTIVE GOOGLE AUTHENTICATION MODAL -->
     <div class="modal-overlay" id="googleModal">
         <div class="modal-google-box">
-            <!-- EXIT BUTTON -->
             <button class="btn-modal-close" onclick="closeGoogleAuthModal()" title="Exit">&times;</button>
 
             <div class="modal-google-header">
@@ -311,7 +302,6 @@
                 <h3 class="modal-google-title">Google Account Sign In</h3>
             </div>
 
-            <!-- Validation Error Banner -->
             <div id="modalErrorBanner" class="modal-error-banner"></div>
 
             <label style="font-size: 12px; font-weight: 700; color: #4B5563;">Name of Teacher:</label>
@@ -344,7 +334,7 @@
             <div class="input-grid">
                 <div class="input-group">
                     <label>Select Class:</label>
-                    <select id="classSelect" onchange="onClassChange()">
+                    <select id="classSelect" onchange="onClassChange(); saveDraft();">
                         <option value="MAUNA KEA">MAUNA KEA Class</option>
                         <option value="SNOWDON">SNOWDON Class</option>
                         <option value="DJEBEL CHELIA">DJEBEL CHELIA Class</option>
@@ -352,15 +342,15 @@
                 </div>
                 <div class="input-group">
                     <label>Select Student:</label>
-                    <select id="studentSelect" onchange="onStudentSelect()"></select>
+                    <select id="studentSelect" onchange="onStudentSelect(); saveDraft();"></select>
                 </div>
                 <div class="input-group">
                     <label>Theme Title:</label>
-                    <input type="text" id="themeInput" value="ALL ABOUT ME" oninput="updateThemeTitle()">
+                    <input type="text" id="themeInput" value="ALL ABOUT ME" oninput="updateThemeTitle(); saveDraft();">
                 </div>
                 <div class="input-group">
                     <label>Week / Date / Term:</label>
-                    <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo()">
+                    <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo(); saveDraft();">
                 </div>
             </div>
 
@@ -374,35 +364,35 @@
             <div class="master-narrations-grid">
                 <div class="master-item">
                     <label>Connection to God:</label>
-                    <textarea id="masterGod" oninput="applyMasterNarrations()" placeholder="{name} actively participated in morning prayers..."></textarea>
+                    <textarea id="masterGod" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} actively participated in morning prayers..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Connection to Self:</label>
-                    <textarea id="masterSelf" oninput="applyMasterNarrations()" placeholder="{name} demonstrated independence..."></textarea>
+                    <textarea id="masterSelf" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} demonstrated independence..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Connection to Others:</label>
-                    <textarea id="masterOthers" oninput="applyMasterNarrations()" placeholder="{name} interacted warmly with peers..."></textarea>
+                    <textarea id="masterOthers" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} interacted warmly with peers..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Connection to Nature:</label>
-                    <textarea id="masterNature" oninput="applyMasterNarrations()" placeholder="{name} cared for plants outdoors..."></textarea>
+                    <textarea id="masterNature" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} cared for plants outdoors..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Rational (Resional):</label>
-                    <textarea id="masterRational" oninput="applyMasterNarrations()" placeholder="{name} demonstrated logic and reasoning in class..."></textarea>
+                    <textarea id="masterRational" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} demonstrated logic and reasoning in class..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Imaginal:</label>
-                    <textarea id="masterImaginal" oninput="applyMasterNarrations()" placeholder="{name} showed great creativity and imagination..."></textarea>
+                    <textarea id="masterImaginal" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} showed great creativity and imagination..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Physical:</label>
-                    <textarea id="masterPhysical" oninput="applyMasterNarrations()" placeholder="{name} engaged actively in outdoor physical games..."></textarea>
+                    <textarea id="masterPhysical" oninput="applyMasterNarrations(); saveDraft();" placeholder="{name} engaged actively in outdoor physical games..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Teacher's Notes:</label>
-                    <textarea id="masterTeacher" oninput="applyMasterNarrations()" placeholder="Great learning progress this week, {name}! Keep up the amazing work!"></textarea>
+                    <textarea id="masterTeacher" oninput="applyMasterNarrations(); saveDraft();" placeholder="Great learning progress this week, {name}! Keep up the amazing work!"></textarea>
                 </div>
             </div>
 
@@ -545,7 +535,7 @@
                                 <img id="imgGod" style="display:none;" alt="God Photo">
                             </div>
                             <div class="narrative-box-right">
-                                <textarea id="txtGod" oninput="syncTextToMirrors()" placeholder="Morning prayers, gratitude, moral values..."></textarea>
+                                <textarea id="txtGod" oninput="syncTextToMirrors(); saveDraft();" placeholder="Morning prayers, gratitude, moral values..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtGod"></div>
                             </div>
                         </div>
@@ -560,7 +550,7 @@
                                 <img id="imgSelf" style="display:none;" alt="Self Photo">
                             </div>
                             <div class="narrative-box-right">
-                                <textarea id="txtSelf" oninput="syncTextToMirrors()" placeholder="Independence, self-awareness..."></textarea>
+                                <textarea id="txtSelf" oninput="syncTextToMirrors(); saveDraft();" placeholder="Independence, self-awareness..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtSelf"></div>
                             </div>
                         </div>
@@ -581,7 +571,7 @@
                                 <img id="imgOthers" style="display:none;" alt="Others Photo">
                             </div>
                             <div class="narrative-box-right">
-                                <textarea id="txtOthers" oninput="syncTextToMirrors()" placeholder="Social interactions, sharing..."></textarea>
+                                <textarea id="txtOthers" oninput="syncTextToMirrors(); saveDraft();" placeholder="Social interactions, sharing..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtOthers"></div>
                             </div>
                         </div>
@@ -596,7 +586,7 @@
                                 <img id="imgNature" style="display:none;" alt="Nature Photo">
                             </div>
                             <div class="narrative-box-right">
-                                <textarea id="txtNature" oninput="syncTextToMirrors()" placeholder="Caring for plants, environmental..."></textarea>
+                                <textarea id="txtNature" oninput="syncTextToMirrors(); saveDraft();" placeholder="Caring for plants, environmental..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtNature"></div>
                             </div>
                         </div>
@@ -613,7 +603,7 @@
                                 <img id="imgRational" style="display:none;" alt="Rational Photo">
                             </div>
                             <div class="narrative-box-right">
-                                <textarea id="txtRational" oninput="syncTextToMirrors()" placeholder="Logical thinking, problem solving, literacy & numeracy..."></textarea>
+                                <textarea id="txtRational" oninput="syncTextToMirrors(); saveDraft();" placeholder="Logical thinking, problem solving, literacy & numeracy..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtRational"></div>
                             </div>
                         </div>
@@ -634,7 +624,7 @@
                                 <img id="imgImaginal" style="display:none;" alt="Imaginal Photo">
                             </div>
                             <div class="narrative-box-right">
-                                <textarea id="txtImaginal" oninput="syncTextToMirrors()" placeholder="Creative expression, art, music, imaginative play..."></textarea>
+                                <textarea id="txtImaginal" oninput="syncTextToMirrors(); saveDraft();" placeholder="Creative expression, art, music, imaginative play..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtImaginal"></div>
                             </div>
                         </div>
@@ -649,7 +639,7 @@
                                 <img id="imgPhysical" style="display:none;" alt="Physical Photo">
                             </div>
                             <div class="narrative-box-right">
-                                <textarea id="txtPhysical" oninput="syncTextToMirrors()" placeholder="Gross motor, fine motor skills, outdoor activities..."></textarea>
+                                <textarea id="txtPhysical" oninput="syncTextToMirrors(); saveDraft();" placeholder="Gross motor, fine motor skills, outdoor activities..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtPhysical"></div>
                             </div>
                         </div>
@@ -659,7 +649,7 @@
                         <div class="card-washi"></div>
                         <div class="card-badge-header">Teacher's Notes</div>
                         <div class="teacher-notes-full">
-                            <textarea id="txtTeacher" oninput="syncTextToMirrors()" placeholder="Overall notes, milestones, and encouragement for the week..."></textarea>
+                            <textarea id="txtTeacher" oninput="syncTextToMirrors(); saveDraft();" placeholder="Overall notes, milestones, and encouragement for the week..."></textarea>
                             <div class="print-text-mirror" id="mirrorTxtTeacher"></div>
                         </div>
                     </div>
@@ -668,72 +658,8 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC WITH AUTO-SAVE & SESSION PERSISTENCE -->
     <script>
-        function openGoogleAuthModal() {
-            document.getElementById('modalErrorBanner').style.display = 'none';
-            document.getElementById('googleModal').style.display = 'flex';
-        }
-
-        function closeGoogleAuthModal() {
-            document.getElementById('modalErrorBanner').style.display = 'none';
-            document.getElementById('googleModal').style.display = 'none';
-        }
-
-        function confirmGoogleLogin() {
-            const nameInput = document.getElementById('inputTeacherName');
-            const emailInput = document.getElementById('inputTeacherEmail');
-            const errorBanner = document.getElementById('modalErrorBanner');
-
-            const name = nameInput.value.trim();
-            const email = emailInput.value.trim().toLowerCase();
-
-            // Clear previous errors
-            errorBanner.style.display = 'none';
-
-            // Validation 1: Blank Name
-            if (!name) {
-                errorBanner.textContent = "Please enter name of teacher.";
-                errorBanner.style.display = 'block';
-                nameInput.focus();
-                return;
-            }
-
-            // Validation 2: Blank Email
-            if (!email) {
-                errorBanner.textContent = "Please enter your school email address.";
-                errorBanner.style.display = 'block';
-                emailInput.focus();
-                return;
-            }
-
-            // Validation 3: Must end with @millennia21.id
-            if (!email.endsWith('@millennia21.id')) {
-                errorBanner.textContent = "Access Denied: You must use an official @millennia21.id email address.";
-                errorBanner.style.display = 'block';
-                emailInput.focus();
-                return;
-            }
-
-            // Success: Unlock App View
-            document.getElementById('userNameDisplay').textContent = name;
-            document.getElementById('googleModal').style.display = 'none';
-            document.getElementById('loginView').style.display = 'none';
-            document.getElementById('appView').style.display = 'block';
-
-            onClassChange();
-        }
-
-        function logoutGoogle() {
-            // Reset modal inputs and error state
-            document.getElementById('inputTeacherName').value = '';
-            document.getElementById('inputTeacherEmail').value = '';
-            document.getElementById('modalErrorBanner').style.display = 'none';
-
-            document.getElementById('appView').style.display = 'none';
-            document.getElementById('loginView').style.display = 'flex';
-        }
-
         const studentDatabase = {
             "MAUNA KEA": [
                 { full: "Aelianna Madeena Mecca", grade: "Pre K", nick: "Anna" },
@@ -811,6 +737,88 @@
 
         let currentStudent = {};
 
+        // INITIALIZE ON PAGE LOAD
+        window.onload = function() {
+            const savedName = localStorage.getItem('mws_teacher_name');
+            const savedEmail = localStorage.getItem('mws_teacher_email');
+            const isLoggedIn = localStorage.getItem('mws_is_logged_in');
+
+            if (savedName) document.getElementById('inputTeacherName').value = savedName;
+            if (savedEmail) document.getElementById('inputTeacherEmail').value = savedEmail;
+
+            if (isLoggedIn === 'true' && savedName) {
+                document.getElementById('userNameDisplay').textContent = savedName;
+                document.getElementById('loginView').style.display = 'none';
+                document.getElementById('appView').style.display = 'block';
+                
+                onClassChange();
+                loadDraft();
+            }
+        };
+
+        function openGoogleAuthModal() {
+            document.getElementById('modalErrorBanner').style.display = 'none';
+            document.getElementById('googleModal').style.display = 'flex';
+        }
+
+        function closeGoogleAuthModal() {
+            document.getElementById('modalErrorBanner').style.display = 'none';
+            document.getElementById('googleModal').style.display = 'none';
+        }
+
+        function confirmGoogleLogin() {
+            const nameInput = document.getElementById('inputTeacherName');
+            const emailInput = document.getElementById('inputTeacherEmail');
+            const errorBanner = document.getElementById('modalErrorBanner');
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim().toLowerCase();
+
+            errorBanner.style.display = 'none';
+
+            if (!name) {
+                errorBanner.textContent = "Please enter name of teacher.";
+                errorBanner.style.display = 'block';
+                nameInput.focus();
+                return;
+            }
+
+            if (!email) {
+                errorBanner.textContent = "Please enter your school email address.";
+                errorBanner.style.display = 'block';
+                emailInput.focus();
+                return;
+            }
+
+            if (!email.endsWith('@millennia21.id')) {
+                errorBanner.textContent = "Access Denied: You must use an official @millennia21.id email address.";
+                errorBanner.style.display = 'block';
+                emailInput.focus();
+                return;
+            }
+
+            // Save Login Credentials
+            localStorage.setItem('mws_teacher_name', name);
+            localStorage.setItem('mws_teacher_email', email);
+            localStorage.setItem('mws_is_logged_in', 'true');
+
+            document.getElementById('userNameDisplay').textContent = name;
+            document.getElementById('googleModal').style.display = 'none';
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('appView').style.display = 'block';
+
+            onClassChange();
+            loadDraft();
+        }
+
+        function logoutGoogle() {
+            // Keep saved credentials and draft data intact in localStorage!
+            localStorage.setItem('mws_is_logged_in', 'false');
+
+            document.getElementById('appView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'flex';
+        }
+
         function onClassChange() {
             const classSelect = document.getElementById('classSelect');
             const studentSelect = document.getElementById('studentSelect');
@@ -862,6 +870,7 @@
                 reader.onload = function(e) {
                     img.src = e.target.result; img.style.display = 'block';
                     document.getElementById(phId).style.display = 'none';
+                    saveDraft();
                 }
                 reader.readAsDataURL(event.target.files[0]);
             }
@@ -876,6 +885,7 @@
             const driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
             if (driveMatch && driveMatch[1]) directUrl = `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
             img.src = directUrl; img.style.display = 'block'; document.getElementById(phId).style.display = 'none';
+            saveDraft();
         }
 
         function applyMasterNarrations() {
@@ -907,6 +917,87 @@
                 const mirror = document.getElementById('mirror' + id.charAt(0).toUpperCase() + id.slice(1));
                 if (mirror) mirror.textContent = val;
             });
+        }
+
+        // SAVE ALL DRAFT DATA TO LOCALSTORAGE
+        function saveDraft() {
+            const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
+            const imgData = {};
+            imgIds.forEach(id => {
+                const img = document.getElementById(id);
+                if (img && img.style.display !== 'none' && img.src) {
+                    imgData[id] = img.src;
+                }
+            });
+
+            const draft = {
+                classSelect: document.getElementById('classSelect').value,
+                studentSelectIdx: document.getElementById('studentSelect').value,
+                themeInput: document.getElementById('themeInput').value,
+                weekTerm: document.getElementById('weekTerm').value,
+                masterGod: document.getElementById('masterGod').value,
+                masterSelf: document.getElementById('masterSelf').value,
+                masterOthers: document.getElementById('masterOthers').value,
+                masterNature: document.getElementById('masterNature').value,
+                masterRational: document.getElementById('masterRational').value,
+                masterImaginal: document.getElementById('masterImaginal').value,
+                masterPhysical: document.getElementById('masterPhysical').value,
+                masterTeacher: document.getElementById('masterTeacher').value,
+                txtGod: document.getElementById('txtGod').value,
+                txtSelf: document.getElementById('txtSelf').value,
+                txtOthers: document.getElementById('txtOthers').value,
+                txtNature: document.getElementById('txtNature').value,
+                txtRational: document.getElementById('txtRational').value,
+                txtImaginal: document.getElementById('txtImaginal').value,
+                txtPhysical: document.getElementById('txtPhysical').value,
+                txtTeacher: document.getElementById('txtTeacher').value,
+                images: imgData
+            };
+
+            try {
+                localStorage.setItem('mws_recap_draft', JSON.stringify(draft));
+            } catch (e) {
+                console.warn("Storage quota limit reached for images", e);
+            }
+        }
+
+        // LOAD DRAFT DATA FROM LOCALSTORAGE
+        function loadDraft() {
+            const raw = localStorage.getItem('mws_recap_draft');
+            if (!raw) return;
+            try {
+                const draft = JSON.parse(raw);
+                if (draft.classSelect) document.getElementById('classSelect').value = draft.classSelect;
+                onClassChange();
+
+                if (draft.studentSelectIdx) document.getElementById('studentSelect').value = draft.studentSelectIdx;
+                onStudentSelect();
+
+                if (draft.themeInput) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
+                if (draft.weekTerm) { document.getElementById('weekTerm').value = draft.weekTerm; updateMetaInfo(); }
+
+                const masters = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher'];
+                masters.forEach(m => { if (draft[m] !== undefined) document.getElementById(m).value = draft[m]; });
+
+                const texts = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
+                texts.forEach(t => { if (draft[t] !== undefined) document.getElementById(t).value = draft[t]; });
+
+                if (draft.images) {
+                    Object.keys(draft.images).forEach(id => {
+                        const img = document.getElementById(id);
+                        const phId = 'ph' + id.replace('img', '');
+                        if (img && draft.images[id]) {
+                            img.src = draft.images[id];
+                            img.style.display = 'block';
+                            if (document.getElementById(phId)) document.getElementById(phId).style.display = 'none';
+                        }
+                    });
+                }
+
+                syncTextToMirrors();
+            } catch (e) {
+                console.error("Failed to load draft:", e);
+            }
         }
 
         function prepareAndPrint() {
