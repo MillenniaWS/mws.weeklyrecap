@@ -276,7 +276,7 @@
             font-size: 11px; font-weight: 700; color: #16A34A; background: #EFE; padding: 4px 8px; border-radius: 6px; border: 1px solid #86EFAC; display: inline-flex; align-items: center; gap: 4px;
         }
 
-        /* DIRECTOR PORTAL VIEW */
+        /* DIRECTOR PORTAL & GOOGLE DOCS STYLE COMMENTING */
         .director-portal-wrapper {
             max-width: 1200px; margin: 0 auto; background: var(--glass-bg); backdrop-filter: blur(16px);
             border-radius: 26px; padding: 30px; border: 3.5px solid var(--mws-maroon); box-shadow: 0 20px 50px rgba(0,0,0,0.2);
@@ -286,11 +286,29 @@
         .student-review-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 18px; padding: 22px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
         .student-review-name { font-size: 18px; font-weight: 700; color: var(--mws-maroon); border-bottom: 1.5px dashed #CBD5E0; padding-bottom: 8px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
         .review-domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
-        .review-domain-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .review-domain-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; position: relative; }
         .review-domain-label { font-size: 11.5px; font-weight: 700; color: #475569; text-transform: uppercase; }
-        .review-domain-text { font-size: 13.5px; color: #1E293B; background: #FFFFFF; padding: 10px; border-radius: 8px; min-height: 60px; border: 1px solid #CBD5E0; white-space: pre-wrap; line-height: 1.4; }
-        .review-comment-input { font-size: 12.5px; padding: 8px 10px; border: 1.5px solid #FCD34D; background: #FEFCE8; border-radius: 8px; outline: none; width: 100%; color: #92400E; font-weight: 600; }
-        .review-comment-input:focus { border-color: var(--mws-maroon); }
+        
+        .review-selectable-text {
+            font-size: 13.5px; color: #1E293B; background: #FFFFFF; padding: 12px; border-radius: 8px;
+            min-height: 80px; border: 1px solid #CBD5E0; white-space: pre-wrap; line-height: 1.5; cursor: text;
+        }
+
+        /* INLINE HIGHLIGHT & FLOATING COMMENT BUTTON */
+        .floating-comment-btn {
+            position: absolute; display: none; z-index: 100; background: #7A1C1C; color: #FFFFFF;
+            border: none; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.15s ease;
+        }
+        .floating-comment-btn:hover { transform: scale(1.08); background: #501010; }
+
+        .doc-comment-mark {
+            background-color: #FEF08A; border-bottom: 2px solid #CA8A04; padding: 2px 4px; border-radius: 4px; position: relative;
+        }
+        .doc-comment-bubble {
+            display: block; background: #FEFCE8; border: 1.5px solid #FDE047; color: #854D0E;
+            font-size: 11.5px; font-weight: 600; padding: 6px 10px; border-radius: 8px; margin-top: 6px;
+        }
 
         /* EDITABLE PREVIEW TEXTAREA IN CONFIRMATION MODAL */
         .editable-preview-textarea {
@@ -326,7 +344,7 @@
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; }
             @page { size: A4 portrait; margin: 8mm; }
             body { background: white !important; padding: 0 !important; }
-            .bg-collage-container, .control-panel, .login-wrapper, .btn-ai-gen, .director-portal-wrapper, .modal-overlay { display: none !important; }
+            .bg-collage-container, .control-panel, .login-wrapper, .btn-ai-gen, .director-portal-wrapper, .modal-overlay, .floating-comment-btn { display: none !important; }
             #teacherAppView { display: block !important; }
             .report-wrapper { margin: 0 !important; padding: 0 !important; gap: 0 !important; max-width: 100% !important; }
             .page-sheet { box-shadow: none !important; border: 5px solid var(--mws-maroon) !important; border-radius: 16px !important; padding: 20px 24px !important; margin-bottom: 0 !important; background-color: #FFFFFF !important; }
@@ -342,6 +360,9 @@
     </style>
 </head>
 <body>
+
+    <!-- FLOATING COMMENT TRIGGER BUTTON FOR GOOGLE DOCS STYLE COMMENTING -->
+    <button id="floatingCommentBtn" class="floating-comment-btn" onclick="addInlineComment()">💬 Add Comment</button>
 
     <!-- DENSE SCATTERED WEBPAGE BACKGROUND COLLAGE -->
     <div class="bg-collage-container">
@@ -411,19 +432,19 @@
         </div>
     </div>
 
-    <!-- SUBMISSION PREVIEW CONFIRMATION MODAL (EDITABLE TEXTAREA) -->
+    <!-- SUBMISSION PREVIEW CONFIRMATION MODAL -->
     <div class="modal-overlay" id="confirmSubmitModal">
         <div class="modal-google-box">
             <button class="btn-modal-close" onclick="closeConfirmSubmitModal()" title="Exit">&times;</button>
-            <h3 class="modal-google-title" style="color: var(--mws-maroon); margin-bottom: 8px;">Confirm Class Submission to Ms. Mahrukh</h3>
+            <h3 class="modal-google-title" style="color: var(--mws-maroon); margin-bottom: 8px;">Confirm Submission to Ms. Mahrukh</h3>
             <p style="font-size: 13px; color: #475569; margin-top: 0; margin-bottom: 5px;">
-                You are about to notify Ms. Mahrukh that narrations for all students in this class have been completed. You may edit the email text below before sending:
+                You are about to notify Ms. Mahrukh via Gmail Web that narrations for all students in this class have been completed. You may edit the email text below before launching Gmail:
             </p>
 
             <textarea id="submitPreviewText" class="editable-preview-textarea"></textarea>
 
             <div style="display: flex; gap: 10px;">
-                <button class="btn-modal-submit" style="background: #16A34A;" onclick="executeMailtoSubmission()">Yes, Send Email Notification</button>
+                <button class="btn-modal-submit" style="background: #16A34A;" onclick="executeGmailSubmission()">Open Gmail Web & Send</button>
                 <button class="btn-modal-submit" style="background: #64748B;" onclick="closeConfirmSubmitModal()">Cancel</button>
             </div>
         </div>
@@ -436,7 +457,7 @@
             <div class="panel-header">
                 <div>
                     <h2 class="panel-title">Millennia World School - Teacher Portal</h2>
-                    <span class="user-sync-status" id="syncStatusTag">Draft Synced to Email</span>
+                    <span class="user-sync-status" id="syncStatusTag">Draft Synced</span>
                 </div>
                 <div class="action-btn-group">
                     <div class="user-profile-badge">
@@ -836,20 +857,24 @@
         </div>
     </div>
 
-    <!-- VIEW 3: DIRECTOR EXCLUSIVE PORTAL -->
+    <!-- VIEW 3: DIRECTOR EXCLUSIVE PORTAL (SINGLE GLOBAL SUBMIT BUTTON) -->
     <div id="directorAppView" style="display: none;">
         <div class="director-portal-wrapper">
             <div class="director-header">
                 <div>
                     <h2 class="director-title">Director Portal</h2>
-                    <span style="font-size: 13px; color: #64748B;">Class Narration Review & Feedback Workspace</span>
+                    <span style="font-size: 13px; color: #64748B;">Highlight text ala Google Docs to add inline feedback notes</span>
                 </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                     <div class="user-profile-badge">
                         <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="user-avatar" alt="User Avatar">
                         <span id="directorNameDisplay">Mahrukh Bashir</span>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
+                    <!-- SINGLE GLOBAL BULK SUBMIT BUTTON FOR MS MAHRUKH -->
+                    <button class="btn-action btn-submit-director" onclick="sendAllDirectorCommentsToTeacher()">
+                        Send All Class Comments to Teacher via Gmail
+                    </button>
                 </div>
             </div>
 
@@ -870,7 +895,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        /* AUTHORIZED TEACHERS & PRINCIPAL MAP (EXACT PAIRING REQUIRED) */
+        /* AUTHORIZED TEACHERS & PRINCIPAL MAP */
         const allowedTeachersList = {
             "latifah@millennia21.id": "latifah",
             "nanda@millennia21.id": "nanda",
@@ -979,10 +1004,19 @@
         let activeStudentIndex = 0;
         let activePaperPhotos = [...defaultPaperPhotos];
         let activePortalMode = "TEACHER";
+        let activeSelectedTarget = null;
 
+        /* ISOLATED STORAGE KEY PER EMAIL ADDRESS */
         function getStudentStorageKey(email, className, studentIndex) {
+            const cleanEmail = (email || 'shared').toLowerCase().trim().replace(/[^a-z0-9]/g, '_');
             const cleanClass = className.replace(/\s+/g, '_');
-            return `mws_recap_v10_${cleanClass}_std${studentIndex}`;
+            return `mws_recap_v12_${cleanEmail}_${cleanClass}_std${studentIndex}`;
+        }
+
+        /* GMAIL WEB DIRECT LAUNCHER */
+        function openGmailWebCompose(recipientEmail, subjectText, bodyText) {
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
+            window.open(gmailUrl, '_blank');
         }
 
         window.onload = function() {
@@ -1009,6 +1043,8 @@
                     onClassChange();
                 }
             }
+
+            document.addEventListener('selectionchange', handleTextSelection);
         };
 
         function openAuthModal(role) {
@@ -1050,10 +1086,9 @@
                 return;
             }
 
-            /* STRICT PAIRING VALIDATION LOGIC */
             if (activePortalMode === 'DIRECTOR') {
                 if (email !== 'mahrukh@millennia21.id' || name.toLowerCase() !== 'mahrukh bashir') {
-                    errorBanner.textContent = "Access Denied: Name and email combination does not match Director records (Mahrukh Bashir & mahrukh@millennia21.id required).";
+                    errorBanner.textContent = "Access Denied: Combination must match Director records (Mahrukh Bashir & mahrukh@millennia21.id).";
                     errorBanner.style.display = 'block';
                     return;
                 }
@@ -1071,6 +1106,9 @@
             localStorage.setItem('mws_user_role', activePortalMode);
             localStorage.setItem('mws_is_logged_in', 'true');
             currentTeacherEmail = email;
+
+            /* CLEAR FORM BEFORE LOADING SPECIFIC USER DATA */
+            resetFormFieldsOnly();
 
             document.getElementById('googleModal').style.display = 'none';
             document.getElementById('loginView').style.display = 'none';
@@ -1090,6 +1128,14 @@
 
         function logoutGoogle() {
             localStorage.setItem('mws_is_logged_in', 'false');
+            localStorage.removeItem('mws_teacher_name');
+            localStorage.removeItem('mws_teacher_email');
+            localStorage.removeItem('mws_user_role');
+            currentTeacherEmail = "";
+
+            /* CLEAR UI SCREEN MEMORY ON LOGOUT */
+            resetFormFieldsOnly();
+
             document.getElementById('teacherAppView').style.display = 'none';
             document.getElementById('directorAppView').style.display = 'none';
             document.getElementById('loginView').style.display = 'flex';
@@ -1170,8 +1216,6 @@
         }
 
         function onClassChange() {
-            saveActiveStudentDraft();
-
             const classSelect = document.getElementById('classSelect');
             const studentSelect = document.getElementById('studentSelect');
             const selectedClass = classSelect.value;
@@ -1189,8 +1233,6 @@
         }
 
         function onStudentSelect() {
-            saveActiveStudentDraft();
-
             const selectedClass = document.getElementById('classSelect').value;
             const idx = document.getElementById('studentSelect').value;
             activeStudentIndex = idx;
@@ -1276,7 +1318,7 @@
             });
         }
 
-        /* INSTANT AI GENERATOR (EASY FOR PARENTS, NON-SUPERLATIVE) */
+        /* INSTANT AI GENERATOR */
         function triggerAIGenerate(targetFieldId, categoryName) {
             const studentNick = currentStudent.nick || 'the student';
             let currentContent = document.getElementById(targetFieldId).value.trim();
@@ -1342,7 +1384,7 @@
             return options[Math.floor(Math.random() * options.length)];
         }
 
-        /* AUTO-SAVE & LOAD DRAFT PER STUDENT */
+        /* AUTO-SAVE & LOAD DRAFT PER STUDENT & PER TEACHER EMAIL */
         function saveActiveStudentDraft() {
             if (!currentTeacherEmail) return;
             const className = document.getElementById('classSelect').value;
@@ -1451,7 +1493,10 @@
         function resetFormFieldsOnly() {
             const fields = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher',
                             'txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
-            fields.forEach(f => { document.getElementById(f).value = ''; });
+            fields.forEach(f => { 
+                const el = document.getElementById(f);
+                if (el) el.value = '';
+            });
 
             const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
             imgIds.forEach(id => {
@@ -1463,13 +1508,12 @@
             syncTextToMirrors();
         }
 
-        /* EDITABLE CONFIRMATION MODAL & SUBMISSION TO MS MAHRUKH */
+        /* EDITABLE CONFIRMATION MODAL & SUBMISSION TO MS MAHRUKH (VIA GMAIL.COM) */
         function openSubmitConfirmModal() {
             saveActiveStudentDraft();
             const teacherName = localStorage.getItem('mws_teacher_name') || 'Teacher';
             const className = document.getElementById('classSelect').value;
 
-            /* DIRECT DIRECTOR PORTAL LINK INCLUDED IN EMAIL BODY */
             const portalLink = window.location.href;
 
             const defaultMessage = `Dear Ms. Mahrukh,
@@ -1492,16 +1536,85 @@ ${teacherName}`;
             document.getElementById('confirmSubmitModal').style.display = 'none';
         }
 
-        function executeMailtoSubmission() {
+        function executeGmailSubmission() {
             const editedText = document.getElementById('submitPreviewText').value;
             const className = document.getElementById('classSelect').value;
 
             closeConfirmSubmitModal();
 
-            const emailSubject = encodeURIComponent(`Weekly Recap Class Narration Completed - ${className} Class`);
-            const emailBody = encodeURIComponent(editedText);
+            const emailSubject = `Weekly Recap Class Narration Completed - ${className} Class`;
+            openGmailWebCompose("mahrukh@millennia21.id", emailSubject, editedText);
+        }
 
-            window.location.href = `mailto:mahrukh@millennia21.id?subject=${emailSubject}&body=${emailBody}`;
+        /* GOOGLE DOCS STYLE INLINE TEXT HIGHLIGHT COMMENTING */
+        function handleTextSelection() {
+            if (activePortalMode !== 'DIRECTOR') return;
+
+            const sel = window.getSelection();
+            const btn = document.getElementById('floatingCommentBtn');
+
+            if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+                btn.style.display = 'none';
+                return;
+            }
+
+            const range = sel.getRangeAt(0);
+            let container = range.commonAncestorContainer;
+            if (container.nodeType === 3) container = container.parentNode;
+
+            const targetBox = container.closest('.review-selectable-text');
+            if (targetBox) {
+                activeSelectedTarget = { range: range, box: targetBox };
+                const rect = range.getBoundingClientRect();
+                btn.style.top = `${window.scrollY + rect.top - 38}px`;
+                btn.style.left = `${window.scrollX + rect.left}px`;
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+
+        function addInlineComment() {
+            if (!activeSelectedTarget) return;
+
+            const commentNote = prompt("Enter your comment/revision note for this highlighted phrase:");
+            if (!commentNote) return;
+
+            const range = activeSelectedTarget.range;
+            const selectedText = range.toString();
+
+            const markNode = document.createElement('mark');
+            markNode.className = 'doc-comment-mark';
+            markNode.title = `Ms. Mahrukh Comment: ${commentNote}`;
+            markNode.textContent = selectedText;
+
+            const bubbleNode = document.createElement('span');
+            bubbleNode.className = 'doc-comment-bubble';
+            bubbleNode.textContent = `💬 Ms. Mahrukh: "${commentNote}"`;
+
+            range.deleteContents();
+            range.insertNode(bubbleNode);
+            range.insertNode(markNode);
+
+            document.getElementById('floatingCommentBtn').style.display = 'none';
+            window.getSelection().removeAllRanges();
+
+            /* SAVE UPDATED HTML CONTENT TO LOCALSTORAGE */
+            const box = activeSelectedTarget.box;
+            const className = box.dataset.class;
+            const studentIdx = box.dataset.studentIdx;
+            const domainKey = box.dataset.domainKey;
+            const teacherEmail = box.dataset.teacherEmail;
+
+            saveDirectorInlineHtml(teacherEmail, className, studentIdx, domainKey, box.innerHTML);
+        }
+
+        function saveDirectorInlineHtml(teacherEmail, className, studentIndex, domainKey, htmlContent) {
+            const storageKey = getStudentStorageKey(teacherEmail, className, studentIndex);
+            const raw = localStorage.getItem(storageKey);
+            let draft = raw ? JSON.parse(raw) : {};
+            draft[domainKey + '_inlineHtml'] = htmlContent;
+            localStorage.setItem(storageKey, JSON.stringify(draft));
         }
 
         /* DIRECTOR PORTAL REVIEW LIST GENERATOR */
@@ -1513,78 +1626,81 @@ ${teacherName}`;
             container.innerHTML = '';
 
             list.forEach((st, idx) => {
-                const storageKey = getStudentStorageKey(currentTeacherEmail, className, idx);
-                const raw = localStorage.getItem(storageKey);
-                let draft = raw ? JSON.parse(raw) : {};
+                /* FIND SPECIFIC TEACHER DRAFT FOR THIS STUDENT ACROSS KEYS */
+                let foundDraft = null;
+                let matchedTeacherEmail = currentTeacherEmail;
+
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.includes(`_${className.replace(/\s+/g, '_')}_std${idx}`)) {
+                        const raw = localStorage.getItem(key);
+                        if (raw) {
+                            foundDraft = JSON.parse(raw);
+                            matchedTeacherEmail = foundDraft.teacherEmail || matchedTeacherEmail;
+                            break;
+                        }
+                    }
+                }
+
+                let draft = foundDraft || {};
 
                 const card = document.createElement('div');
                 card.className = 'student-review-card';
+
+                const domains = [
+                    { label: 'Connection to God', key: 'txtGod' },
+                    { label: 'Connection to Self', key: 'txtSelf' },
+                    { label: 'Connection to Others', key: 'txtOthers' },
+                    { label: 'Connection to Nature', key: 'txtNature' },
+                    { label: 'Rational', key: 'txtRational' },
+                    { label: 'Imaginal', key: 'txtImaginal' },
+                    { label: 'Physical', key: 'txtPhysical' },
+                    { label: 'Parental Support', key: 'txtTeacher' }
+                ];
+
+                let domainGridHtml = '';
+                domains.forEach(d => {
+                    const savedInline = draft[d.key + '_inlineHtml'];
+                    const defaultText = draft[d.key] || 'No narration entered yet.';
+                    const displayText = savedInline || defaultText;
+
+                    domainGridHtml += `
+                        <div class="review-domain-box">
+                            <span class="review-domain-label">${d.label}:</span>
+                            <div class="review-selectable-text" data-teacher-email="${matchedTeacherEmail}" data-class="${className}" data-student-idx="${idx}" data-domain-key="${d.key}">${displayText}</div>
+                        </div>
+                    `;
+                });
+
                 card.innerHTML = `
                     <div class="student-review-name">
                         <span>${idx + 1}. ${st.full} (${st.nick}) - Grade: ${st.grade}</span>
-                        <button class="btn-action btn-submit-director" style="font-size:11px; padding: 4px 10px;" onclick="sendDirectorFeedbackToTeacher('${className}', ${idx}, '${draft.teacherEmail || ''}', '${st.nick}')">Submit Comment to Teacher</button>
                     </div>
                     <div class="review-domain-grid">
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Connection to God:</span>
-                            <div class="review-domain-text">${draft.txtGod || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentGod || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentGod', this.value)">
-                        </div>
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Connection to Self:</span>
-                            <div class="review-domain-text">${draft.txtSelf || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentSelf || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentSelf', this.value)">
-                        </div>
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Connection to Others:</span>
-                            <div class="review-domain-text">${draft.txtOthers || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentOthers || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentOthers', this.value)">
-                        </div>
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Connection to Nature:</span>
-                            <div class="review-domain-text">${draft.txtNature || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentNature || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentNature', this.value)">
-                        </div>
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Rational:</span>
-                            <div class="review-domain-text">${draft.txtRational || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentRational || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentRational', this.value)">
-                        </div>
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Imaginal:</span>
-                            <div class="review-domain-text">${draft.txtImaginal || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentImaginal || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentImaginal', this.value)">
-                        </div>
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Physical:</span>
-                            <div class="review-domain-text">${draft.txtPhysical || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentPhysical || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentPhysical', this.value)">
-                        </div>
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">Parental Support:</span>
-                            <div class="review-domain-text">${draft.txtTeacher || 'No narration entered yet.'}</div>
-                            <input class="review-comment-input" placeholder="Ms. Mahrukh comment/feedback..." value="${draft.commentTeacher || ''}" oninput="saveDirectorComment('${className}', ${idx}, 'commentTeacher', this.value)">
-                        </div>
+                        ${domainGridHtml}
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function saveDirectorComment(className, studentIndex, fieldKey, val) {
-            const storageKey = getStudentStorageKey(currentTeacherEmail, className, studentIndex);
-            const raw = localStorage.getItem(storageKey);
-            let draft = raw ? JSON.parse(raw) : {};
-            draft[fieldKey] = val;
-            localStorage.setItem(storageKey, JSON.stringify(draft));
-        }
+        /* SINGLE GLOBAL SUBMIT BUTTON FOR MS MAHRUKH */
+        function sendAllDirectorCommentsToTeacher() {
+            const className = document.getElementById('directorClassSelect').value;
+            const portalLink = window.location.href;
 
-        function sendDirectorFeedbackToTeacher(className, studentIndex, teacherEmail, studentNick) {
-            const recipient = teacherEmail || "teacher@millennia21.id";
-            const subject = encodeURIComponent(`Weekly Recap Feedback for ${studentNick} (${className})`);
-            const body = encodeURIComponent(`Dear Teacher,\n\nI have reviewed and added feedback/comments for ${studentNick}'s Weekly Recap narration in class ${className}.\n\nPlease log in to the portal to view the revisions and suggestions.\n\nWarm regards,\nMahrukh Bashir`);
+            const subject = `Weekly Recap Feedback & Revisions - ${className} Class`;
+            const body = `Dear Teacher,
 
-            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+I have reviewed the Weekly Recap narrations for ${className} Class and added inline comments/feedback directly on the portal.
+
+Please open the Director Portal to view the highlighted notes and revisions:
+${portalLink}
+
+Warm regards,
+Mahrukh Bashir`;
+
+            openGmailWebCompose("", subject, body);
         }
 
         function prepareAndPrint() {
