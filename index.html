@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MWS - Weekly Recap Kindergarten</title>
+    <title>Millennia World School - Weekly Recap Kindergarten</title>
 
     <!-- WEBSITE FAVICON -->
     <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx">
@@ -11,10 +11,14 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     
+    <!-- HTML2PDF LIBRARY FOR DIRECT SEAMLESS POSTER PDF DOWNLOAD -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         :root {
             --mws-maroon: #7A1C1C;
             --mws-maroon-dark: #501010;
+            --mws-maroon-light: #FFF0F2;
             
             --pastel-gold-bg: #FEFCE8;   --pastel-gold-border: #FDE047;   --pastel-gold-pill: #CA8A04;
             --pastel-pink-bg: #FFF1F2;   --pastel-pink-border: #FDA4AF;   --pastel-pink-pill: #E11D48;
@@ -25,18 +29,18 @@
             --pastel-cyan-bg: #ECFEFF;   --pastel-cyan-border: #A5F3FC;   --pastel-cyan-pill: #0891B2;
             --pastel-amber-bg: #FFFBEB;  --pastel-amber-border: #FDE68A;  --pastel-amber-pill: #D97706;
 
-            --text-dark: #2D3748;
+            --text-dark: #1E293B;
             --glass-bg: rgba(255, 255, 255, 0.96);
         }
 
         * { box-sizing: border-box; }
         body {
             font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: #CBD5E1;
+            background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
             color: var(--text-dark); margin: 0; padding: 25px 12px; min-height: 100vh;
         }
 
-        /* DENSE SCATTERED WEBPAGE BACKGROUND COLLAGE */
+        /* BACKGROUND COLLAGE OVERLAY */
         .bg-collage-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.88; filter: saturate(1.15);
@@ -55,10 +59,21 @@
         .collage-11 { bottom: -3%; left: 51%; width: 25vw; height: 34vh; transform: rotate(-4deg); }
         .collage-12 { bottom: -4%; right: -2%; width: 25vw; height: 34vh; transform: rotate(3deg); }
 
+        /* FLOATING TOAST NOTIFICATION SYSTEM */
+        .toast-notification {
+            position: fixed; bottom: 25px; right: 25px; z-index: 9999;
+            background: #0F172A; color: #FFFFFF; font-size: 13px; font-weight: 700;
+            padding: 12px 20px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex; align-items: center; gap: 10px; transform: translateY(100px); opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .toast-notification.show { transform: translateY(0); opacity: 1; }
+
         /* LOGIN VIEW STYLES */
         .login-wrapper { min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-card {
-            background: var(--glass-bg); backdrop-filter: blur(16px);
+            background: var(--glass-bg); backdrop-filter: blur(20px);
             border-radius: 28px; padding: 45px 40px; max-width: 480px; width: 100%;
             text-align: center; box-shadow: 0 20px 50px rgba(122, 28, 28, 0.22);
             border: 3.5px solid var(--mws-maroon); display: flex; flex-direction: column; align-items: center;
@@ -83,121 +98,132 @@
         /* GOOGLE AUTHENTICATION POPUP MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px);
             display: none; align-items: center; justify-content: center; z-index: 999;
         }
         .modal-google-box {
-            background: #FFFFFF; border-radius: 20px; padding: 30px; width: 90%; max-width: 480px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25); text-align: left; position: relative;
+            background: #FFFFFF; border-radius: 24px; padding: 32px; width: 90%; max-width: 480px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25); text-align: left; position: relative;
         }
         .btn-modal-close {
-            position: absolute; top: 15px; right: 18px; background: none; border: none; font-size: 24px; font-weight: 700;
+            position: absolute; top: 18px; right: 20px; background: none; border: none; font-size: 24px; font-weight: 700;
             color: #9CA3AF; cursor: pointer; line-height: 1; padding: 4px 8px; border-radius: 50%; transition: all 0.2s ease;
         }
         .btn-modal-close:hover { color: var(--mws-maroon); background: #FFF0F2; }
 
         .modal-google-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
         .modal-google-title { font-size: 18px; font-weight: 700; color: #1F2937; margin: 0; }
-        .form-input-google { width: 100%; padding: 10px 14px; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .form-input-google { width: 100%; padding: 11px 14px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 14px; margin-bottom: 14px; outline: none; transition: border 0.2s; }
         .form-input-google:focus { border-color: var(--mws-maroon); }
-        .btn-modal-submit { background: var(--mws-maroon); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+        .btn-modal-submit { background: var(--mws-maroon); color: white; width: 100%; padding: 13px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
         .btn-modal-submit:hover { background: var(--mws-maroon-dark); }
         
         .modal-error-banner {
             display: none; background: #FFF1F2; border: 1px solid #FDA4AF;
-            color: #E11D48; font-size: 12.5px; font-weight: 700; padding: 8px 12px;
-            border-radius: 8px; margin-bottom: 14px; line-height: 1.4;
+            color: #E11D48; font-size: 12.5px; font-weight: 700; padding: 10px 14px;
+            border-radius: 10px; margin-bottom: 14px; line-height: 1.4;
         }
 
         /* USER PROFILE BADGE */
         .user-profile-badge {
             display: flex; align-items: center; gap: 8px; background: #FFF0F2;
-            border: 1.5px solid #F8B4B4; padding: 5px 12px; border-radius: 20px;
+            border: 1.5px solid #F8B4B4; padding: 6px 14px; border-radius: 20px;
             font-size: 12.5px; font-weight: 700; color: var(--mws-maroon); white-space: nowrap;
         }
         .user-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--mws-maroon); background: white; }
-        .btn-logout { background: transparent; border: 1px solid var(--mws-maroon); color: var(--mws-maroon); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px; cursor: pointer; margin-left: 4px; }
+        .btn-logout { background: transparent; border: 1px solid var(--mws-maroon); color: var(--mws-maroon); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px; cursor: pointer; margin-left: 4px; transition: all 0.2s; }
         .btn-logout:hover { background: var(--mws-maroon); color: #FFFFFF; }
 
         /* CONTROL PANEL & RECAP STYLES */
-        .control-panel { max-width: 1150px; margin: 0 auto 30px auto; background: var(--glass-bg); backdrop-filter: blur(12px); padding: 22px 28px; border-radius: 22px; box-shadow: 0 10px 30px rgba(122, 28, 28, 0.18); border: 2.5px solid var(--mws-maroon); }
+        .control-panel { max-width: 1150px; margin: 0 auto 30px auto; background: var(--glass-bg); backdrop-filter: blur(16px); padding: 24px 30px; border-radius: 24px; box-shadow: 0 12px 35px rgba(122, 28, 28, 0.16); border: 2.5px solid var(--mws-maroon); }
         
         .panel-header { 
             display: flex; justify-content: space-between; align-items: center; 
             flex-wrap: wrap; gap: 14px;
-            border-bottom: 2px dashed #CBD5E0; padding-bottom: 14px; margin-bottom: 18px; 
+            border-bottom: 2px dashed #CBD5E0; padding-bottom: 16px; margin-bottom: 20px; 
         }
-        .panel-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 20px; color: var(--mws-maroon); margin: 0 0 3px 0; text-transform: uppercase; line-height: 1.2; }
+        .panel-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 21px; color: var(--mws-maroon); margin: 0 0 4px 0; text-transform: uppercase; line-height: 1.2; }
         
         .action-btn-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .btn-action { 
-            color: white; border: none; padding: 8px 14px; border-radius: 12px; 
+            color: white; border: none; padding: 9px 16px; border-radius: 12px; 
             font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 13px; 
-            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: all 0.2s ease; 
-            display: flex; align-items: center; justify-content: center; gap: 5px; 
+            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s ease; 
+            display: flex; align-items: center; justify-content: center; gap: 6px; 
             white-space: nowrap;
         }
-        .btn-print { background: var(--mws-maroon); }
-        .btn-print:hover { background: var(--mws-maroon-dark); transform: translateY(-2px); }
+        .btn-download-pdf { background: #16A34A; }
+        .btn-download-pdf:hover { background: #15803D; transform: translateY(-2px); }
         .btn-submit-director { background: #9333EA; }
         .btn-submit-director:hover { background: #7E22CE; transform: translateY(-2px); }
 
         .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 18px; }
         .input-group { display: flex; flex-direction: column; gap: 5px; }
         .input-group label { font-weight: 700; font-size: 12.5px; color: var(--mws-maroon); }
-        .input-group select, .input-group input, .input-group textarea { padding: 9px 12px; border-radius: 10px; border: 2px solid #CBD5E0; font-family: inherit; font-size: 13px; background: #FFFFFF; outline: none; }
+        .input-group select, .input-group input, .input-group textarea { padding: 9px 12px; border-radius: 10px; border: 2px solid #CBD5E0; font-family: inherit; font-size: 13px; background: #FFFFFF; outline: none; transition: border 0.2s; }
+        .input-group select:focus, .input-group input:focus { border-color: var(--mws-maroon); }
         .input-group input[type="date"] { cursor: pointer; color: #1F2937; font-weight: 600; }
         
-        .section-subtitle-bar { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 15px; color: var(--mws-maroon); margin: 18px 0 10px 0; text-transform: uppercase; border-bottom: 2px solid var(--mws-maroon); padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+        /* COLLAPSIBLE ACCORDION HEADERS */
+        .section-subtitle-bar { 
+            font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 15px; color: var(--mws-maroon); 
+            margin: 20px 0 10px 0; text-transform: uppercase; border-bottom: 2px solid var(--mws-maroon); 
+            padding-bottom: 6px; display: flex; justify-content: space-between; align-items: center; 
+            cursor: pointer; user-select: none; transition: color 0.2s;
+        }
+        .section-subtitle-bar:hover { color: var(--mws-maroon-dark); }
+        .collapse-icon { font-size: 12px; background: var(--mws-maroon-light); color: var(--mws-maroon); padding: 3px 8px; border-radius: 6px; font-weight: bold; }
 
-        .photo-grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #FFF5F5; padding: 14px; border-radius: 16px; border: 2px dashed var(--mws-maroon); }
-        .photo-card-input { background: #FFFFFF; padding: 10px; border-radius: 10px; border: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 6px; }
+        .photo-grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #FFF5F5; padding: 16px; border-radius: 18px; border: 2px dashed var(--mws-maroon); }
+        .photo-card-input { background: #FFFFFF; padding: 12px; border-radius: 12px; border: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
         .photo-card-header { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--mws-maroon); }
         .source-tabs { display: flex; gap: 4px; }
-        .tab-btn { font-size: 10px; padding: 3px 8px; border-radius: 5px; border: 1px solid #CBD5E0; background: #F7FAFC; cursor: pointer; font-weight: 700; }
+        .tab-btn { font-size: 10px; padding: 3px 8px; border-radius: 6px; border: 1px solid #CBD5E0; background: #F7FAFC; cursor: pointer; font-weight: 700; transition: all 0.15s; }
         .tab-btn.active { background: var(--mws-maroon); color: #FFFFFF; border-color: var(--mws-maroon); }
 
-        .master-narrations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #F8FAFC; padding: 14px; border-radius: 16px; border: 2px dashed #CBD5E0; }
-        .master-item { display: flex; flex-direction: column; gap: 5px; }
+        .master-narrations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #F8FAFC; padding: 16px; border-radius: 18px; border: 2px dashed #CBD5E0; }
+        .master-item { display: flex; flex-direction: column; gap: 6px; }
         .master-item label { font-size: 12px; font-weight: 700; color: #4A5568; display: flex; justify-content: space-between; align-items: center; }
-        .master-item textarea { height: 75px; resize: none; font-size: 12.5px; }
+        .master-item textarea { height: 78px; resize: none; font-size: 12.5px; }
 
+        /* SLEEK AI BUTTON */
         .btn-ai-gen {
             background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
-            color: #FFFFFF; border: none; padding: 4px 10px; border-radius: 6px;
+            color: #FFFFFF; border: none; padding: 4px 10px; border-radius: 8px;
             font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25);
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3); display: inline-flex; align-items: center; gap: 3px;
         }
-        .btn-ai-gen:hover { transform: scale(1.04); opacity: 0.95; }
+        .btn-ai-gen:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.45); }
 
-        /* REPORT SHEET WITH TRANSLUCENT PAPER COLLAGE */
-        .report-wrapper { max-width: 1100px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 35px; }
+        /* CONTINUOUS SEAMLESS FLEXIBLE REPORT WRAPPER */
+        .report-wrapper { max-width: 1000px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 20px; }
         
         .page-sheet { 
             background-color: #FFFFFF; 
             border-radius: 26px; box-shadow: 0 15px 40px rgba(122, 28, 28, 0.12); 
-            padding: 32px 35px; box-sizing: border-box; border: 7px solid var(--mws-maroon); 
+            padding: 35px 38px; box-sizing: border-box; border: 7px solid var(--mws-maroon); 
             position: relative; overflow: hidden;
         }
 
+        /* REPEATING ABSTRACT NATURAL ASPECT RATIO MICRO-PHOTO WALLPAPER */
         .sheet-collage-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; opacity: 0.20; z-index: 0; overflow: hidden;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100%;
+            pointer-events: none; opacity: 0.14; z-index: 0; overflow: hidden;
+            display: flex; flex-wrap: wrap; gap: 14px; padding: 14px; box-sizing: border-box;
+            align-content: flex-start; justify-content: space-around;
         }
-        .sp-photo {
-            position: absolute; border-radius: 20px; object-fit: cover; box-shadow: 0 6px 20px rgba(0,0,0,0.15); filter: contrast(1.1);
-            width: 320px; height: 240px;
+        .sp-photo-micro {
+            flex: 1 1 68px; max-width: 110px; height: auto; min-height: 50px; max-height: 85px;
+            border-radius: 10px; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+            filter: contrast(1.08); transition: transform 0.2s;
         }
-        .sp-1  { top: -2%; left: -5%; transform: rotate(-14deg); }
-        .sp-2  { top: -3%; right: -5%; transform: rotate(15deg); }
-        .sp-3  { top: 22%; left: 8%; transform: rotate(-8deg); }
-        .sp-4  { top: 25%; right: 7%; transform: rotate(11deg); }
-        .sp-5  { top: 48%; left: -3%; transform: rotate(13deg); }
-        .sp-6  { top: 50%; right: -3%; transform: rotate(-12deg); }
-        .sp-7  { top: 70%; left: 10%; transform: rotate(-9deg); }
-        .sp-8  { top: 72%; right: 10%; transform: rotate(14deg); }
-        .sp-9  { bottom: -4%; left: -4%; transform: rotate(10deg); }
-        .sp-10 { bottom: -3%; right: -4%; transform: rotate(-15deg); }
+
+        /* ABSTRACT SLANTED ROTATIONS FOR SCRAPBOOK FEEL */
+        .sp-photo-micro:nth-child(2n) { transform: rotate(-6deg) translateY(3px); }
+        .sp-photo-micro:nth-child(3n) { transform: rotate(5deg) scale(0.95); }
+        .sp-photo-micro:nth-child(5n) { transform: rotate(-4deg) translateX(-2px); }
+        .sp-photo-micro:nth-child(7n) { transform: rotate(7deg) translateY(-2px); }
+        .sp-photo-micro:nth-child(11n) { transform: rotate(-5deg) scale(1.03); }
 
         .sheet-content-relative { position: relative; z-index: 2; }
 
@@ -213,7 +239,7 @@
         .recap-big-heading { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 26px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: flex-end; }
         .recap-theme-subtitle { font-size: 14.5px; font-weight: 700; color: #555; margin-top: 4px; }
 
-        .hero-student-cover { background: #FFF0F2; border: 2.5px solid #F8B4B4; border-radius: 20px; padding: 18px 25px; margin-bottom: 20px; display: flex; align-items: center; gap: 25px; position: relative; }
+        .hero-student-cover { background: #FFF0F2; border: 2.5px solid #F8B4B4; border-radius: 20px; padding: 18px 25px; margin-bottom: 22px; display: flex; align-items: center; gap: 25px; position: relative; }
         .student-main-photo-box { width: 145px; height: 145px; border-radius: 20px; background-color: #FFFFFF; border: 4px dashed var(--mws-maroon); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
         .tape-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 85px; height: 20px; background: #FFE680; border: 1px dashed #E6C200; z-index: 5; }
         .student-main-photo-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -226,18 +252,18 @@
         .meta-tag { background: var(--mws-maroon); color: white; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 18px; text-transform: uppercase; }
         .meta-tag.secondary { background: #FFFFFF; color: var(--mws-maroon); border: 2px solid var(--mws-maroon); }
 
-        .domain-section-banner { background: linear-gradient(135deg, var(--mws-maroon) 0%, var(--mws-maroon-dark) 100%); color: #FFFFFF; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 20px; border-radius: 14px; margin: 8px 0 16px 0; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(122, 28, 28, 0.18); }
+        .domain-section-banner { background: linear-gradient(135deg, var(--mws-maroon) 0%, var(--mws-maroon-dark) 100%); color: #FFFFFF; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 20px; border-radius: 14px; margin: 18px 0 16px 0; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(122, 28, 28, 0.18); }
 
         .cards-column-layout { display: flex; flex-direction: column; gap: 20px; }
-        .section-card { border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; break-inside: avoid; page-break-inside: avoid; }
-        .section-card.gold   { background-color: rgba(254, 252, 232, 0.95); border: 2px solid var(--pastel-gold-border); }
-        .section-card.pink   { background-color: rgba(255, 241, 242, 0.95); border: 2px solid var(--pastel-pink-border); }
-        .section-card.blue   { background-color: rgba(240, 249, 255, 0.95); border: 2px solid var(--pastel-blue-border); }
-        .section-card.green  { background-color: rgba(240, 253, 244, 0.95); border: 2px solid var(--pastel-green-border); }
-        .section-card.purple { background-color: rgba(243, 232, 255, 0.95); border: 2px solid var(--pastel-purple-border); }
-        .section-card.cyan   { background-color: rgba(236, 254, 255, 0.95); border: 2px solid var(--pastel-cyan-border); }
-        .section-card.amber  { background-color: rgba(255, 251, 235, 0.95); border: 2px solid var(--pastel-amber-border); }
-        .section-card.orange { background-color: rgba(255, 247, 237, 0.95); border: 2px solid var(--pastel-orange-border); }
+        .section-card { border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; }
+        .section-card.gold   { background-color: rgba(254, 252, 232, 0.96); border: 2px solid var(--pastel-gold-border); }
+        .section-card.pink   { background-color: rgba(255, 241, 242, 0.96); border: 2px solid var(--pastel-pink-border); }
+        .section-card.blue   { background-color: rgba(240, 249, 255, 0.96); border: 2px solid var(--pastel-blue-border); }
+        .section-card.green  { background-color: rgba(240, 253, 244, 0.96); border: 2px solid var(--pastel-green-border); }
+        .section-card.purple { background-color: rgba(243, 232, 255, 0.96); border: 2px solid var(--pastel-purple-border); }
+        .section-card.cyan   { background-color: rgba(236, 254, 255, 0.96); border: 2px solid var(--pastel-cyan-border); }
+        .section-card.amber  { background-color: rgba(255, 251, 235, 0.96); border: 2px solid var(--pastel-amber-border); }
+        .section-card.orange { background-color: rgba(255, 247, 237, 0.96); border: 2px solid var(--pastel-orange-border); }
 
         .card-badge-header { display: inline-flex; align-items: center; padding: 6px 16px; border-radius: 16px; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 15px; color: #FFFFFF; align-self: flex-start; text-transform: uppercase; }
         .section-card.gold .card-badge-header   { background: var(--pastel-gold-pill); }
@@ -259,10 +285,10 @@
         .narrative-box-right { flex-grow: 1; display: flex; flex-direction: column; gap: 4px; }
         .card-inline-header { display: flex; justify-content: space-between; align-items: center; }
 
-        textarea { width: 100%; height: 100%; min-height: 140px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 12px; resize: vertical; font-family: 'Quicksand', -apple-system, sans-serif; font-size: 14.5px; line-height: 1.45; padding: 10px 14px; box-sizing: border-box; outline: none; background: #FFFFFF; color: var(--text-dark); }
+        textarea { width: 100%; height: 100%; min-height: 140px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 12px; resize: vertical; font-family: 'Quicksand', -apple-system, sans-serif; font-size: 14.5px; line-height: 1.45; padding: 10px 14px; box-sizing: border-box; outline: none; background: #FFFFFF; color: var(--text-dark); transition: border 0.2s; }
         textarea:focus { border-color: var(--mws-maroon); }
 
-        .print-text-mirror { display: none; width: 100%; background: #FFFFFF; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; color: var(--text-dark); min-height: 140px; }
+        .print-text-mirror { display: none; width: 100%; background: #FFFFFF; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 12px 14px; font-size: 14.5px; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; color: var(--text-dark); min-height: 120px; }
         .teacher-notes-full { width: 100%; display: flex; flex-direction: column; gap: 4px; }
 
         .user-sync-status {
@@ -283,22 +309,44 @@
         }
         .btn-resolve-feedback:hover { background: #15803D; }
 
-        /* DIRECTOR PORTAL & GOOGLE DOCS STYLE COMMENTING */
+        /* ENHANCED EXECUTIVE DIRECTOR PORTAL STYLES */
         .director-portal-wrapper {
             max-width: 1200px; margin: 0 auto; background: var(--glass-bg); backdrop-filter: blur(16px);
             border-radius: 26px; padding: 30px; border: 3.5px solid var(--mws-maroon); box-shadow: 0 20px 50px rgba(0,0,0,0.2);
         }
         .director-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px dashed #CBD5E0; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .director-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 24px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; }
-        .student-review-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 18px; padding: 22px; margin-bottom: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-        .student-review-name { font-size: 18px; font-weight: 700; color: var(--mws-maroon); border-bottom: 1.5px dashed #CBD5E0; padding-bottom: 8px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
-        .review-domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
-        .review-domain-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; position: relative; }
-        .review-domain-label { font-size: 11.5px; font-weight: 700; color: #475569; text-transform: uppercase; }
         
+        .student-review-card { background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 18px; padding: 20px; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: all 0.2s ease; }
+        .student-review-header { font-size: 16px; font-weight: 700; color: var(--mws-maroon); border-bottom: 1.5px dashed #CBD5E0; padding-bottom: 10px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .student-review-header:hover { color: var(--mws-maroon-dark); }
+
+        .review-domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+        .review-domain-box { border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; position: relative; border: 1.5px solid #CBD5E0; }
+        
+        /* MATCHING PASTEL COLOURS FOR DIRECTOR SCREENING */
+        .review-domain-box.gold   { background-color: var(--pastel-gold-bg); border-color: var(--pastel-gold-border); }
+        .review-domain-box.pink   { background-color: var(--pastel-pink-bg); border-color: var(--pastel-pink-border); }
+        .review-domain-box.blue   { background-color: var(--pastel-blue-bg); border-color: var(--pastel-blue-border); }
+        .review-domain-box.green  { background-color: var(--pastel-green-bg); border-color: var(--pastel-green-border); }
+        .review-domain-box.purple { background-color: var(--pastel-purple-bg); border-color: var(--pastel-purple-border); }
+        .review-domain-box.cyan   { background-color: var(--pastel-cyan-bg); border-color: var(--pastel-cyan-border); }
+        .review-domain-box.amber  { background-color: var(--pastel-amber-bg); border-color: var(--pastel-amber-border); }
+        .review-domain-box.orange { background-color: var(--pastel-orange-bg); border-color: var(--pastel-orange-border); }
+
+        .review-domain-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 8px; color: #FFFFFF; align-self: flex-start; }
+        .review-domain-box.gold .review-domain-label   { background: var(--pastel-gold-pill); }
+        .review-domain-box.pink .review-domain-label   { background: var(--pastel-pink-pill); }
+        .review-domain-box.blue .review-domain-label   { background: var(--pastel-blue-pill); }
+        .review-domain-box.green .review-domain-label  { background: var(--pastel-green-pill); }
+        .review-domain-box.purple .review-domain-label { background: var(--pastel-purple-pill); }
+        .review-domain-box.cyan .review-domain-label   { background: var(--pastel-cyan-pill); }
+        .review-domain-box.amber .review-domain-label  { background: var(--pastel-amber-pill); }
+        .review-domain-box.orange .review-domain-label { background: var(--pastel-orange-pill); }
+
         .review-selectable-text {
-            font-size: 13.5px; color: #1E293B; background: #FFFFFF; padding: 12px; border-radius: 8px;
-            min-height: 80px; border: 1px solid #CBD5E0; white-space: pre-wrap; line-height: 1.5; cursor: text;
+            font-size: 13.5px; color: #1E293B; background: #FFFFFF; padding: 12px; border-radius: 10px;
+            min-height: 85px; border: 1px solid rgba(0,0,0,0.1); white-space: pre-wrap; line-height: 1.5; cursor: text;
         }
 
         /* INLINE HIGHLIGHT & FLOATING COMMENT BUTTON */
@@ -332,6 +380,13 @@
         }
         .editable-preview-textarea:focus { border-color: var(--mws-maroon); background: #FFFFFF; }
 
+        /* CLEAN PDF DIRECT EXPORT ACTIVE UTILITY STYLES */
+        body.pdf-export-active .btn-ai-gen,
+        body.pdf-export-active .director-feedback-banner,
+        body.pdf-export-active textarea { display: none !important; }
+        body.pdf-export-active .print-text-mirror { display: block !important; }
+        body.pdf-export-active .page-sheet { box-shadow: none !important; margin-bottom: 0 !important; }
+
         @media screen and (max-width: 768px) {
             body { padding: 12px 8px; }
             .control-panel, .director-portal-wrapper { padding: 16px; border-radius: 16px; }
@@ -351,30 +406,17 @@
             .photo-box-left { width: 100%; height: 210px; }
             textarea { min-height: 120px; }
         }
-
-        /* PRINT PDF OPTIMIZATIONS */
-        @media print {
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; }
-            @page { size: A4 portrait; margin: 8mm; }
-            body { background: white !important; padding: 0 !important; }
-            .bg-collage-container, .control-panel, .login-wrapper, .btn-ai-gen, .director-portal-wrapper, .modal-overlay, .floating-comment-btn, .director-feedback-banner { display: none !important; }
-            #teacherAppView { display: block !important; }
-            .report-wrapper { margin: 0 !important; padding: 0 !important; gap: 0 !important; max-width: 100% !important; }
-            .page-sheet { box-shadow: none !important; border: 5px solid var(--mws-maroon) !important; border-radius: 16px !important; padding: 20px 24px !important; margin-bottom: 0 !important; background-color: #FFFFFF !important; }
-            .page-sheet.page-2, .page-sheet.page-3 { page-break-before: always !important; break-before: page !important; margin-top: 8mm !important; }
-            .sheet-collage-overlay { opacity: 0.20 !important; display: block !important; visibility: visible !important; }
-            .tape-top { background-color: #FFE680 !important; }
-            .hero-student-cover { background-color: #FFF0F2 !important; }
-            .domain-section-banner { background-color: var(--mws-maroon) !important; color: white !important; }
-            textarea { display: none !important; }
-            .print-text-mirror { display: block !important; }
-            .section-card { break-inside: avoid !important; page-break-inside: avoid !important; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- FLOATING COMMENT TRIGGER BUTTON FOR GOOGLE DOCS STYLE COMMENTING -->
+    <!-- FLOATING TOAST NOTIFICATION -->
+    <div id="toastNotification" class="toast-notification">
+        <span id="toastIcon">✨</span>
+        <span id="toastMessage">Draft Auto-Saved</span>
+    </div>
+
+    <!-- FLOATING COMMENT TRIGGER BUTTON FOR DIRECTOR INLINE COMMENTING -->
     <button id="floatingCommentBtn" class="floating-comment-btn" onclick="addInlineComment()">💬 Add Comment</button>
 
     <!-- DENSE SCATTERED WEBPAGE BACKGROUND COLLAGE -->
@@ -451,7 +493,7 @@
             <button class="btn-modal-close" onclick="closeConfirmSubmitModal()" title="Exit">&times;</button>
             <h3 class="modal-google-title" style="color: var(--mws-maroon); margin-bottom: 8px;">Confirm Submission to Director</h3>
             <p style="font-size: 13px; color: #475569; margin-top: 0; margin-bottom: 5px;">
-                You are about to notify Ms. Mahrukh via Gmail Web that narrations for all students in this class have been completed. You may edit the email text below before launching Gmail:
+                You are about to notify the School Director via Gmail Web that narrations for all students in this class have been completed. You may edit the email text below before launching Gmail:
             </p>
 
             <textarea id="submitPreviewText" class="editable-preview-textarea"></textarea>
@@ -466,7 +508,7 @@
     <!-- VIEW 2: TEACHER RECAP PORTAL APP -->
     <div id="teacherAppView" style="display: none;">
         
-        <div class="control-panel">
+        <div class="control-panel" id="mainControlPanel">
             <div class="panel-header">
                 <div>
                     <h2 class="panel-title">Millennia World School - Teacher Portal</h2>
@@ -481,8 +523,8 @@
                         </div>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
-                    <button class="btn-action btn-submit-director" onclick="openSubmitConfirmModal()">Submit Class Narration to Ms. Mahrukh</button>
-                    <button class="btn-action btn-print" onclick="prepareAndPrint()">Print PDF</button>
+                    <button class="btn-action btn-download-pdf" onclick="downloadPDFDirect()">📥 Download PDF Report</button>
+                    <button class="btn-action btn-submit-director" onclick="openSubmitConfirmModal()">Submit Class Narrations to Director</button>
                 </div>
             </div>
 
@@ -513,72 +555,84 @@
                 </div>
             </div>
 
-            <!-- UNLIMITED PAPER BACKGROUND PHOTO UPLOADER -->
-            <div class="section-subtitle-bar">
-                <span>Paper Background Photos (Printable Translucent Collage)</span>
+            <!-- UNLIMITED PAPER BACKGROUND PHOTO UPLOADER (COLLAPSIBLE) -->
+            <div class="section-subtitle-bar" onclick="toggleAccordion('paperBgContainer', 'iconPaperBg')">
+                <span>Paper Background Photos (Printable Translucent Micro-Pattern Wallpaper)</span>
+                <span class="collapse-icon" id="iconPaperBg">▼</span>
             </div>
-            <p style="font-size: 12.5px; color: #475569; margin: 0 0 10px 0;">
-                Select photos below to dynamically generate a scattered translucent background collage covering all paper sheets (rendered on PDF export).
-            </p>
-            <div style="margin-bottom: 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                <input type="file" id="multiPaperBgInput" multiple accept="image/*" onchange="handleMultiplePaperBgFiles(event)" style="display:none;">
-                <button class="btn-action btn-print" style="background: #0284C7;" onclick="document.getElementById('multiPaperBgInput').click()">Upload Paper Background Photos (Multiple)</button>
-                <span id="paperBgCountTag" style="font-size: 12px; font-weight: bold; color: var(--mws-maroon);">0 custom paper background photos active</span>
+            <div id="paperBgContainer">
+                <p style="font-size: 12.5px; color: #475569; margin: 0 0 10px 0;">
+                    Select photos below to dynamically generate a clean seamless tile wallpaper pattern covering all paper sheets (rendered on PDF export).
+                </p>
+                <div style="margin-bottom: 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <input type="file" id="multiPaperBgInput" multiple accept="image/*" onchange="handleMultiplePaperBgFiles(event)" style="display:none;">
+                    <button class="btn-action btn-submit-director" style="background: #0284C7;" onclick="document.getElementById('multiPaperBgInput').click()">Upload Background Photos</button>
+                    <span id="paperBgCountTag" style="font-size: 12px; font-weight: bold; color: var(--mws-maroon);">0 custom paper background photos active</span>
+                </div>
             </div>
 
-            <div class="section-subtitle-bar">
+            <!-- MASTER NARRATION HUB (COLLAPSIBLE) -->
+            <div class="section-subtitle-bar" onclick="toggleAccordion('masterHubContainer', 'iconMasterHub')">
                 <span>Master Narration Hub (Auto-Generate {name})</span>
-            </div>
-            <p style="font-size: 13px; color: #16A34A; margin: 0 0 10px 0; font-weight: bold;">
-                Tip: Enter key observation words or quick notes, then click "AI Generate" (click repeatedly for fresh, unique, and dynamic variations in Millennia tone)!
-            </p>
-
-            <div class="master-narrations-grid">
-                <div class="master-item">
-                    <label>Connection to God: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterGod', 'Connection to God')">AI Generate</button></label>
-                    <textarea id="masterGod" oninput="handleUserTextInput('masterGod'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., morning prayers, calm reflection..."></textarea>
-                </div>
-                <div class="master-item">
-                    <label>Connection to Self: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterSelf', 'Connection to Self')">AI Generate</button></label>
-                    <textarea id="masterSelf" oninput="handleUserTextInput('masterSelf'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., independent arrival, managing shoes..."></textarea>
-                </div>
-                <div class="master-item">
-                    <label>Connection to Others: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterOthers', 'Connection to Others')">AI Generate</button></label>
-                    <textarea id="masterOthers" oninput="handleUserTextInput('masterOthers'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., sharing building blocks, helping friends..."></textarea>
-                </div>
-                <div class="master-item">
-                    <label>Connection to Nature: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterNature', 'Connection to Nature')">AI Generate</button></label>
-                    <textarea id="masterNature" oninput="handleUserTextInput('masterNature'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., watering garden, outdoor cleanup..."></textarea>
-                </div>
-                <div class="master-item">
-                    <label>Rational (Resional): <button class="btn-ai-gen" onclick="triggerAIGenerate('masterRational', 'Rational')">AI Generate</button></label>
-                    <textarea id="masterRational" oninput="handleUserTextInput('masterRational'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., identifying letter B sounds, counting..."></textarea>
-                </div>
-                <div class="master-item">
-                    <label>Imaginal: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterImaginal', 'Imaginal')">AI Generate</button></label>
-                    <textarea id="masterImaginal" oninput="handleUserTextInput('masterImaginal'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., drawing family picture, pretend play..."></textarea>
-                </div>
-                <div class="master-item">
-                    <label>Physical: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterPhysical', 'Physical')">AI Generate</button></label>
-                    <textarea id="masterPhysical" oninput="handleUserTextInput('masterPhysical'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., running games, scissor fine motor skills..."></textarea>
-                </div>
-                <div class="master-item">
-                    <label>Parental Support: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterTeacher', 'Parental Support')">AI Generate</button></label>
-                    <textarea id="masterTeacher" oninput="handleUserTextInput('masterTeacher'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., practice daily routines, reading together..."></textarea>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button class="btn-ai-gen" style="background: #16A34A;" onclick="event.stopPropagation(); autoFillAllDomainsAI();">⚡ Auto-Fill All Domains</button>
+                    <span class="collapse-icon" id="iconMasterHub">▼</span>
                 </div>
             </div>
+            <div id="masterHubContainer">
+                <p style="font-size: 13px; color: #16A34A; margin: 0 0 10px 0; font-weight: bold;">
+                    Enter key observation words or quick notes, then click "AI Generate" to produce customized narratives in Millennia's official educational tone.
+                </p>
 
-            <div class="section-subtitle-bar">
+                <div class="master-narrations-grid">
+                    <div class="master-item">
+                        <label>Connection to God: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterGod', 'Connection to God')">✨ AI Generate</button></label>
+                        <textarea id="masterGod" oninput="handleUserTextInput('masterGod'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., morning prayers, calm reflection..."></textarea>
+                    </div>
+                    <div class="master-item">
+                        <label>Connection to Self: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterSelf', 'Connection to Self')">✨ AI Generate</button></label>
+                        <textarea id="masterSelf" oninput="handleUserTextInput('masterSelf'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., independent arrival, managing shoes..."></textarea>
+                    </div>
+                    <div class="master-item">
+                        <label>Connection to Others: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterOthers', 'Connection to Others')">✨ AI Generate</button></label>
+                        <textarea id="masterOthers" oninput="handleUserTextInput('masterOthers'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., sharing building blocks, helping friends..."></textarea>
+                    </div>
+                    <div class="master-item">
+                        <label>Connection to Nature: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterNature', 'Connection to Nature')">✨ AI Generate</button></label>
+                        <textarea id="masterNature" oninput="handleUserTextInput('masterNature'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., watering garden, outdoor cleanup..."></textarea>
+                    </div>
+                    <div class="master-item">
+                        <label>Rational: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterRational', 'Rational')">✨ AI Generate</button></label>
+                        <textarea id="masterRational" oninput="handleUserTextInput('masterRational'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., identifying letter B sounds, counting..."></textarea>
+                    </div>
+                    <div class="master-item">
+                        <label>Imaginal: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterImaginal', 'Imaginal')">✨ AI Generate</button></label>
+                        <textarea id="masterImaginal" oninput="handleUserTextInput('masterImaginal'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., drawing family picture, pretend play..."></textarea>
+                    </div>
+                    <div class="master-item">
+                        <label>Physical: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterPhysical', 'Physical')">✨ AI Generate</button></label>
+                        <textarea id="masterPhysical" oninput="handleUserTextInput('masterPhysical'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., running games, scissor fine motor skills..."></textarea>
+                    </div>
+                    <div class="master-item">
+                        <label>Parental Support: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterTeacher', 'Parental Support')">✨ AI Generate</button></label>
+                        <textarea id="masterTeacher" oninput="handleUserTextInput('masterTeacher'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., practice daily routines, reading together..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UPLOAD STUDENT ACTIVITY PHOTOS (COLLAPSIBLE) -->
+            <div class="section-subtitle-bar" onclick="toggleAccordion('photoGridContainer', 'iconPhotoGrid')">
                 <span>Upload Student Activity Photos</span>
+                <span class="collapse-icon" id="iconPhotoGrid">▼</span>
             </div>
 
-            <div class="photo-grid-inputs">
+            <div id="photoGridContainer" class="photo-grid-inputs">
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Profile Photo:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-Profile" onclick="togglePhotoSource('Profile', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-Profile" onclick="togglePhotoSource('Profile', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-Profile" onclick="togglePhotoSource('Profile', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-Profile"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgProfile')"></div>
@@ -589,7 +643,7 @@
                         <span>Connection to God:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-God" onclick="togglePhotoSource('God', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-God" onclick="togglePhotoSource('God', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-God" onclick="togglePhotoSource('God', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-God"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgGod')"></div>
@@ -600,7 +654,7 @@
                         <span>Connection to Self:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-Self" onclick="togglePhotoSource('Self', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-Self" onclick="togglePhotoSource('Self', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-Self" onclick="togglePhotoSource('Self', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-Self"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgSelf')"></div>
@@ -611,7 +665,7 @@
                         <span>Connection to Others:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-Others" onclick="togglePhotoSource('Others', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-Others" onclick="togglePhotoSource('Others', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-Others" onclick="togglePhotoSource('Others', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-Others"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgOthers')"></div>
@@ -622,7 +676,7 @@
                         <span>Connection to Nature:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-Nature" onclick="togglePhotoSource('Nature', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-Nature" onclick="togglePhotoSource('Nature', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-Nature" onclick="togglePhotoSource('Nature', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-Nature"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgNature')"></div>
@@ -633,7 +687,7 @@
                         <span>Rational:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-Rational" onclick="togglePhotoSource('Rational', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-Rational" onclick="togglePhotoSource('Rational', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-Rational" onclick="togglePhotoSource('Rational', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-Rational"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgRational')"></div>
@@ -644,7 +698,7 @@
                         <span>Imaginal:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-Imaginal" onclick="togglePhotoSource('Imaginal', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-Imaginal" onclick="togglePhotoSource('Imaginal', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-Imaginal" onclick="togglePhotoSource('Imaginal', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-Imaginal"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgImaginal')"></div>
@@ -655,7 +709,7 @@
                         <span>Physical:</span>
                         <div class="source-tabs">
                             <button class="tab-btn active" id="tab-file-Physical" onclick="togglePhotoSource('Physical', 'file')">File</button>
-                            <button class="tab-btn" id="tab-drive-Physical" onclick="togglePhotoSource('Physical', 'drive')">GDrive Link</button>
+                            <button class="tab-btn" id="tab-drive-Physical" onclick="togglePhotoSource('Physical', 'drive')">GDrive</button>
                         </div>
                     </div>
                     <div id="src-file-Physical"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgPhysical')"></div>
@@ -664,10 +718,9 @@
             </div>
         </div>
 
-        <!-- MAIN REPORT WRAPPER -->
+        <!-- MAIN REPORT WRAPPER (SEAMLESS CONTINUOUS SINGLE PAGE REPORT) -->
         <div class="report-wrapper" id="reportWrapper">
-            <!-- PAGE 1 -->
-            <div class="page-sheet page-1">
+            <div class="page-sheet">
                 <div class="sheet-collage-overlay" id="paperOverlayP1"></div>
 
                 <div class="sheet-content-relative">
@@ -708,12 +761,11 @@
                                     <img id="imgGod" style="display:none;" alt="God Photo">
                                 </div>
                                 <div class="narrative-box-right">
-                                    <!-- DIRECTOR FEEDBACK BANNER -->
                                     <div class="director-feedback-banner" id="fb_txtGod"></div>
 
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #854D0E;">Narration:</span>
-                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtGod', 'Connection to God')">AI Generate</button>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtGod', 'Connection to God')">✨ AI Generate</button>
                                     </div>
                                     <textarea id="txtGod" oninput="handleUserTextInput('txtGod'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Morning prayers, gratitude, quiet reflection..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtGod"></div>
@@ -734,23 +786,14 @@
 
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #9F1239;">Narration:</span>
-                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtSelf', 'Connection to Self')">AI Generate</button>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtSelf', 'Connection to Self')">✨ AI Generate</button>
                                     </div>
                                     <textarea id="txtSelf" oninput="handleUserTextInput('txtSelf'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Independence, self-awareness, personal routines..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtSelf"></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- PAGE 2 -->
-            <div class="page-sheet page-2">
-                <div class="sheet-collage-overlay" id="paperOverlayP2"></div>
-
-                <div class="sheet-content-relative">
-                    <div class="cards-column-layout">
                         <div class="section-card blue">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Connection to Others</div>
@@ -764,7 +807,7 @@
 
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #075985;">Narration:</span>
-                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtOthers', 'Connection to Others')">AI Generate</button>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtOthers', 'Connection to Others')">✨ AI Generate</button>
                                     </div>
                                     <textarea id="txtOthers" oninput="handleUserTextInput('txtOthers'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Playing nicely, sharing toys, helping classmates..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtOthers"></div>
@@ -785,7 +828,7 @@
 
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #166534;">Narration:</span>
-                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtNature', 'Connection to Nature')">AI Generate</button>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtNature', 'Connection to Nature')">✨ AI Generate</button>
                                     </div>
                                     <textarea id="txtNature" oninput="handleUserTextInput('txtNature'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Caring for plants, outdoor play, environmental awareness..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtNature"></div>
@@ -808,23 +851,14 @@
 
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #6B21A8;">Narration:</span>
-                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtRational', 'Rational')">AI Generate</button>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtRational', 'Rational')">✨ AI Generate</button>
                                     </div>
                                     <textarea id="txtRational" oninput="handleUserTextInput('txtRational'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Following directions, counting, listening to stories..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtRational"></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- PAGE 3 -->
-            <div class="page-sheet page-3">
-                <div class="sheet-collage-overlay" id="paperOverlayP3"></div>
-
-                <div class="sheet-content-relative">
-                    <div class="cards-column-layout">
                         <div class="section-card cyan">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Imaginal</div>
@@ -838,7 +872,7 @@
 
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #155E75;">Narration:</span>
-                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtImaginal', 'Imaginal')">AI Generate</button>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtImaginal', 'Imaginal')">✨ AI Generate</button>
                                     </div>
                                     <textarea id="txtImaginal" oninput="handleUserTextInput('txtImaginal'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Drawing, building, pretend play, music..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtImaginal"></div>
@@ -859,7 +893,7 @@
 
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #9A3412;">Narration:</span>
-                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtPhysical', 'Physical')">AI Generate</button>
+                                        <button class="btn-ai-gen" onclick="triggerAIGenerate('txtPhysical', 'Physical')">✨ AI Generate</button>
                                     </div>
                                     <textarea id="txtPhysical" oninput="handleUserTextInput('txtPhysical'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Running, jumping, fine motor activities, playground games..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtPhysical"></div>
@@ -875,7 +909,7 @@
 
                                 <div class="card-inline-header">
                                     <span style="font-size: 11px; font-weight: bold; color: #C2410C;">Home Guidance & Support:</span>
-                                    <button class="btn-ai-gen" onclick="triggerAIGenerate('txtTeacher', 'Parental Support')">AI Generate</button>
+                                    <button class="btn-ai-gen" onclick="triggerAIGenerate('txtTeacher', 'Parental Support')">✨ AI Generate</button>
                                 </div>
                                 <textarea id="txtTeacher" oninput="handleUserTextInput('txtTeacher'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Simple, practical ways parents can support learning and routines at home..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtTeacher"></div>
@@ -887,13 +921,13 @@
         </div>
     </div>
 
-    <!-- VIEW 3: DIRECTOR EXCLUSIVE PORTAL -->
+    <!-- VIEW 3: EXECUTIVE DIRECTOR PORTAL -->
     <div id="directorAppView" style="display: none;">
         <div class="director-portal-wrapper">
             <div class="director-header">
                 <div>
-                    <h2 class="director-title">Director Portal</h2>
-                    <span style="font-size: 13px; color: #64748B;">Highlight text ala Google Docs to add inline feedback notes</span>
+                    <h2 class="director-title">Executive Director Portal</h2>
+                    <span style="font-size: 13px; color: #64748B;">Highlight text to add inline feedback notes for teachers.</span>
                 </div>
                 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                     <div class="user-profile-badge">
@@ -901,13 +935,13 @@
                         <span id="directorNameDisplay">Director</span>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
-                    <!-- SINGLE GLOBAL BULK SUBMIT BUTTON FOR DIRECTOR -->
                     <button class="btn-action btn-submit-director" onclick="sendAllDirectorCommentsToTeacher()">
-                        Send All Class Comments to Teacher via Gmail
+                        Send Class Feedback to Homeroom Teachers
                     </button>
                 </div>
             </div>
 
+            <!-- EXECUTIVE SCREENING & SEARCH CONTROL BAR -->
             <div class="input-grid" style="margin-bottom: 20px;">
                 <div class="input-group">
                     <label>Select Class for Review:</label>
@@ -916,6 +950,14 @@
                         <option value="SNOWDON">SNOWDON Class (Widya & Sindy)</option>
                         <option value="DJEBEL CHELIA">DJEBEL CHELIA Class (Afi & Nanda)</option>
                     </select>
+                </div>
+                <div class="input-group">
+                    <label>Search Student:</label>
+                    <input type="text" id="directorSearchInput" placeholder="Type student name..." oninput="filterDirectorStudents()">
+                </div>
+                <div class="input-group" style="justify-content: flex-end; flex-direction: row; align-items: flex-end; gap: 8px;">
+                    <button class="btn-action" style="background: #0284C7; font-size: 11.5px; padding: 8px 12px;" onclick="toggleAllDirectorCards(true)">Expand All</button>
+                    <button class="btn-action" style="background: #64748B; font-size: 11.5px; padding: 8px 12px;" onclick="toggleAllDirectorCards(false)">Collapse All</button>
                 </div>
             </div>
 
@@ -1038,14 +1080,69 @@
         let activePaperPhotos = [...defaultPaperPhotos];
         let activePortalMode = "TEACHER";
         let activeSelectedTarget = null;
+        let toastTimeout = null;
         
-        // Track last generated template per field to force fresh variations on repeated clicks!
         const lastTemplateIndices = {};
+
+        /* ACCORDION TOGGLE HELPER */
+        function toggleAccordion(containerId, iconId) {
+            const container = document.getElementById(containerId);
+            const icon = document.getElementById(iconId);
+            if (container.style.display === 'none') {
+                container.style.display = containerId === 'photoGridContainer' ? 'grid' : 'block';
+                if (icon) icon.textContent = '▼';
+            } else {
+                container.style.display = 'none';
+                if (icon) icon.textContent = '▲';
+            }
+        }
+
+        /* TOAST NOTIFICATION TRIGGER */
+        function showToast(msg, icon = "✨") {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = msg;
+            document.getElementById('toastIcon').textContent = icon;
+            toast.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        /* DYNAMIC CONTINUOUS SINGLE-PAGE SEAMLESS POSTER PDF DOWNLOADER */
+        function downloadPDFDirect() {
+            syncTextToMirrors();
+            document.body.classList.add('pdf-export-active');
+            showToast("Generating Continuous Poster PDF, please wait...", "⏳");
+
+            const element = document.getElementById('reportWrapper');
+            const studentNick = currentStudent.nick || 'Student';
+            const fileName = `${studentNick}_Weekly_Recap.pdf`;
+
+            const elementHeightPx = element.scrollHeight;
+            const pxToMm = 0.264583;
+            const customHeightMm = Math.max(297, Math.ceil(elementHeightPx * pxToMm) + 12);
+
+            const opt = {
+                margin:       [4, 4, 4, 4],
+                filename:     fileName,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false, scrollY: 0 },
+                jsPDF:        { unit: 'mm', format: [210, customHeightMm], orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.body.classList.remove('pdf-export-active');
+                showToast("Poster PDF Downloaded successfully!", "✅");
+            }).catch(err => {
+                document.body.classList.remove('pdf-export-active');
+                console.error("PDF Download error:", err);
+                showToast("Download failed, please try again...", "⚠️");
+            });
+        }
 
         /* UNIFIED CLASS DRAFT KEY FOR CO-HOMEROOM TEACHERS */
         function getStudentStorageKey(className, studentIndex) {
             const cleanClass = className.replace(/\s+/g, '_');
-            return `mws_recap_v21_${cleanClass}_std${studentIndex}`;
+            return `mws_recap_v28_${cleanClass}_std${studentIndex}`;
         }
 
         /* GMAIL WEB DIRECT LAUNCHER */
@@ -1158,6 +1255,7 @@
                 renderPaperBgCollages();
                 onClassChange();
             }
+            showToast(`Welcome back, ${name}!`);
         }
 
         function logoutGoogle() {
@@ -1174,7 +1272,7 @@
             document.getElementById('loginView').style.display = 'flex';
         }
 
-        /* DENSE & LARGE PAPER BACKGROUND COLLAGE GENERATOR */
+        /* REPEATING ABSTRACT NATURAL ASPECT-RATIO MICRO-PHOTO WALLPAPER GENERATOR */
         function handleMultiplePaperBgFiles(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
@@ -1190,6 +1288,7 @@
                     if (loadedCount === files.length) {
                         renderPaperBgCollages();
                         saveActiveStudentDraft();
+                        showToast(`${files.length} photos generated into Full Page Wallpaper!`, "🖼️");
                     }
                 }
                 reader.readAsDataURL(file);
@@ -1200,21 +1299,16 @@
             const list = activePaperPhotos.length > 0 ? activePaperPhotos : defaultPaperPhotos;
             document.getElementById('paperBgCountTag').textContent = `${list.length} custom paper background photos active`;
 
-            const pageIds = ['paperOverlayP1', 'paperOverlayP2', 'paperOverlayP3'];
-            const classList = ['sp-1', 'sp-2', 'sp-3', 'sp-4', 'sp-5', 'sp-6', 'sp-7', 'sp-8', 'sp-9', 'sp-10'];
-
-            pageIds.forEach(pId => {
-                const container = document.getElementById(pId);
-                if (!container) return;
-                container.innerHTML = '';
-                
-                for (let i = 0; i < 10; i++) {
-                    const img = document.createElement('img');
-                    img.src = list[i % list.length];
-                    img.className = `sp-photo ${classList[i]}`;
-                    container.appendChild(img);
-                }
-            });
+            const container = document.getElementById('paperOverlayP1');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 250; i++) {
+                const img = document.createElement('img');
+                img.src = list[i % list.length];
+                img.className = 'sp-photo-micro';
+                container.appendChild(img);
+            }
         }
 
         function autoCalculateWeekTerm() {
@@ -1323,7 +1417,6 @@
         function handleUserTextInput(fieldId) {
             const el = document.getElementById(fieldId);
             if (el) {
-                // If teacher edits text manually, clear the AI flag so new text becomes rawKeywords seed
                 el.dataset.isAiGenerated = "false";
                 el.dataset.rawKeywords = el.value.trim();
             }
@@ -1357,6 +1450,40 @@
             syncTextToMirrors();
         }
 
+        /* AUTO-FILL ALL DOMAINS AT ONCE WITH RELIABLE FALLBACK TEMPLATES */
+        function autoFillAllDomainsAI() {
+            const studentNick = currentStudent.nick || 'Student';
+            const domains = [
+                { masterId: 'masterGod', targetId: 'txtGod', category: 'Connection to God', defaultNote: 'participating in morning prayers and quiet reflection' },
+                { masterId: 'masterSelf', targetId: 'txtSelf', category: 'Connection to Self', defaultNote: 'independently managing arrival and shoe routines' },
+                { masterId: 'masterOthers', targetId: 'txtOthers', category: 'Connection to Others', defaultNote: 'sharing building toys and playing kindly with peers' },
+                { masterId: 'masterNature', targetId: 'txtNature', category: 'Connection to Nature', defaultNote: 'caring for class plants and outdoor play' },
+                { masterId: 'masterRational', targetId: 'txtRational', category: 'Rational', defaultNote: 'recognizing letter sounds and counting objects' },
+                { masterId: 'masterImaginal', targetId: 'txtImaginal', category: 'Imaginal', defaultNote: 'drawing creative pictures and pretend play' },
+                { masterId: 'masterPhysical', targetId: 'txtPhysical', category: 'Physical', defaultNote: 'active playground games and scissor fine motor practice' },
+                { masterId: 'masterTeacher', targetId: 'txtTeacher', category: 'Parental Support', defaultNote: 'practicing daily home reading and independent routines' }
+            ];
+
+            domains.forEach(d => {
+                const masterEl = document.getElementById(d.masterId);
+                const targetEl = document.getElementById(d.targetId);
+                
+                let rawNote = masterEl.value.trim() || d.defaultNote;
+                rawNote = rawNote.replace(/\{name\}/gi, studentNick);
+                
+                if (!masterEl.value.trim()) masterEl.value = rawNote;
+
+                const generated = generateDynamicProse(d.category, studentNick, rawNote, d.targetId);
+                targetEl.value = generated;
+                targetEl.dataset.isAiGenerated = "true";
+                targetEl.dataset.rawKeywords = rawNote;
+            });
+
+            syncTextToMirrors();
+            saveActiveStudentDraft();
+            showToast(`⚡ Generated All 8 Narrations for ${studentNick}!`, "🚀");
+        }
+
         function syncTextToMirrors() {
             const textIds = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
             textIds.forEach(id => {
@@ -1366,13 +1493,12 @@
             });
         }
 
-        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE (V21 FIX) */
+        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE (V28) */
         function triggerAIGenerate(targetFieldId, categoryName) {
             const studentNick = currentStudent.nick || 'the student';
             const textarea = document.getElementById(targetFieldId);
             let currentVal = textarea.value.trim();
 
-            // Store original teacher keywords in dataset if not present or if edited manually
             if (!textarea.dataset.rawKeywords || textarea.dataset.isAiGenerated !== "true") {
                 textarea.dataset.rawKeywords = currentVal;
             }
@@ -1385,11 +1511,10 @@
                 textarea.dataset.rawKeywords = baseKeywords.trim();
             }
 
-            // Generate fresh variation using preserved rawKeywords seed
             const generatedProse = generateDynamicProse(categoryName, studentNick, textarea.dataset.rawKeywords, targetFieldId);
             
             textarea.value = generatedProse;
-            textarea.dataset.isAiGenerated = "true"; // Mark as AI generated
+            textarea.dataset.isAiGenerated = "true";
 
             if (targetFieldId.startsWith('master')) {
                 applyMasterNarrations();
@@ -1397,23 +1522,21 @@
                 syncTextToMirrors();
             }
             saveActiveStudentDraft();
+            showToast(`✨ Generated fresh variation for ${categoryName}!`);
         }
 
         function generateDynamicProse(category, name, rawNotes, fieldId) {
             if (!rawNotes || !rawNotes.trim()) return "";
 
-            // 1. Clean & strip superlatives
             let cleanKW = rawNotes.trim().replace(/\{name\}/gi, name);
             const superlativesPattern = /\b(super|best|most|perfect|flawless|outstanding|exceptional|amazing|extreme|unbeatable)\b/gi;
             cleanKW = cleanKW.replace(superlativesPattern, "").replace(/\s+/g, ' ').trim();
 
             let kw = cleanKW.toLowerCase().replace(/[.!?]+$/, '');
 
-            // 2. Positive developmental reframing
             kw = kw.replace(/\b(needs help with|struggles with|cannot do|has trouble with|still can't|unable to|hard time)\b/gi, "is developing skills in")
                    .replace(/\b(needs to|has to)\b/gi, "is gently guided to");
 
-            // Helper: Pick a random element guarantee different from last time
             const pickDifferent = (arr, key) => {
                 const lastIdx = lastTemplateIndices[key] !== undefined ? lastTemplateIndices[key] : -1;
                 let nextIdx = Math.floor(Math.random() * arr.length);
@@ -1424,7 +1547,6 @@
                 return arr[nextIdx];
             };
 
-            // 3. Domain Multi-Template Pools (Strictly Millennia Style, No Superlatives)
             const frameworks = {
                 "Connection to God": {
                     openers: [
@@ -1553,17 +1675,15 @@
                 closers: [`${name} continues to make steady progress across daily activities.`]
             };
 
-            // Pick different opener and closer
             const selectedOpener = pickDifferent(selectedDomain.openers, fieldId + '_opener');
             const selectedCloser = pickDifferent(selectedDomain.closers, fieldId + '_closer');
 
-            // 4. Grammar & Syntax Cleanup
             const sanitize = (text) => {
                 return text
-                    .replace(/\s+/g, ' ')                   // Clean double spaces
-                    .replace(/\s+([,.!?])/g, '$1')           // Remove space before punctuation
-                    .replace(/([.!?])\s*([a-z])/g, (m, p1, p2) => p1 + ' ' + p2.toUpperCase()) // Capitalize sentence start
-                    .replace(/\b(a)\s+([aeiou])/gi, 'an $2')  // Correct "a" vs "an"
+                    .replace(/\s+/g, ' ')
+                    .replace(/\s+([,.!?])/g, '$1')
+                    .replace(/([.!?])\s*([a-z])/g, (m, p1, p2) => p1 + ' ' + p2.toUpperCase())
+                    .replace(/\b(a)\s+([aeiou])/gi, 'an $2')
                     .trim();
             };
 
@@ -1668,7 +1788,6 @@
                         }
                     }
                     
-                    // Render Director Feedback Alert Box in Teacher Portal if comments exist
                     const fbBanner = document.getElementById('fb_' + t);
                     const inlineHtml = draft[t + '_inlineHtml'];
                     
@@ -1721,6 +1840,7 @@
                 fbBanner.innerHTML = '';
             }
             saveActiveStudentDraft();
+            showToast("Revision note marked as resolved!", "✓");
         }
 
         function resetFormFieldsOnly() {
@@ -1785,7 +1905,7 @@ ${teacherName}`;
             openGmailWebCompose(DIRECTOR_EMAIL, emailSubject, editedText);
         }
 
-        /* GOOGLE DOCS STYLE INLINE TEXT HIGHLIGHT & COMMENTING FOR DIRECTOR */
+        /* DIRECTOR INLINE HIGHLIGHT & COMMENTING LOGIC */
         function handleTextSelection() {
             if (activePortalMode !== 'DIRECTOR') return;
 
@@ -1816,7 +1936,7 @@ ${teacherName}`;
         function addInlineComment() {
             if (!activeSelectedTarget) return;
 
-            const commentNote = prompt("Enter your comment/revision note for this highlighted phrase:");
+            const commentNote = prompt("Enter your revision note for this highlighted phrase:");
             if (!commentNote) return;
 
             const range = activeSelectedTarget.range;
@@ -1847,9 +1967,9 @@ ${teacherName}`;
             const domainKey = box.dataset.domainKey;
 
             saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML);
+            showToast("Inline comment saved!");
         }
 
-        /* UNDO / DELETE INLINE COMMENT FOR DIRECTOR */
         function deleteInlineComment(btnElement) {
             const bubble = btnElement.closest('.doc-comment-bubble');
             const box = btnElement.closest('.review-selectable-text');
@@ -1880,7 +2000,7 @@ ${teacherName}`;
             localStorage.setItem(storageKey, JSON.stringify(draft));
         }
 
-        /* DIRECTOR PORTAL REVIEW LIST GENERATOR */
+        /* EXECUTIVE DIRECTOR PORTAL REVIEW LIST GENERATOR */
         function renderDirectorReviewList() {
             const className = document.getElementById('directorClassSelect').value;
             const list = studentDatabase[className] || [];
@@ -1895,37 +2015,52 @@ ${teacherName}`;
 
                 const card = document.createElement('div');
                 card.className = 'student-review-card';
+                card.id = `dirStudentCard_${idx}`;
 
                 const domains = [
-                    { label: 'Connection to God', key: 'txtGod' },
-                    { label: 'Connection to Self', key: 'txtSelf' },
-                    { label: 'Connection to Others', key: 'txtOthers' },
-                    { label: 'Connection to Nature', key: 'txtNature' },
-                    { label: 'Rational', key: 'txtRational' },
-                    { label: 'Imaginal', key: 'txtImaginal' },
-                    { label: 'Physical', key: 'txtPhysical' },
-                    { label: 'Parental Support', key: 'txtTeacher' }
+                    { label: 'Connection to God', key: 'txtGod', color: 'gold' },
+                    { label: 'Connection to Self', key: 'txtSelf', color: 'pink' },
+                    { label: 'Connection to Others', key: 'txtOthers', color: 'blue' },
+                    { label: 'Connection to Nature', key: 'txtNature', color: 'green' },
+                    { label: 'Rational', key: 'txtRational', color: 'purple' },
+                    { label: 'Imaginal', key: 'txtImaginal', color: 'cyan' },
+                    { label: 'Physical', key: 'txtPhysical', color: 'amber' },
+                    { label: 'Parental Support', key: 'txtTeacher', color: 'orange' }
                 ];
 
                 let domainGridHtml = '';
+                let hasRevisionNotes = false;
+
                 domains.forEach(d => {
                     const savedInline = draft[d.key + '_inlineHtml'];
                     const defaultText = draft[d.key] || 'No narration entered yet.';
                     const displayText = savedInline || defaultText;
 
+                    if (savedInline && savedInline.includes('doc-comment-bubble')) {
+                        hasRevisionNotes = true;
+                    }
+
                     domainGridHtml += `
-                        <div class="review-domain-box">
-                            <span class="review-domain-label">${d.label}:</span>
+                        <div class="review-domain-box ${d.color}">
+                            <span class="review-domain-label">${d.label}</span>
                             <div class="review-selectable-text" data-class="${className}" data-student-idx="${idx}" data-domain-key="${d.key}">${displayText}</div>
                         </div>
                     `;
                 });
 
+                const statusTag = hasRevisionNotes 
+                    ? `<span style="font-size: 11px; background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; padding: 3px 8px; border-radius: 10px;">Revision Notes Added</span>`
+                    : `<span style="font-size: 11px; background: #F0FDF4; color: #16A34A; border: 1px solid #86EFAC; padding: 3px 8px; border-radius: 10px;">Draft Complete</span>`;
+
                 card.innerHTML = `
-                    <div class="student-review-name">
-                        <span>${idx + 1}. ${st.full} (${st.nick}) - Grade: ${st.grade}</span>
+                    <div class="student-review-header" onclick="toggleDirectorCardBody(${idx})">
+                        <span>${idx + 1}. ${st.full} (${st.nick}) — ${st.grade}</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            ${statusTag}
+                            <span class="collapse-icon" id="dirCardIcon_${idx}">▲</span>
+                        </div>
                     </div>
-                    <div class="review-domain-grid">
+                    <div class="review-domain-grid" id="dirCardBody_${idx}">
                         ${domainGridHtml}
                     </div>
                 `;
@@ -1933,28 +2068,61 @@ ${teacherName}`;
             });
         }
 
-        /* SINGLE GLOBAL SUBMIT BUTTON FOR DIRECTOR */
+        function toggleDirectorCardBody(idx) {
+            const body = document.getElementById(`dirCardBody_${idx}`);
+            const icon = document.getElementById(`dirCardIcon_${idx}`);
+            if (body.style.display === 'none') {
+                body.style.display = 'grid';
+                icon.textContent = '▲';
+            } else {
+                body.style.display = 'none';
+                icon.textContent = '▼';
+            }
+        }
+
+        function toggleAllDirectorCards(shouldExpand) {
+            const cards = document.querySelectorAll('.student-review-card');
+            cards.forEach((_, idx) => {
+                const body = document.getElementById(`dirCardBody_${idx}`);
+                const icon = document.getElementById(`dirCardIcon_${idx}`);
+                if (body && icon) {
+                    body.style.display = shouldExpand ? 'grid' : 'none';
+                    icon.textContent = shouldExpand ? '▲' : '▼';
+                }
+            });
+        }
+
+        function filterDirectorStudents() {
+            const query = document.getElementById('directorSearchInput').value.toLowerCase();
+            const className = document.getElementById('directorClassSelect').value;
+            const list = studentDatabase[className] || [];
+
+            list.forEach((st, idx) => {
+                const card = document.getElementById(`dirStudentCard_${idx}`);
+                if (card) {
+                    const matches = st.full.toLowerCase().includes(query) || st.nick.toLowerCase().includes(query);
+                    card.style.display = matches ? 'block' : 'none';
+                }
+            });
+        }
+
+        /* SUBMIT DIRECTOR COMMENTS TO TEACHERS */
         function sendAllDirectorCommentsToTeacher() {
             const className = document.getElementById('directorClassSelect').value;
             const portalLink = window.location.href;
 
             const subject = `Weekly Recap Feedback & Revisions - ${className} Class`;
-            const body = `Dear Teacher,
+            const body = `Dear Teachers,
 
-I have reviewed the Weekly Recap narrations for ${className} Class and added inline comments/feedback directly on the portal.
+I have reviewed the Weekly Recap narrations for ${className} Class and added inline comments directly on the Director Portal.
 
-Please open the Director Portal to view the highlighted notes and revisions:
+Please access the portal to review the highlighted feedback notes and make the necessary updates:
 ${portalLink}
 
 Warm regards,
 Director`;
 
             openGmailWebCompose("", subject, body);
-        }
-
-        function prepareAndPrint() {
-            syncTextToMirrors();
-            window.print();
         }
     </script>
 </body>
