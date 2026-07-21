@@ -56,21 +56,16 @@
         .collage-12 { bottom: -4%; right: -2%; width: 25vw; height: 34vh; transform: rotate(3deg); }
 
         /* LOGIN VIEW STYLES */
-        .login-wrapper {
-            min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 20px;
-        }
-
+        .login-wrapper { min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-card {
             background: var(--glass-bg); backdrop-filter: blur(16px);
             border-radius: 28px; padding: 45px 40px; max-width: 480px; width: 100%;
             text-align: center; box-shadow: 0 20px 50px rgba(122, 28, 28, 0.22);
             border: 3.5px solid var(--mws-maroon); display: flex; flex-direction: column; align-items: center;
         }
-
         .login-logo { max-width: 220px; height: auto; margin-bottom: 20px; }
         .login-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 24px; color: var(--mws-maroon); margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.8px; }
         .login-subtitle { font-size: 14px; color: #64748B; margin-bottom: 25px; line-height: 1.5; }
-
         .portal-btn-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
 
         .btn-google-login {
@@ -83,7 +78,6 @@
         .btn-google-login:hover { border-color: var(--mws-maroon); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(122, 28, 28, 0.12); }
         .btn-director-login { background: var(--mws-maroon); color: #FFFFFF; border-color: var(--mws-maroon); }
         .btn-director-login:hover { background: var(--mws-maroon-dark); color: #FFFFFF; }
-
         .google-icon-svg { width: 20px; height: 20px; }
 
         /* GOOGLE AUTHENTICATION POPUP MODAL */
@@ -176,7 +170,7 @@
         }
         .btn-ai-gen:hover { transform: scale(1.04); opacity: 0.95; }
 
-        /* REPORT SHEET WITH ENLARGED & DENSE TRANSLUCENT PAPER COLLAGE */
+        /* REPORT SHEET WITH TRANSLUCENT PAPER COLLAGE */
         .report-wrapper { max-width: 1100px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 35px; }
         
         .page-sheet { 
@@ -265,16 +259,29 @@
         .narrative-box-right { flex-grow: 1; display: flex; flex-direction: column; gap: 4px; }
         .card-inline-header { display: flex; justify-content: space-between; align-items: center; }
 
-        textarea { width: 100%; height: 100%; min-height: 155px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 12px; resize: vertical; font-family: 'Quicksand', -apple-system, sans-serif; font-size: 14.5px; line-height: 1.45; padding: 10px 14px; box-sizing: border-box; outline: none; background: #FFFFFF; color: var(--text-dark); }
+        textarea { width: 100%; height: 100%; min-height: 140px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 12px; resize: vertical; font-family: 'Quicksand', -apple-system, sans-serif; font-size: 14.5px; line-height: 1.45; padding: 10px 14px; box-sizing: border-box; outline: none; background: #FFFFFF; color: var(--text-dark); }
         textarea:focus { border-color: var(--mws-maroon); }
 
-        .print-text-mirror { display: none; width: 100%; background: #FFFFFF; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; color: var(--text-dark); min-height: 150px; }
+        .print-text-mirror { display: none; width: 100%; background: #FFFFFF; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; color: var(--text-dark); min-height: 140px; }
         .teacher-notes-full { width: 100%; display: flex; flex-direction: column; gap: 4px; }
-        .teacher-notes-full textarea { min-height: 150px; }
 
         .user-sync-status {
             font-size: 11px; font-weight: 700; color: #16A34A; background: #EFE; padding: 4px 8px; border-radius: 6px; border: 1px solid #86EFAC; display: inline-flex; align-items: center; gap: 4px;
         }
+
+        /* DIRECTOR FEEDBACK ALERT BANNER IN TEACHER PORTAL */
+        .director-feedback-banner {
+            display: none; background: #FEF2F2; border: 1.5px solid #FCA5A5;
+            border-radius: 12px; padding: 10px 14px; font-size: 12.5px; color: #991B1B;
+            margin-bottom: 8px; line-height: 1.4; position: relative;
+        }
+        .director-feedback-banner strong { font-size: 13px; color: var(--mws-maroon); }
+        .btn-resolve-feedback {
+            margin-top: 6px; background: #16A34A; color: white; border: none;
+            padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+        }
+        .btn-resolve-feedback:hover { background: #15803D; }
 
         /* DIRECTOR PORTAL & GOOGLE DOCS STYLE COMMENTING */
         .director-portal-wrapper {
@@ -306,9 +313,15 @@
             background-color: #FEF08A; border-bottom: 2px solid #CA8A04; padding: 2px 4px; border-radius: 4px; position: relative;
         }
         .doc-comment-bubble {
-            display: block; background: #FEFCE8; border: 1.5px solid #FDE047; color: #854D0E;
+            display: flex; align-items: center; justify-content: space-between;
+            background: #FEFCE8; border: 1.5px solid #FDE047; color: #854D0E;
             font-size: 11.5px; font-weight: 600; padding: 6px 10px; border-radius: 8px; margin-top: 6px;
         }
+        .btn-delete-comment {
+            background: #EF4444; color: white; border: none; padding: 2px 8px; border-radius: 6px;
+            font-size: 10px; font-weight: bold; cursor: pointer; margin-left: 8px; transition: background 0.15s ease;
+        }
+        .btn-delete-comment:hover { background: #DC2626; }
 
         /* EDITABLE PREVIEW TEXTAREA IN CONFIRMATION MODAL */
         .editable-preview-textarea {
@@ -344,7 +357,7 @@
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; }
             @page { size: A4 portrait; margin: 8mm; }
             body { background: white !important; padding: 0 !important; }
-            .bg-collage-container, .control-panel, .login-wrapper, .btn-ai-gen, .director-portal-wrapper, .modal-overlay, .floating-comment-btn { display: none !important; }
+            .bg-collage-container, .control-panel, .login-wrapper, .btn-ai-gen, .director-portal-wrapper, .modal-overlay, .floating-comment-btn, .director-feedback-banner { display: none !important; }
             #teacherAppView { display: block !important; }
             .report-wrapper { margin: 0 !important; padding: 0 !important; gap: 0 !important; max-width: 100% !important; }
             .page-sheet { box-shadow: none !important; border: 5px solid var(--mws-maroon) !important; border-radius: 16px !important; padding: 20px 24px !important; margin-bottom: 0 !important; background-color: #FFFFFF !important; }
@@ -384,7 +397,7 @@
     <div class="login-wrapper" id="loginView">
         <div class="login-card">
             <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="login-logo" alt="Millennia Logo">
-            <h1 class="login-title">Millennia Portal Login</h1>
+            <h1 class="login-title">Weekly Recap Dashboard</h1>
             <p class="login-subtitle">Please select your portal to sign in using your official school Google account (@millennia21.id).</p>
             
             <div class="portal-btn-grid">
@@ -436,7 +449,7 @@
     <div class="modal-overlay" id="confirmSubmitModal">
         <div class="modal-google-box">
             <button class="btn-modal-close" onclick="closeConfirmSubmitModal()" title="Exit">&times;</button>
-            <h3 class="modal-google-title" style="color: var(--mws-maroon); margin-bottom: 8px;">Confirm Submission to Ms. Mahrukh</h3>
+            <h3 class="modal-google-title" style="color: var(--mws-maroon); margin-bottom: 8px;">Confirm Submission to Director</h3>
             <p style="font-size: 13px; color: #475569; margin-top: 0; margin-bottom: 5px;">
                 You are about to notify Ms. Mahrukh via Gmail Web that narrations for all students in this class have been completed. You may edit the email text below before launching Gmail:
             </p>
@@ -477,9 +490,9 @@
                 <div class="input-group">
                     <label>Select Class:</label>
                     <select id="classSelect" onchange="onClassChange();">
-                        <option value="MAUNA KEA">MAUNA KEA Class</option>
-                        <option value="SNOWDON">SNOWDON Class</option>
-                        <option value="DJEBEL CHELIA">DJEBEL CHELIA Class</option>
+                        <option value="MAUNA KEA">MAUNA KEA Class (Diya & Yunda)</option>
+                        <option value="SNOWDON">SNOWDON Class (Widya & Sindy)</option>
+                        <option value="DJEBEL CHELIA">DJEBEL CHELIA Class (Afi & Nanda)</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -517,41 +530,41 @@
                 <span>Master Narration Hub (Auto-Generate {name})</span>
             </div>
             <p style="font-size: 13px; color: #16A34A; margin: 0 0 10px 0; font-weight: bold;">
-                Tip: Write notes or click "AI Generate" to instantly create positive, clear report-card narrations for {name}!
+                Tip: Enter key observation words or quick notes, then click "AI Generate" (click repeatedly for fresh, unique, and dynamic variations in Millennia tone)!
             </p>
 
             <div class="master-narrations-grid">
                 <div class="master-item">
                     <label>Connection to God: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterGod', 'Connection to God')">AI Generate</button></label>
-                    <textarea id="masterGod" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} joined in morning prayers quietly..."></textarea>
+                    <textarea id="masterGod" oninput="handleUserTextInput('masterGod'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., morning prayers, calm reflection..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Connection to Self: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterSelf', 'Connection to Self')">AI Generate</button></label>
-                    <textarea id="masterSelf" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} showed good independence..."></textarea>
+                    <textarea id="masterSelf" oninput="handleUserTextInput('masterSelf'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., independent arrival, managing shoes..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Connection to Others: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterOthers', 'Connection to Others')">AI Generate</button></label>
-                    <textarea id="masterOthers" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} played kindly with friends..."></textarea>
+                    <textarea id="masterOthers" oninput="handleUserTextInput('masterOthers'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., sharing building blocks, helping friends..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Connection to Nature: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterNature', 'Connection to Nature')">AI Generate</button></label>
-                    <textarea id="masterNature" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} helped care for plants..."></textarea>
+                    <textarea id="masterNature" oninput="handleUserTextInput('masterNature'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., watering garden, outdoor cleanup..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Rational (Resional): <button class="btn-ai-gen" onclick="triggerAIGenerate('masterRational', 'Rational')">AI Generate</button></label>
-                    <textarea id="masterRational" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} followed learning instructions well..."></textarea>
+                    <textarea id="masterRational" oninput="handleUserTextInput('masterRational'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., identifying letter B sounds, counting..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Imaginal: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterImaginal', 'Imaginal')">AI Generate</button></label>
-                    <textarea id="masterImaginal" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} enjoyed drawing and art activities..."></textarea>
+                    <textarea id="masterImaginal" oninput="handleUserTextInput('masterImaginal'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., drawing family picture, pretend play..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Physical: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterPhysical', 'Physical')">AI Generate</button></label>
-                    <textarea id="masterPhysical" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="{name} stayed active during playground time..."></textarea>
+                    <textarea id="masterPhysical" oninput="handleUserTextInput('masterPhysical'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., running games, scissor fine motor skills..."></textarea>
                 </div>
                 <div class="master-item">
                     <label>Parental Support: <button class="btn-ai-gen" onclick="triggerAIGenerate('masterTeacher', 'Parental Support')">AI Generate</button></label>
-                    <textarea id="masterTeacher" oninput="applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Parents can encourage {name} at home by practicing daily routines together..."></textarea>
+                    <textarea id="masterTeacher" oninput="handleUserTextInput('masterTeacher'); applyMasterNarrations(); saveActiveStudentDraft();" placeholder="Enter key points e.g., practice daily routines, reading together..."></textarea>
                 </div>
             </div>
 
@@ -695,11 +708,14 @@
                                     <img id="imgGod" style="display:none;" alt="God Photo">
                                 </div>
                                 <div class="narrative-box-right">
+                                    <!-- DIRECTOR FEEDBACK BANNER -->
+                                    <div class="director-feedback-banner" id="fb_txtGod"></div>
+
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #854D0E;">Narration:</span>
                                         <button class="btn-ai-gen" onclick="triggerAIGenerate('txtGod', 'Connection to God')">AI Generate</button>
                                     </div>
-                                    <textarea id="txtGod" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Morning prayers, gratitude, quiet reflection..."></textarea>
+                                    <textarea id="txtGod" oninput="handleUserTextInput('txtGod'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Morning prayers, gratitude, quiet reflection..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtGod"></div>
                                 </div>
                             </div>
@@ -714,11 +730,13 @@
                                     <img id="imgSelf" style="display:none;" alt="Self Photo">
                                 </div>
                                 <div class="narrative-box-right">
+                                    <div class="director-feedback-banner" id="fb_txtSelf"></div>
+
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #9F1239;">Narration:</span>
                                         <button class="btn-ai-gen" onclick="triggerAIGenerate('txtSelf', 'Connection to Self')">AI Generate</button>
                                     </div>
-                                    <textarea id="txtSelf" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Independence, self-awareness, personal routines..."></textarea>
+                                    <textarea id="txtSelf" oninput="handleUserTextInput('txtSelf'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Independence, self-awareness, personal routines..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtSelf"></div>
                                 </div>
                             </div>
@@ -742,11 +760,13 @@
                                     <img id="imgOthers" style="display:none;" alt="Others Photo">
                                 </div>
                                 <div class="narrative-box-right">
+                                    <div class="director-feedback-banner" id="fb_txtOthers"></div>
+
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #075985;">Narration:</span>
                                         <button class="btn-ai-gen" onclick="triggerAIGenerate('txtOthers', 'Connection to Others')">AI Generate</button>
                                     </div>
-                                    <textarea id="txtOthers" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Playing nicely, sharing toys, helping classmates..."></textarea>
+                                    <textarea id="txtOthers" oninput="handleUserTextInput('txtOthers'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Playing nicely, sharing toys, helping classmates..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtOthers"></div>
                                 </div>
                             </div>
@@ -761,11 +781,13 @@
                                     <img id="imgNature" style="display:none;" alt="Nature Photo">
                                 </div>
                                 <div class="narrative-box-right">
+                                    <div class="director-feedback-banner" id="fb_txtNature"></div>
+
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #166534;">Narration:</span>
                                         <button class="btn-ai-gen" onclick="triggerAIGenerate('txtNature', 'Connection to Nature')">AI Generate</button>
                                     </div>
-                                    <textarea id="txtNature" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Caring for plants, outdoor play, environmental awareness..."></textarea>
+                                    <textarea id="txtNature" oninput="handleUserTextInput('txtNature'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Caring for plants, outdoor play, environmental awareness..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtNature"></div>
                                 </div>
                             </div>
@@ -782,11 +804,13 @@
                                     <img id="imgRational" style="display:none;" alt="Rational Photo">
                                 </div>
                                 <div class="narrative-box-right">
+                                    <div class="director-feedback-banner" id="fb_txtRational"></div>
+
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #6B21A8;">Narration:</span>
                                         <button class="btn-ai-gen" onclick="triggerAIGenerate('txtRational', 'Rational')">AI Generate</button>
                                     </div>
-                                    <textarea id="txtRational" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Following directions, counting, listening to stories..."></textarea>
+                                    <textarea id="txtRational" oninput="handleUserTextInput('txtRational'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Following directions, counting, listening to stories..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtRational"></div>
                                 </div>
                             </div>
@@ -810,11 +834,13 @@
                                     <img id="imgImaginal" style="display:none;" alt="Imaginal Photo">
                                 </div>
                                 <div class="narrative-box-right">
+                                    <div class="director-feedback-banner" id="fb_txtImaginal"></div>
+
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #155E75;">Narration:</span>
                                         <button class="btn-ai-gen" onclick="triggerAIGenerate('txtImaginal', 'Imaginal')">AI Generate</button>
                                     </div>
-                                    <textarea id="txtImaginal" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Drawing, building, pretend play, music..."></textarea>
+                                    <textarea id="txtImaginal" oninput="handleUserTextInput('txtImaginal'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Drawing, building, pretend play, music..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtImaginal"></div>
                                 </div>
                             </div>
@@ -829,11 +855,13 @@
                                     <img id="imgPhysical" style="display:none;" alt="Physical Photo">
                                 </div>
                                 <div class="narrative-box-right">
+                                    <div class="director-feedback-banner" id="fb_txtPhysical"></div>
+
                                     <div class="card-inline-header">
                                         <span style="font-size: 11px; font-weight: bold; color: #9A3412;">Narration:</span>
                                         <button class="btn-ai-gen" onclick="triggerAIGenerate('txtPhysical', 'Physical')">AI Generate</button>
                                     </div>
-                                    <textarea id="txtPhysical" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Running, jumping, fine motor activities, playground games..."></textarea>
+                                    <textarea id="txtPhysical" oninput="handleUserTextInput('txtPhysical'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Running, jumping, fine motor activities, playground games..."></textarea>
                                     <div class="print-text-mirror" id="mirrorTxtPhysical"></div>
                                 </div>
                             </div>
@@ -843,11 +871,13 @@
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Parental Support</div>
                             <div class="teacher-notes-full">
+                                <div class="director-feedback-banner" id="fb_txtTeacher"></div>
+
                                 <div class="card-inline-header">
                                     <span style="font-size: 11px; font-weight: bold; color: #C2410C;">Home Guidance & Support:</span>
                                     <button class="btn-ai-gen" onclick="triggerAIGenerate('txtTeacher', 'Parental Support')">AI Generate</button>
                                 </div>
-                                <textarea id="txtTeacher" oninput="syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Simple, practical ways parents can support learning and routines at home..."></textarea>
+                                <textarea id="txtTeacher" oninput="handleUserTextInput('txtTeacher'); syncTextToMirrors(); saveActiveStudentDraft();" placeholder="Simple, practical ways parents can support learning and routines at home..."></textarea>
                                 <div class="print-text-mirror" id="mirrorTxtTeacher"></div>
                             </div>
                         </div>
@@ -857,7 +887,7 @@
         </div>
     </div>
 
-    <!-- VIEW 3: DIRECTOR EXCLUSIVE PORTAL (SINGLE GLOBAL SUBMIT BUTTON) -->
+    <!-- VIEW 3: DIRECTOR EXCLUSIVE PORTAL -->
     <div id="directorAppView" style="display: none;">
         <div class="director-portal-wrapper">
             <div class="director-header">
@@ -868,10 +898,10 @@
                 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                     <div class="user-profile-badge">
                         <img src="https://lh3.googleusercontent.com/d/1CWmoNniOHc0oaghEeoXrxOlz78rvKULx" class="user-avatar" alt="User Avatar">
-                        <span id="directorNameDisplay">Mahrukh Bashir</span>
+                        <span id="directorNameDisplay">Director</span>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
-                    <!-- SINGLE GLOBAL BULK SUBMIT BUTTON FOR MS MAHRUKH -->
+                    <!-- SINGLE GLOBAL BULK SUBMIT BUTTON FOR DIRECTOR -->
                     <button class="btn-action btn-submit-director" onclick="sendAllDirectorCommentsToTeacher()">
                         Send All Class Comments to Teacher via Gmail
                     </button>
@@ -882,9 +912,9 @@
                 <div class="input-group">
                     <label>Select Class for Review:</label>
                     <select id="directorClassSelect" onchange="renderDirectorReviewList()">
-                        <option value="MAUNA KEA">MAUNA KEA Class</option>
-                        <option value="SNOWDON">SNOWDON Class</option>
-                        <option value="DJEBEL CHELIA">DJEBEL CHELIA Class</option>
+                        <option value="MAUNA KEA">MAUNA KEA Class (Diya & Yunda)</option>
+                        <option value="SNOWDON">SNOWDON Class (Widya & Sindy)</option>
+                        <option value="DJEBEL CHELIA">DJEBEL CHELIA Class (Afi & Nanda)</option>
                     </select>
                 </div>
             </div>
@@ -895,19 +925,22 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        /* AUTHORIZED TEACHERS & PRINCIPAL MAP */
+        /* AUTHORIZED HOMEROOM TEACHERS PAIRS */
         const allowedTeachersList = {
-            "latifah@millennia21.id": "latifah",
-            "nanda@millennia21.id": "nanda",
-            "widya@millennia21.id": "widya",
-            "aprimaputri@millennia21.id": "yunda",
             "diya@millennia21.id": "diya",
+            "aprimaputri@millennia21.id": "yunda",
+            "widya@millennia21.id": "widya",
             "sindy@millennia21.id": "sindy",
+            "afiyanti.hardiansari@millennia21.id": "afi",
+            "nanda@millennia21.id": "nanda",
+            "latifah@millennia21.id": "latifah",
             "anggie@millennia21.id": "anggie",
             "ikarahayu@millennia21.id": "ika",
-            "afiyanti.hardiansari@millennia21.id": "afi",
             "hana.sajidah@millennia21.id": "ana"
         };
+
+        /* OFFICIAL DIRECTOR EMAIL ACCESS */
+        const DIRECTOR_EMAIL = "mahrukh@millennia21.id";
 
         const studentDatabase = {
             "MAUNA KEA": [
@@ -1005,12 +1038,14 @@
         let activePaperPhotos = [...defaultPaperPhotos];
         let activePortalMode = "TEACHER";
         let activeSelectedTarget = null;
+        
+        // Track last generated template per field to force fresh variations on repeated clicks!
+        const lastTemplateIndices = {};
 
-        /* ISOLATED STORAGE KEY PER EMAIL ADDRESS */
-        function getStudentStorageKey(email, className, studentIndex) {
-            const cleanEmail = (email || 'shared').toLowerCase().trim().replace(/[^a-z0-9]/g, '_');
+        /* UNIFIED CLASS DRAFT KEY FOR CO-HOMEROOM TEACHERS */
+        function getStudentStorageKey(className, studentIndex) {
             const cleanClass = className.replace(/\s+/g, '_');
-            return `mws_recap_v12_${cleanEmail}_${cleanClass}_std${studentIndex}`;
+            return `mws_recap_v21_${cleanClass}_std${studentIndex}`;
         }
 
         /* GMAIL WEB DIRECT LAUNCHER */
@@ -1030,7 +1065,7 @@
                 activePortalMode = savedRole || 'TEACHER';
 
                 if (activePortalMode === 'DIRECTOR') {
-                    document.getElementById('directorNameDisplay').textContent = savedName || 'Mahrukh Bashir';
+                    document.getElementById('directorNameDisplay').textContent = savedName || 'Director';
                     document.getElementById('loginView').style.display = 'none';
                     document.getElementById('directorAppView').style.display = 'block';
                     renderDirectorReviewList();
@@ -1087,8 +1122,8 @@
             }
 
             if (activePortalMode === 'DIRECTOR') {
-                if (email !== 'mahrukh@millennia21.id' || name.toLowerCase() !== 'mahrukh bashir') {
-                    errorBanner.textContent = "Access Denied: Combination must match Director records (Mahrukh Bashir & mahrukh@millennia21.id).";
+                if (email !== DIRECTOR_EMAIL) {
+                    errorBanner.textContent = `Access Denied: Director login requires official director email address (${DIRECTOR_EMAIL}).`;
                     errorBanner.style.display = 'block';
                     return;
                 }
@@ -1107,7 +1142,6 @@
             localStorage.setItem('mws_is_logged_in', 'true');
             currentTeacherEmail = email;
 
-            /* CLEAR FORM BEFORE LOADING SPECIFIC USER DATA */
             resetFormFieldsOnly();
 
             document.getElementById('googleModal').style.display = 'none';
@@ -1133,7 +1167,6 @@
             localStorage.removeItem('mws_user_role');
             currentTeacherEmail = "";
 
-            /* CLEAR UI SCREEN MEMORY ON LOGOUT */
             resetFormFieldsOnly();
 
             document.getElementById('teacherAppView').style.display = 'none';
@@ -1247,7 +1280,7 @@
                 document.getElementById('displayClass').textContent = `Class: ${selectedClass}`;
                 document.getElementById('displayPeriod').textContent = `Period: ${document.getElementById('weekTerm').value}`;
                 
-                loadStudentDraft(currentTeacherEmail, selectedClass, activeStudentIndex);
+                loadStudentDraft(selectedClass, activeStudentIndex);
             }
         }
 
@@ -1287,6 +1320,15 @@
             saveActiveStudentDraft();
         }
 
+        function handleUserTextInput(fieldId) {
+            const el = document.getElementById(fieldId);
+            if (el) {
+                // If teacher edits text manually, clear the AI flag so new text becomes rawKeywords seed
+                el.dataset.isAiGenerated = "false";
+                el.dataset.rawKeywords = el.value.trim();
+            }
+        }
+
         function applyMasterNarrations() {
             const nick = currentStudent.nick || 'Student';
             const keys = [
@@ -1301,9 +1343,15 @@
             ];
             
             keys.forEach(k => {
-                const masterText = document.getElementById(k.master).value;
+                const masterEl = document.getElementById(k.master);
+                const masterText = masterEl ? masterEl.value : "";
                 if (masterText !== "") {
-                    document.getElementById(k.target).value = masterText.replace(/\{name\}/gi, nick);
+                    const targetEl = document.getElementById(k.target);
+                    if (targetEl) {
+                        targetEl.value = masterText.replace(/\{name\}/gi, nick);
+                        targetEl.dataset.rawKeywords = masterText.replace(/\{name\}/gi, nick);
+                        targetEl.dataset.isAiGenerated = "false";
+                    }
                 }
             });
             syncTextToMirrors();
@@ -1318,18 +1366,30 @@
             });
         }
 
-        /* INSTANT AI GENERATOR */
+        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE (V21 FIX) */
         function triggerAIGenerate(targetFieldId, categoryName) {
             const studentNick = currentStudent.nick || 'the student';
-            let currentContent = document.getElementById(targetFieldId).value.trim();
+            const textarea = document.getElementById(targetFieldId);
+            let currentVal = textarea.value.trim();
 
-            if (!currentContent) {
-                currentContent = prompt(`AI Narration Generator (${categoryName})\n\nEnter quick notes/assessment for ${studentNick}:\n(e.g., "independent, helpful during clean up, active listener")`);
-                if (!currentContent) return;
+            // Store original teacher keywords in dataset if not present or if edited manually
+            if (!textarea.dataset.rawKeywords || textarea.dataset.isAiGenerated !== "true") {
+                textarea.dataset.rawKeywords = currentVal;
             }
 
-            const generatedProse = generateHumanReportNarration(categoryName, studentNick, currentContent);
-            document.getElementById(targetFieldId).value = generatedProse;
+            let baseKeywords = textarea.dataset.rawKeywords;
+
+            if (!baseKeywords || baseKeywords.trim() === "") {
+                baseKeywords = prompt(`AI Generator (${categoryName})\n\nEnter key words or observation notes for ${studentNick}:`);
+                if (!baseKeywords) return;
+                textarea.dataset.rawKeywords = baseKeywords.trim();
+            }
+
+            // Generate fresh variation using preserved rawKeywords seed
+            const generatedProse = generateDynamicProse(categoryName, studentNick, textarea.dataset.rawKeywords, targetFieldId);
+            
+            textarea.value = generatedProse;
+            textarea.dataset.isAiGenerated = "true"; // Mark as AI generated
 
             if (targetFieldId.startsWith('master')) {
                 applyMasterNarrations();
@@ -1339,56 +1399,181 @@
             saveActiveStudentDraft();
         }
 
-        function generateHumanReportNarration(category, name, notes) {
-            const cleanNotes = notes.toLowerCase();
+        function generateDynamicProse(category, name, rawNotes, fieldId) {
+            if (!rawNotes || !rawNotes.trim()) return "";
 
-            const phraseBank = {
-                "Connection to God": [
-                    `${name} joined in morning prayers and quiet reflection time nicely this week. ${name} ${cleanNotes.includes('pray') ? 'participated attentively during prayers' : 'showed good respect during spiritual routines'}.`,
-                    `${name} demonstrated good respect during daily morning reflection. ${name} continues to show kindness and gentle behavior toward others.`
-                ],
-                "Connection to Self": [
-                    `${name} showed good independence during classroom activities this week. ${name} ${notes}, managing daily tasks smoothly and taking care of personal belongings.`,
-                    `${name} is growing more confident in completing work independently. ${name} follows daily routines well and expresses needs clearly.`
-                ],
-                "Connection to Others": [
-                    `${name} played nicely with classmates and shared learning materials willingly. ${name} ${notes}, showing good cooperation and kindness during group activities.`,
-                    `${name} interacted warmly with friends this week. ${name} listened to classmates during circle time and joined in shared play time happily.`
-                ],
-                "Connection to Nature": [
-                    `${name} enjoyed outdoor time and showed care for our school surroundings. ${name} ${notes}, taking simple steps to help keep our play area tidy.`,
-                    `${name} showed good interest in nature activities. ${name} helped care for classroom plants and explored outdoor surroundings respectfully.`
-                ],
-                "Rational": [
-                    `${name} followed instructions well and completed learning activities step-by-step. ${name} ${notes}, showing good steady progress in daily tasks.`,
-                    `${name} engaged well in counting and story time activities. ${name} listened attentively and answered questions during group discussions.`
-                ],
-                "Imaginal": [
-                    `${name} enjoyed creative activities such as drawing, building, and pretend play. ${name} ${notes}, expressing thoughts clearly through hands-on art.`,
-                    `${name} showed good imagination during art and play time. ${name} enjoyed making crafts and sharing creative ideas with classmates.`
-                ],
-                "Physical": [
-                    `${name} stayed active and participated well in outdoor games. ${name} ${notes}, demonstrating good balance and motor movement during playtime.`,
-                    `${name} enjoyed playground and physical movement activities. ${name} practiced fine motor skills like cutting and gripping pencils with good effort.`
-                ],
-                "Parental Support": [
-                    `Parents can support ${name} at home by practicing simple daily routines together and talking about school activities. Encouraging ${name} to pack school items independently will also build helpful self-reliance habits.`,
-                    `To support ${name}'s progress at home, parents are encouraged to read short stories together daily and practice counting household items during play time.`
-                ]
+            // 1. Clean & strip superlatives
+            let cleanKW = rawNotes.trim().replace(/\{name\}/gi, name);
+            const superlativesPattern = /\b(super|best|most|perfect|flawless|outstanding|exceptional|amazing|extreme|unbeatable)\b/gi;
+            cleanKW = cleanKW.replace(superlativesPattern, "").replace(/\s+/g, ' ').trim();
+
+            let kw = cleanKW.toLowerCase().replace(/[.!?]+$/, '');
+
+            // 2. Positive developmental reframing
+            kw = kw.replace(/\b(needs help with|struggles with|cannot do|has trouble with|still can't|unable to|hard time)\b/gi, "is developing skills in")
+                   .replace(/\b(needs to|has to)\b/gi, "is gently guided to");
+
+            // Helper: Pick a random element guarantee different from last time
+            const pickDifferent = (arr, key) => {
+                const lastIdx = lastTemplateIndices[key] !== undefined ? lastTemplateIndices[key] : -1;
+                let nextIdx = Math.floor(Math.random() * arr.length);
+                if (arr.length > 1 && nextIdx === lastIdx) {
+                    nextIdx = (nextIdx + 1) % arr.length;
+                }
+                lastTemplateIndices[key] = nextIdx;
+                return arr[nextIdx];
             };
 
-            const options = phraseBank[category] || [
-                `${name} showed steady progress and good participation this week. ${name} ${notes}, demonstrating a positive learning attitude.`
-            ];
+            // 3. Domain Multi-Template Pools (Strictly Millennia Style, No Superlatives)
+            const frameworks = {
+                "Connection to God": {
+                    openers: [
+                        `${name} engaged thoughtfully during spiritual reflection, particularly while ${kw}.`,
+                        `It was encouraging to observe ${name} participating in morning prayers and quiet reflection as ${name} ${kw}.`,
+                        `${name} demonstrated a calm and respectful presence this week through ${kw}.`,
+                        `During moments of gratitude and quiet devotion, ${name} showed meaningful involvement as ${name} ${kw}.`,
+                        `In our daily spiritual routines, ${name} displayed a gentle mindfulness, especially when ${kw}.`
+                    ],
+                    closers: [
+                        `This quiet focus supports ${name}'s emotional grounding and spiritual awareness.`,
+                        `${name} continues to nurture a reverent and peaceful attitude in class activities.`,
+                        `We appreciate ${name}'s respectful participation and calm presence during these routines.`,
+                        `This mindful engagement fosters ${name}'s personal connection and inner quietude.`
+                    ]
+                },
+                "Connection to Self": {
+                    openers: [
+                        `${name} showed positive self-reliance and personal growth this week by ${kw}.`,
+                        `It was wonderful to see ${name} taking active ownership of daily routines, especially while ${kw}.`,
+                        `${name} demonstrated growing self-awareness and independence as ${name} ${kw}.`,
+                        `Building healthy habits of personal autonomy, ${name} focused on ${kw}.`,
+                        `Taking pride in individual tasks, ${name} actively practiced ${kw}.`
+                    ],
+                    closers: [
+                        `This consistent effort helps ${name} build confidence and strong self-management skills.`,
+                        `${name} is developing a healthy sense of independence in the classroom.`,
+                        `Continued daily practice will further solidify ${name}'s personal confidence.`,
+                        `We celebrate ${name}'s steady growth in managing personal responsibilities.`
+                    ]
+                },
+                "Connection to Others": {
+                    openers: [
+                        `${name} contributed positively to group interactions and social harmony by ${kw}.`,
+                        `${name} demonstrated thoughtful cooperation with peers this week, particularly while ${kw}.`,
+                        `In collaborative group play, ${name} practiced empathy and sharing through ${kw}.`,
+                        `It was lovely to observe ${name} interacting warmly with classmates as ${name} ${kw}.`,
+                        `Fostering positive social connections, ${name} joined friends in ${kw}.`
+                    ],
+                    closers: [
+                        `${name}'s considerate behavior helps cultivate a supportive classroom community.`,
+                        `These positive social habits enable ${name} to form meaningful friendships.`,
+                        `${name} continues to learn the value of active teamwork and kindness.`,
+                        `We encourage ${name} to keep sharing and engaging positively with classmates.`
+                    ]
+                },
+                "Connection to Nature": {
+                    openers: [
+                        `${name} explored our outdoor environment with genuine curiosity, actively ${kw}.`,
+                        `${name} showed a caring and observant attitude toward nature while ${kw}.`,
+                        `During outdoor discovery time, ${name} engaged meaningfully with the surroundings through ${kw}.`,
+                        `Observing the natural world, ${name} participated eagerly in ${kw}.`,
+                        `${name} demonstrated environmental awareness and gentle care as ${name} ${kw}.`
+                    ],
+                    closers: [
+                        `This hands-on outdoor exploration deepens ${name}'s respect for living things.`,
+                        `${name} is cultivating a thoughtful appreciation for the environment.`,
+                        `Outdoor learning continues to enrich ${name}'s sensory discovery and awareness.`,
+                        `We look forward to seeing ${name}'s curiosity about nature grow even further.`
+                    ]
+                },
+                "Rational": {
+                    openers: [
+                        `${name} exercised clear focus and problem-solving skills this week while ${kw}.`,
+                        `In cognitive tasks, ${name} demonstrated active listening and logical thinking, particularly during ${kw}.`,
+                        `${name} processed new learning concepts thoughtfully as ${name} engaged in ${kw}.`,
+                        `Working through structured learning exercises, ${name} showed steady application in ${kw}.`,
+                        `Demonstrating active curiosity, ${name} explored mathematical and language concepts through ${kw}.`
+                    ],
+                    closers: [
+                        `This focused approach supports ${name}'s cognitive advancement and critical thinking.`,
+                        `${name} approaches new intellectual tasks with steady effort and curiosity.`,
+                        `Continued practice will further consolidate ${name}'s concept mastery.`,
+                        `We are pleased with ${name}'s structured thinking and learning determination.`
+                    ]
+                },
+                "Imaginal": {
+                    openers: [
+                        `${name} expressed creative ideas and artistic effort this week by ${kw}.`,
+                        `During imaginative play and creative expression, ${name} shared original concepts while ${kw}.`,
+                        `${name} brought unique imaginative ideas into project time through ${kw}.`,
+                        `Exploring creative mediums and storytelling, ${name} engaged expressively in ${kw}.`,
+                        `In art and role-play activities, ${name} demonstrated enthusiastic creativity as ${name} ${kw}.`
+                    ],
+                    closers: [
+                        `This creative exploration allows ${name} to communicate ideas with confidence.`,
+                        `${name}'s imaginative spirit adds wonderful energy to our group activities.`,
+                        `We warmly encourage ${name} to keep exploring diverse creative outlets.`,
+                        `Artistic expression helps ${name} convey thoughts and feelings in unique ways.`
+                    ]
+                },
+                "Physical": {
+                    openers: [
+                        `${name} displayed active physical movement and motor coordination while ${kw}.`,
+                        `In active play and physical exercises, ${name} practiced strength and balance through ${kw}.`,
+                        `${name} engaged enthusiastically in motor skill development, particularly when ${kw}.`,
+                        `Working on body control and fine motor dexterity, ${name} practiced ${kw}.`,
+                        `${name} participated energetically in movement activities, actively trying ${kw}.`
+                    ],
+                    closers: [
+                        `Regular physical play strengthens ${name}'s overall movement confidence.`,
+                        `${name} continues to build refined control in both fine and gross motor tasks.`,
+                        `Active movement keeps ${name} energized, healthy, and focused throughout the day.`,
+                        `This physical practice contributes greatly to ${name}'s body awareness and balance.`
+                    ]
+                },
+                "Parental Support": {
+                    openers: [
+                        `To support ${name}'s ongoing journey, parents are encouraged to gently reinforce ${kw} at home.`,
+                        `A simple and effective way to guide ${name} at home is through consistent practice with ${kw}.`,
+                        `At home, parents can partner with us by offering positive encouragement in ${kw}.`,
+                        `Creating predictable daily routines for ${name} around ${kw} will provide great continuity.`,
+                        `Continuing conversations and practice at home regarding ${kw} will wonderfully support ${name}.`
+                    ],
+                    closers: [
+                        `Consistent home routines help strengthen ${name}'s classroom confidence and independence.`,
+                        `Thank you for your warm partnership in nurturing ${name}'s developmental progress.`,
+                        `Gentle home guidance will continue to build ${name}'s comfort and skill mastery.`,
+                        `Your collaboration at home plays an important role in ${name}'s holistic growth.`
+                    ]
+                }
+            };
 
-            return options[Math.floor(Math.random() * options.length)];
+            const selectedDomain = frameworks[category] || {
+                openers: [`${name} showed positive involvement and steady effort this week while ${kw}.`],
+                closers: [`${name} continues to make steady progress across daily activities.`]
+            };
+
+            // Pick different opener and closer
+            const selectedOpener = pickDifferent(selectedDomain.openers, fieldId + '_opener');
+            const selectedCloser = pickDifferent(selectedDomain.closers, fieldId + '_closer');
+
+            // 4. Grammar & Syntax Cleanup
+            const sanitize = (text) => {
+                return text
+                    .replace(/\s+/g, ' ')                   // Clean double spaces
+                    .replace(/\s+([,.!?])/g, '$1')           // Remove space before punctuation
+                    .replace(/([.!?])\s*([a-z])/g, (m, p1, p2) => p1 + ' ' + p2.toUpperCase()) // Capitalize sentence start
+                    .replace(/\b(a)\s+([aeiou])/gi, 'an $2')  // Correct "a" vs "an"
+                    .trim();
+            };
+
+            return sanitize(`${selectedOpener} ${selectedCloser}`);
         }
 
-        /* AUTO-SAVE & LOAD DRAFT PER STUDENT & PER TEACHER EMAIL */
+        /* AUTO-SAVE & LOAD DRAFT PER CLASS (SHARED HOMEROOM PAIR) */
         function saveActiveStudentDraft() {
-            if (!currentTeacherEmail) return;
             const className = document.getElementById('classSelect').value;
-            const storageKey = getStudentStorageKey(currentTeacherEmail, className, activeStudentIndex);
+            const storageKey = getStudentStorageKey(className, activeStudentIndex);
 
             const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
             const imgData = {};
@@ -1399,7 +1584,11 @@
                 }
             });
 
+            const existingRaw = localStorage.getItem(storageKey);
+            let existingDraft = existingRaw ? JSON.parse(existingRaw) : {};
+
             const draft = {
+                ...existingDraft,
                 teacherEmail: currentTeacherEmail,
                 teacherName: localStorage.getItem('mws_teacher_name') || 'Teacher',
                 studentIndex: activeStudentIndex,
@@ -1430,18 +1619,19 @@
 
             try {
                 localStorage.setItem(storageKey, JSON.stringify(draft));
-                document.getElementById('syncStatusTag').textContent = `Saved (${currentStudent.nick || 'Student'})`;
+                document.getElementById('syncStatusTag').textContent = `Class Synced (${currentStudent.nick || 'Student'})`;
             } catch (e) {
                 console.warn("Storage write limit reached", e);
             }
         }
 
-        function loadStudentDraft(email, className, studentIndex) {
-            const storageKey = getStudentStorageKey(email, className, studentIndex);
+        function loadStudentDraft(className, studentIndex) {
+            const storageKey = getStudentStorageKey(className, studentIndex);
             const raw = localStorage.getItem(storageKey);
 
+            resetFormFieldsOnly();
+
             if (!raw) {
-                resetFormFieldsOnly();
                 document.getElementById('syncStatusTag').textContent = `Workspace Ready (${currentStudent.nick})`;
                 return;
             }
@@ -1458,17 +1648,41 @@
                 }
 
                 const masters = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher'];
-                masters.forEach(m => { if (draft[m] !== undefined) document.getElementById(m).value = draft[m]; });
+                masters.forEach(m => { 
+                    if (draft[m] !== undefined) {
+                        const el = document.getElementById(m);
+                        if (el) {
+                            el.value = draft[m];
+                            el.dataset.rawKeywords = draft[m];
+                        }
+                    } 
+                });
 
                 const texts = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
-                texts.forEach(t => { if (draft[t] !== undefined) document.getElementById(t).value = draft[t]; });
-
-                const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
-                imgIds.forEach(id => {
-                    const img = document.getElementById(id);
-                    const phId = 'ph' + id.replace('img', '');
-                    if (img) { img.src = ''; img.style.display = 'none'; }
-                    if (document.getElementById(phId)) document.getElementById(phId).style.display = 'block';
+                texts.forEach(t => { 
+                    if (draft[t] !== undefined) {
+                        const el = document.getElementById(t);
+                        if (el) {
+                            el.value = draft[t];
+                            el.dataset.rawKeywords = draft[t];
+                        }
+                    }
+                    
+                    // Render Director Feedback Alert Box in Teacher Portal if comments exist
+                    const fbBanner = document.getElementById('fb_' + t);
+                    const inlineHtml = draft[t + '_inlineHtml'];
+                    
+                    if (fbBanner && inlineHtml && inlineHtml.includes('doc-comment-bubble')) {
+                        fbBanner.innerHTML = `
+                            <strong>💬 Director Revision Note:</strong>
+                            <div style="margin-top: 4px;">${inlineHtml}</div>
+                            <button class="btn-resolve-feedback" onclick="resolveDirectorFeedback('${t}')">✓ Mark as Resolved</button>
+                        `;
+                        fbBanner.style.display = 'block';
+                    } else if (fbBanner) {
+                        fbBanner.style.display = 'none';
+                        fbBanner.innerHTML = '';
+                    }
                 });
 
                 if (draft.images) {
@@ -1484,10 +1698,29 @@
                 }
 
                 syncTextToMirrors();
-                document.getElementById('syncStatusTag').textContent = `Data Loaded (${currentStudent.nick})`;
+                document.getElementById('syncStatusTag').textContent = `Class Data Loaded (${currentStudent.nick})`;
             } catch (e) {
                 console.error("Error loading student draft:", e);
             }
+        }
+
+        function resolveDirectorFeedback(domainKey) {
+            const className = document.getElementById('classSelect').value;
+            const storageKey = getStudentStorageKey(className, activeStudentIndex);
+            
+            const raw = localStorage.getItem(storageKey);
+            if (raw) {
+                let draft = JSON.parse(raw);
+                delete draft[domainKey + '_inlineHtml'];
+                localStorage.setItem(storageKey, JSON.stringify(draft));
+            }
+
+            const fbBanner = document.getElementById('fb_' + domainKey);
+            if (fbBanner) {
+                fbBanner.style.display = 'none';
+                fbBanner.innerHTML = '';
+            }
+            saveActiveStudentDraft();
         }
 
         function resetFormFieldsOnly() {
@@ -1495,7 +1728,13 @@
                             'txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
             fields.forEach(f => { 
                 const el = document.getElementById(f);
-                if (el) el.value = '';
+                if (el) {
+                    el.value = '';
+                    delete el.dataset.rawKeywords;
+                    delete el.dataset.isAiGenerated;
+                }
+                const fb = document.getElementById('fb_' + f);
+                if (fb) { fb.style.display = 'none'; fb.innerHTML = ''; }
             });
 
             const imgIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
@@ -1508,7 +1747,7 @@
             syncTextToMirrors();
         }
 
-        /* EDITABLE CONFIRMATION MODAL & SUBMISSION TO MS MAHRUKH (VIA GMAIL.COM) */
+        /* EDITABLE CONFIRMATION MODAL & SUBMISSION TO DIRECTOR (VIA GMAIL.COM) */
         function openSubmitConfirmModal() {
             saveActiveStudentDraft();
             const teacherName = localStorage.getItem('mws_teacher_name') || 'Teacher';
@@ -1516,7 +1755,7 @@
 
             const portalLink = window.location.href;
 
-            const defaultMessage = `Dear Ms. Mahrukh,
+            const defaultMessage = `Dear Director,
 
 I have completed all Weekly Recap narrations for ${className} Class. I have also updated them based on your feedback.
 
@@ -1543,10 +1782,10 @@ ${teacherName}`;
             closeConfirmSubmitModal();
 
             const emailSubject = `Weekly Recap Class Narration Completed - ${className} Class`;
-            openGmailWebCompose("mahrukh@millennia21.id", emailSubject, editedText);
+            openGmailWebCompose(DIRECTOR_EMAIL, emailSubject, editedText);
         }
 
-        /* GOOGLE DOCS STYLE INLINE TEXT HIGHLIGHT COMMENTING */
+        /* GOOGLE DOCS STYLE INLINE TEXT HIGHLIGHT & COMMENTING FOR DIRECTOR */
         function handleTextSelection() {
             if (activePortalMode !== 'DIRECTOR') return;
 
@@ -1585,12 +1824,15 @@ ${teacherName}`;
 
             const markNode = document.createElement('mark');
             markNode.className = 'doc-comment-mark';
-            markNode.title = `Ms. Mahrukh Comment: ${commentNote}`;
+            markNode.title = `Director Comment: ${commentNote}`;
             markNode.textContent = selectedText;
 
             const bubbleNode = document.createElement('span');
             bubbleNode.className = 'doc-comment-bubble';
-            bubbleNode.textContent = `💬 Ms. Mahrukh: "${commentNote}"`;
+            bubbleNode.innerHTML = `
+                <span>💬 Director: "${commentNote}"</span>
+                <button class="btn-delete-comment" onclick="deleteInlineComment(this)">🗑️ Undo</button>
+            `;
 
             range.deleteContents();
             range.insertNode(bubbleNode);
@@ -1599,18 +1841,39 @@ ${teacherName}`;
             document.getElementById('floatingCommentBtn').style.display = 'none';
             window.getSelection().removeAllRanges();
 
-            /* SAVE UPDATED HTML CONTENT TO LOCALSTORAGE */
             const box = activeSelectedTarget.box;
             const className = box.dataset.class;
             const studentIdx = box.dataset.studentIdx;
             const domainKey = box.dataset.domainKey;
-            const teacherEmail = box.dataset.teacherEmail;
 
-            saveDirectorInlineHtml(teacherEmail, className, studentIdx, domainKey, box.innerHTML);
+            saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML);
         }
 
-        function saveDirectorInlineHtml(teacherEmail, className, studentIndex, domainKey, htmlContent) {
-            const storageKey = getStudentStorageKey(teacherEmail, className, studentIndex);
+        /* UNDO / DELETE INLINE COMMENT FOR DIRECTOR */
+        function deleteInlineComment(btnElement) {
+            const bubble = btnElement.closest('.doc-comment-bubble');
+            const box = btnElement.closest('.review-selectable-text');
+
+            if (bubble) {
+                let prevMark = bubble.previousElementSibling;
+                if (prevMark && prevMark.classList.contains('doc-comment-mark')) {
+                    const originalText = prevMark.textContent;
+                    const textNode = document.createTextNode(originalText);
+                    prevMark.parentNode.replaceChild(textNode, prevMark);
+                }
+                bubble.remove();
+            }
+
+            if (box) {
+                const className = box.dataset.class;
+                const studentIdx = box.dataset.studentIdx;
+                const domainKey = box.dataset.domainKey;
+                saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML);
+            }
+        }
+
+        function saveDirectorInlineHtml(className, studentIndex, domainKey, htmlContent) {
+            const storageKey = getStudentStorageKey(className, studentIndex);
             const raw = localStorage.getItem(storageKey);
             let draft = raw ? JSON.parse(raw) : {};
             draft[domainKey + '_inlineHtml'] = htmlContent;
@@ -1626,23 +1889,9 @@ ${teacherName}`;
             container.innerHTML = '';
 
             list.forEach((st, idx) => {
-                /* FIND SPECIFIC TEACHER DRAFT FOR THIS STUDENT ACROSS KEYS */
-                let foundDraft = null;
-                let matchedTeacherEmail = currentTeacherEmail;
-
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.includes(`_${className.replace(/\s+/g, '_')}_std${idx}`)) {
-                        const raw = localStorage.getItem(key);
-                        if (raw) {
-                            foundDraft = JSON.parse(raw);
-                            matchedTeacherEmail = foundDraft.teacherEmail || matchedTeacherEmail;
-                            break;
-                        }
-                    }
-                }
-
-                let draft = foundDraft || {};
+                const storageKey = getStudentStorageKey(className, idx);
+                const raw = localStorage.getItem(storageKey);
+                let draft = raw ? JSON.parse(raw) : {};
 
                 const card = document.createElement('div');
                 card.className = 'student-review-card';
@@ -1667,7 +1916,7 @@ ${teacherName}`;
                     domainGridHtml += `
                         <div class="review-domain-box">
                             <span class="review-domain-label">${d.label}:</span>
-                            <div class="review-selectable-text" data-teacher-email="${matchedTeacherEmail}" data-class="${className}" data-student-idx="${idx}" data-domain-key="${d.key}">${displayText}</div>
+                            <div class="review-selectable-text" data-class="${className}" data-student-idx="${idx}" data-domain-key="${d.key}">${displayText}</div>
                         </div>
                     `;
                 });
@@ -1684,7 +1933,7 @@ ${teacherName}`;
             });
         }
 
-        /* SINGLE GLOBAL SUBMIT BUTTON FOR MS MAHRUKH */
+        /* SINGLE GLOBAL SUBMIT BUTTON FOR DIRECTOR */
         function sendAllDirectorCommentsToTeacher() {
             const className = document.getElementById('directorClassSelect').value;
             const portalLink = window.location.href;
@@ -1698,7 +1947,7 @@ Please open the Director Portal to view the highlighted notes and revisions:
 ${portalLink}
 
 Warm regards,
-Mahrukh Bashir`;
+Director`;
 
             openGmailWebCompose("", subject, body);
         }
