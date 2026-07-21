@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Millennia World School - Smart Automated Recap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --mws-maroon: #7A1C1C;
+            --mws-maroon-dark: #501010;
+            
+            --pastel-gold-bg: #FEFCE8;   --pastel-gold-border: #FDE047;   --pastel-gold-pill: #CA8A04;
+            --pastel-pink-bg: #FFF1F2;   --pastel-pink-border: #FDA4AF;   --pastel-pink-pill: #E11D48;
+            --pastel-blue-bg: #F0F9FF;   --pastel-blue-border: #7DD3FC;   --pastel-blue-pill: #0284C7;
+            --pastel-green-bg: #F0FDF4;  --pastel-green-border: #86EFAC;  --pastel-green-pill: #16A34A;
+            --pastel-orange-bg: #FFF7ED; --pastel-orange-border: #FDBA74; --pastel-orange-pill: #EA580C;
+            --pastel-purple-bg: #F3E8FF; --pastel-purple-border: #D8B4FE; --pastel-purple-pill: #9333EA;
+            --pastel-cyan-bg: #ECFEFF;   --pastel-cyan-border: #A5F3FC;   --pastel-cyan-pill: #0891B2;
+            --pastel-amber-bg: #FFFBEB;  --pastel-amber-border: #FDE68A;  --pastel-amber-pill: #D97706;
+
+            --text-dark: #2D3748;
+            --glass-bg: rgba(255, 255, 255, 0.96);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background-color: #F1F4F9;
+            color: var(--text-dark); margin: 0; padding: 25px 12px; min-height: 100vh;
+        }
+
+        /* EVENLY DISTRIBUTED COLLAGE BACKGROUND (TOP, MIDDLE, BOTTOM, LEFT, RIGHT) */
+        .bg-collage-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.12;
+        }
+        .collage-photo { position: absolute; border-radius: 20px; object-fit: cover; }
+        /* 1: Top Left */
+        .collage-1 { top: -2%; left: -2%; width: 30vw; height: 36vh; transform: rotate(-5deg); }
+        /* 2: Top Center */
+        .collage-2 { top: -4%; left: 35%; width: 30vw; height: 35vh; transform: rotate(3deg); }
+        /* 3: Top Right */
+        .collage-3 { top: -2%; right: -2%; width: 30vw; height: 36vh; transform: rotate(-4deg); }
+        /* 4: Middle Center */
+        .collage-4 { top: 32%; left: 33%; width: 34vw; height: 36vh; transform: rotate(2deg); }
+        /* 5: Bottom Left */
+        .collage-5 { bottom: -2%; left: -2%; width: 30vw; height: 36vh; transform: rotate(4deg); }
+        /* 6: Bottom Center */
+        .collage-6 { bottom: -4%; left: 35%; width: 30vw; height: 35vh; transform: rotate(-3deg); }
+        /* 7: Bottom Right */
+        .collage-7 { bottom: -2%; right: -2%; width: 30vw; height: 36vh; transform: rotate(5deg); }
+
+        /* LOGIN VIEW STYLES */
+        .login-wrapper {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            padding: 45px 40px;
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(122, 28, 28, 0.15);
+            border: 3px solid var(--mws-maroon);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-logo { max-width: 220px; height: auto; margin-bottom: 20px; }
+        .login-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 24px; color: var(--mws-maroon); margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.8px; }
+        .login-subtitle { font-size: 14px; color: #64748B; margin-bottom: 25px; line-height: 1.5; }
+
+        .btn-google-login {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            background: #FFFFFF; color: #374151; font-weight: 700; font-size: 15px;
+            padding: 12px 24px; border-radius: 14px; border: 2px solid #E5E7EB;
+            cursor: pointer; width: 100%; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        .btn-google-login:hover { border-color: var(--mws-maroon); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(122, 28, 28, 0.12); }
+        .google-icon-svg { width: 20px; height: 20px; }
+
+        /* GOOGLE AUTHENTICATION POPUP MODAL WITH CLOSE BUTTON */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            display: none; align-items: center; justify-content: center; z-index: 999;
+        }
+        .modal-google-box {
+            background: #FFFFFF; border-radius: 20px; padding: 30px; width: 90%; max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: left; position: relative;
+        }
+        .btn-modal-close {
+            position: absolute; top: 15px; right: 18px;
+            background: none; border: none; font-size: 24px; font-weight: 700;
+            color: #9CA3AF; cursor: pointer; line-height: 1; padding: 4px 8px;
+            border-radius: 50%; transition: all 0.2s ease;
+        }
+        .btn-modal-close:hover { color: var(--mws-maroon); background: #FFF0F2; }
+
+        .modal-google-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .modal-google-title { font-size: 18px; font-weight: 700; color: #1F2937; margin: 0; }
+        .form-input-google { width: 100%; padding: 10px 14px; border: 2px solid #E5E7EB; border-radius: 10px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .form-input-google:focus { border-color: var(--mws-maroon); }
+        .btn-modal-submit { background: var(--mws-maroon); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+        .btn-modal-submit:hover { background: var(--mws-maroon-dark); }
+        
+        /* ERROR MESSAGE CONTAINER */
+        .modal-error-banner {
+            display: none; background: #FFF1F2; border: 1px solid #FDA4AF;
+            color: #E11D48; font-size: 12.5px; font-weight: 700; padding: 8px 12px;
+            border-radius: 8px; margin-bottom: 14px; line-height: 1.4;
+        }
+
+        /* USER PROFILE BADGE */
+        .user-profile-badge {
+            display: flex; align-items: center; gap: 10px; background: #FFF0F2;
+            border: 1.5px solid #F8B4B4; padding: 6px 14px; border-radius: 20px;
+            font-size: 13px; font-weight: 700; color: var(--mws-maroon);
+        }
+        .user-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--mws-maroon); }
+        .btn-logout { background: transparent; border: 1px solid var(--mws-maroon); color: var(--mws-maroon); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px; cursor: pointer; margin-left: 6px; }
+        .btn-logout:hover { background: var(--mws-maroon); color: #FFFFFF; }
+
+        /* CONTROL PANEL & RECAP STYLES */
+        .control-panel { max-width: 1150px; margin: 0 auto 30px auto; background: var(--glass-bg); backdrop-filter: blur(12px); padding: 22px 28px; border-radius: 22px; box-shadow: 0 10px 30px rgba(122, 28, 28, 0.12); border: 2px solid var(--mws-maroon); }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #CBD5E0; padding-bottom: 12px; margin-bottom: 18px; }
+        .panel-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 22px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; }
+        .action-btn-group { display: flex; gap: 10px; align-items: center; }
+        .btn-action { color: white; border: none; padding: 10px 20px; border-radius: 12px; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 14px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
+        .btn-print { background: var(--mws-maroon); }
+        .btn-print:hover { background: var(--mws-maroon-dark); transform: translateY(-2px); }
+        .btn-download-html { background: #16A34A; }
+        .btn-download-html:hover { background: #15803D; transform: translateY(-2px); }
+
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 18px; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        .input-group label { font-weight: 700; font-size: 13px; color: var(--mws-maroon); }
+        .input-group select, .input-group input, .input-group textarea { padding: 9px 12px; border-radius: 10px; border: 2px solid #CBD5E0; font-family: inherit; font-size: 13.5px; background: #FFFFFF; outline: none; }
+        .section-subtitle-bar { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 15px; color: var(--mws-maroon); margin: 18px 0 10px 0; text-transform: uppercase; border-bottom: 2px solid var(--mws-maroon); padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+
+        .photo-grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #FFF5F5; padding: 14px; border-radius: 16px; border: 2px dashed var(--mws-maroon); }
+        .photo-card-input { background: #FFFFFF; padding: 10px; border-radius: 10px; border: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 6px; }
+        .photo-card-header { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--mws-maroon); }
+        .source-tabs { display: flex; gap: 4px; }
+        .tab-btn { font-size: 10px; padding: 3px 8px; border-radius: 5px; border: 1px solid #CBD5E0; background: #F7FAFC; cursor: pointer; font-weight: 700; }
+        .tab-btn.active { background: var(--mws-maroon); color: #FFFFFF; border-color: var(--mws-maroon); }
+
+        .master-narrations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; background: #F8FAFC; padding: 14px; border-radius: 16px; border: 2px dashed #CBD5E0; }
+        .master-item { display: flex; flex-direction: column; gap: 5px; }
+        .master-item label { font-size: 12px; font-weight: 700; color: #4A5568; }
+        .master-item textarea { height: 70px; resize: none; font-size: 12.5px; }
+
+        .report-wrapper { max-width: 1100px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 35px; }
+        .page-sheet { background-color: #FFFFFF; background-image: radial-gradient(#d4d4d4 1.5px, transparent 1.5px); background-size: 22px 22px; border-radius: 26px; box-shadow: 0 15px 40px rgba(122, 28, 28, 0.08); padding: 32px 35px; box-sizing: border-box; border: 7px solid var(--mws-maroon); position: relative; }
+        .washi-tape-corner { position: absolute; top: -10px; right: 35px; width: 130px; height: 32px; background: #FFC0CB; border: 1px dashed #FF69B4; transform: rotate(5deg); z-index: 10; }
+        .domain-section-banner { background: linear-gradient(135deg, var(--mws-maroon) 0%, var(--mws-maroon-dark) 100%); color: #FFFFFF; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 20px; border-radius: 14px; margin: 8px 0 16px 0; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(122, 28, 28, 0.18); }
+        .school-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3.5px solid var(--mws-maroon); padding-bottom: 12px; margin-bottom: 20px; background: #FFFFFF; border-radius: 14px; }
+        .logo-img { max-width: 260px; height: auto; display: block; }
+        .main-recap-title { text-align: right; }
+        .recap-big-heading { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 28px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; letter-spacing: 1.2px; display: flex; align-items: center; justify-content: flex-end; }
+        .recap-theme-subtitle { font-size: 15px; font-weight: 700; color: #555; margin-top: 3px; }
+
+        .hero-student-cover { background: #FFF0F2; border: 2.5px solid #F8B4B4; border-radius: 20px; padding: 18px 25px; margin-bottom: 20px; display: flex; align-items: center; gap: 25px; position: relative; }
+        .student-main-photo-box { width: 145px; height: 145px; border-radius: 20px; background-color: #FFFFFF; border: 4px dashed var(--mws-maroon); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
+        .tape-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 85px; height: 20px; background: #FFE680; border: 1px dashed #E6C200; z-index: 5; }
+        .student-main-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .student-main-photo-placeholder { text-align: center; font-size: 12px; color: var(--mws-maroon); font-weight: 700; padding: 6px; }
+
+        .student-details-box { display: flex; flex-direction: column; gap: 4px; flex-grow: 1; }
+        .student-nickname-big { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 42px; color: var(--mws-maroon); line-height: 1; margin: 0; letter-spacing: 1px; text-transform: uppercase; }
+        .student-fullname-text { font-size: 19px; font-weight: 700; color: #333; margin-bottom: 6px; }
+        .meta-tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .meta-tag { background: var(--mws-maroon); color: white; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 18px; text-transform: uppercase; }
+        .meta-tag.secondary { background: #FFFFFF; color: var(--mws-maroon); border: 2px solid var(--mws-maroon); }
+        .canva-sticker-badge { position: absolute; right: -10px; top: -16px; background: #FFD166; color: #7A1C1C; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 13px; padding: 8px 16px; border-radius: 25px; border: 2.5px dashed #7A1C1C; transform: rotate(6deg); display: flex; align-items: center; z-index: 10; }
+
+        .cards-column-layout { display: flex; flex-direction: column; gap: 20px; }
+        .section-card { border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; break-inside: avoid; page-break-inside: avoid; }
+        .section-card.gold   { background-color: var(--pastel-gold-bg);   border: 2px solid var(--pastel-gold-border); }
+        .section-card.pink   { background-color: var(--pastel-pink-bg);   border: 2px solid var(--pastel-pink-border); }
+        .section-card.blue   { background-color: var(--pastel-blue-bg);   border: 2px solid var(--pastel-blue-border); }
+        .section-card.green  { background-color: var(--pastel-green-bg);  border: 2px solid var(--pastel-green-border); }
+        .section-card.purple { background-color: var(--pastel-purple-bg); border: 2px solid var(--pastel-purple-border); }
+        .section-card.cyan   { background-color: var(--pastel-cyan-bg);   border: 2px solid var(--pastel-cyan-border); }
+        .section-card.amber  { background-color: var(--pastel-amber-bg);  border: 2px solid var(--pastel-amber-border); }
+        .section-card.orange { background-color: var(--pastel-orange-bg); border: 2px solid var(--pastel-orange-border); }
+
+        .card-badge-header { display: inline-flex; align-items: center; padding: 6px 16px; border-radius: 16px; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 15px; color: #FFFFFF; align-self: flex-start; text-transform: uppercase; }
+        .section-card.gold .card-badge-header   { background: var(--pastel-gold-pill); }
+        .section-card.pink .card-badge-header   { background: var(--pastel-pink-pill); }
+        .section-card.blue .card-badge-header   { background: var(--pastel-blue-pill); }
+        .section-card.green .card-badge-header  { background: var(--pastel-green-pill); }
+        .section-card.purple .card-badge-header { background: var(--pastel-purple-pill); }
+        .section-card.cyan .card-badge-header   { background: var(--pastel-cyan-pill); }
+        .section-card.amber .card-badge-header  { background: var(--pastel-amber-pill); }
+        .section-card.orange .card-badge-header { background: var(--pastel-orange-pill); }
+
+        .card-washi { position: absolute; top: -10px; right: 20px; width: 70px; height: 18px; background: #FFFFFF; border: 1px dashed #999; transform: rotate(-3deg); }
+        .card-body-horizontal { display: flex; gap: 18px; align-items: stretch; width: 100%; }
+
+        .photo-box-left { width: 260px; height: 170px; border-radius: 16px; background-color: #FFFFFF; border: 3px dashed #CBD5E0; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
+        .photo-box-left img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-placeholder { text-align: center; font-size: 13px; color: #888; font-weight: 700; padding: 8px; }
+
+        .narrative-box-right { flex-grow: 1; display: flex; flex-direction: column; }
+
+        textarea { width: 100%; height: 100%; min-height: 155px; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 12px; resize: vertical; font-family: 'Quicksand', -apple-system, sans-serif; font-size: 14.5px; line-height: 1.45; padding: 10px 14px; box-sizing: border-box; outline: none; background: #FFFFFF; color: var(--text-dark); }
+        textarea:focus { border-color: var(--mws-maroon); }
+
+        .print-text-mirror { display: none; width: 100%; background: #FFFFFF; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; color: var(--text-dark); min-height: 150px; }
+        .teacher-notes-full { width: 100%; display: flex; flex-direction: column; }
+        .teacher-notes-full textarea { min-height: 150px; }
+
+        @media screen and (max-width: 768px) {
+            body { padding: 12px 8px; }
+            .control-panel { padding: 16px; border-radius: 16px; }
+            .panel-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .action-btn-group { width: 100%; flex-direction: column; gap: 8px; }
+            .btn-action { width: 100%; justify-content: center; }
+            .page-sheet { padding: 20px 14px; border-width: 5px; border-radius: 18px; }
+            .school-header { flex-direction: column; text-align: center; gap: 10px; }
+            .logo-img { max-width: 200px; }
+            .main-recap-title { text-align: center; }
+            .recap-big-heading { justify-content: center; font-size: 22px; }
+            .hero-student-cover { flex-direction: column; text-align: center; padding: 18px 14px; gap: 14px; }
+            .canva-sticker-badge { position: relative; right: auto; top: auto; transform: none; margin-bottom: 5px; display: inline-flex; }
+            .student-details-box { align-items: center; }
+            .student-nickname-big { font-size: 32px; }
+            .meta-tags-row { justify-content: center; }
+            .card-body-horizontal { flex-direction: column; }
+            .photo-box-left { width: 100%; height: 210px; }
+            textarea { min-height: 120px; }
+        }
+
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; }
+            @page { size: A4 portrait; margin: 8mm; }
+            body { background: white !important; padding: 0 !important; }
+            .bg-collage-container, .control-panel, .login-wrapper { display: none !important; }
+            #appView { display: block !important; }
+            .report-wrapper { margin: 0 !important; padding: 0 !important; gap: 0 !important; max-width: 100% !important; }
+            .page-sheet { box-shadow: none !important; border: 5px solid var(--mws-maroon) !important; border-radius: 16px !important; padding: 20px 24px !important; margin-bottom: 0 !important; background-color: #FFFFFF !important; }
+            .page-sheet.page-2, .page-sheet.page-3 { page-break-before: always !important; break-before: page !important; margin-top: 8mm !important; }
+            .washi-tape-corner { background-color: #FFC0CB !important; }
+            .tape-top { background-color: #FFE680 !important; }
+            .canva-sticker-badge { background-color: #FFD166 !important; }
+            .hero-student-cover { background-color: #FFF0F2 !important; }
+            .domain-section-banner { background-color: var(--mws-maroon) !important; color: white !important; }
+            textarea { display: none !important; }
+            .print-text-mirror { display: block !important; }
+            .section-card { break-inside: avoid !important; page-break-inside: avoid !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- EVENLY DISTRIBUTED FULL-SCREEN COLLAGE BACKGROUND -->
+    <div class="bg-collage-container">
+        <img src="https://lh3.googleusercontent.com/d/12Qo7wDzV4vedqUciwLAVVlycx4nh6brC" class="collage-photo collage-1" alt="Bg 1">
+        <img src="https://lh3.googleusercontent.com/d/16iyq0mPzRzhWyamAGKoPF01vqj0TnE7R" class="collage-photo collage-2" alt="Bg 2">
+        <img src="https://lh3.googleusercontent.com/d/1YYHjwl1f9eKeu-W2lfFIlw8tI8lfCSms" class="collage-photo collage-3" alt="Bg 3">
+        <img src="https://lh3.googleusercontent.com/d/1dY5vtwWr0l9qhhie7i9r6SvysIfSqTla" class="collage-photo collage-4" alt="Bg 4">
+        <img src="https://lh3.googleusercontent.com/d/1o-5nQrYYYCmZK_eEguXWXACM6xZP8Ulr" class="collage-photo collage-5" alt="Bg 5">
+        <img src="https://lh3.googleusercontent.com/d/1oE88UXJ4_0MBozzwrCFc6KXJs6unqPUL" class="collage-photo collage-6" alt="Bg 6">
+        <img src="https://lh3.googleusercontent.com/d/1qXtbSvB09Tw29kt_Fq8np8bssvywmESr" class="collage-photo collage-7" alt="Bg 7">
+    </div>
+
+    <!-- VIEW 1: GOOGLE LOGIN SCREEN -->
+    <div class="login-wrapper" id="loginView">
+        <div class="login-card">
+            <img src="https://lh3.googleusercontent.com/d/1FgT-82Q6Vn6g-cm_4ExJKv8lAsIUBMp2" class="login-logo" alt="Millennia Logo">
+            <h1 class="login-title">Teacher Portal Login</h1>
+            <p class="login-subtitle">Please sign in using your official Millennia World School Google account to access student weekly recaps.</p>
+            
+            <button class="btn-google-login" onclick="openGoogleAuthModal()">
+                <svg class="google-icon-svg" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                Sign in with Google
+            </button>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE GOOGLE AUTHENTICATION MODAL (WITH EXIT X BUTTON) -->
+    <div class="modal-overlay" id="googleModal">
+        <div class="modal-google-box">
+            <!-- EXIT BUTTON -->
+            <button class="btn-modal-close" onclick="closeGoogleAuthModal()" title="Exit">&times;</button>
+
+            <div class="modal-google-header">
+                <svg class="google-icon-svg" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <h3 class="modal-google-title">Google Account Sign In</h3>
+            </div>
+
+            <!-- Validation Error Banner -->
+            <div id="modalErrorBanner" class="modal-error-banner"></div>
+
+            <label style="font-size: 12px; font-weight: 700; color: #4B5563;">Name of Teacher:</label>
+            <input type="text" id="inputTeacherName" class="form-input-google" placeholder="Enter name of teacher...">
+            
+            <label style="font-size: 12px; font-weight: 700; color: #4B5563;">School Google Email (@millennia21.id):</label>
+            <input type="email" id="inputTeacherEmail" class="form-input-google" placeholder="name@millennia21.id">
+
+            <button class="btn-modal-submit" onclick="confirmGoogleLogin()">Continue to Dashboard</button>
+        </div>
+    </div>
+
+    <!-- VIEW 2: MAIN RECAP APP -->
+    <div id="appView" style="display: none;">
+        
+        <div class="control-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Millennia World School - Teacher Portal</h2>
+                <div class="action-btn-group">
+                    <div class="user-profile-badge">
+                        <img src="https://lh3.googleusercontent.com/d/1FgT-82Q6Vn6g-cm_4ExJKv8lAsIUBMp2" class="user-avatar" id="userAvatar" alt="User">
+                        <span id="userNameDisplay">Teacher</span>
+                        <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
+                    </div>
+                    <button class="btn-action btn-download-html" onclick="downloadParentHTML()">Download HTML</button>
+                    <button class="btn-action btn-print" onclick="prepareAndPrint()">Export / Print PDF</button>
+                </div>
+            </div>
+
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Select Class:</label>
+                    <select id="classSelect" onchange="onClassChange()">
+                        <option value="MAUNA KEA">MAUNA KEA Class</option>
+                        <option value="SNOWDON">SNOWDON Class</option>
+                        <option value="DJEBEL CHELIA">DJEBEL CHELIA Class</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Select Student:</label>
+                    <select id="studentSelect" onchange="onStudentSelect()"></select>
+                </div>
+                <div class="input-group">
+                    <label>Theme Title:</label>
+                    <input type="text" id="themeInput" value="ALL ABOUT ME" oninput="updateThemeTitle()">
+                </div>
+                <div class="input-group">
+                    <label>Week / Date / Term:</label>
+                    <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo()">
+                </div>
+            </div>
+
+            <div class="section-subtitle-bar">
+                <span>Master Narration Hub (Auto-Generate {name})</span>
+            </div>
+            <p style="font-size: 13px; color: #16A34A; margin: 0 0 10px 0; font-weight: bold;">
+                *Tip: Use {name} in the text below. The text will AUTOMATICALLY update and populate the report below as you type!
+            </p>
+
+            <div class="master-narrations-grid">
+                <div class="master-item">
+                    <label>Connection to God:</label>
+                    <textarea id="masterGod" oninput="applyMasterNarrations()" placeholder="{name} actively participated in morning prayers..."></textarea>
+                </div>
+                <div class="master-item">
+                    <label>Connection to Self:</label>
+                    <textarea id="masterSelf" oninput="applyMasterNarrations()" placeholder="{name} demonstrated independence..."></textarea>
+                </div>
+                <div class="master-item">
+                    <label>Connection to Others:</label>
+                    <textarea id="masterOthers" oninput="applyMasterNarrations()" placeholder="{name} interacted warmly with peers..."></textarea>
+                </div>
+                <div class="master-item">
+                    <label>Connection to Nature:</label>
+                    <textarea id="masterNature" oninput="applyMasterNarrations()" placeholder="{name} cared for plants outdoors..."></textarea>
+                </div>
+                <div class="master-item">
+                    <label>Rational (Resional):</label>
+                    <textarea id="masterRational" oninput="applyMasterNarrations()" placeholder="{name} demonstrated logic and reasoning in class..."></textarea>
+                </div>
+                <div class="master-item">
+                    <label>Imaginal:</label>
+                    <textarea id="masterImaginal" oninput="applyMasterNarrations()" placeholder="{name} showed great creativity and imagination..."></textarea>
+                </div>
+                <div class="master-item">
+                    <label>Physical:</label>
+                    <textarea id="masterPhysical" oninput="applyMasterNarrations()" placeholder="{name} engaged actively in outdoor physical games..."></textarea>
+                </div>
+                <div class="master-item">
+                    <label>Teacher's Notes:</label>
+                    <textarea id="masterTeacher" oninput="applyMasterNarrations()" placeholder="Great learning progress this week, {name}! Keep up the amazing work!"></textarea>
+                </div>
+            </div>
+
+            <div class="section-subtitle-bar">
+                <span>Upload Photos (Local File OR Paste GDrive Link)</span>
+            </div>
+
+            <div class="photo-grid-inputs">
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Profile Photo:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-Profile" onclick="togglePhotoSource('Profile', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-Profile" onclick="togglePhotoSource('Profile', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-Profile"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgProfile')"></div>
+                    <div id="src-drive-Profile" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgProfile')"></div>
+                </div>
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Connection to God:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-God" onclick="togglePhotoSource('God', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-God" onclick="togglePhotoSource('God', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-God"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgGod')"></div>
+                    <div id="src-drive-God" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgGod')"></div>
+                </div>
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Connection to Self:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-Self" onclick="togglePhotoSource('Self', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-Self" onclick="togglePhotoSource('Self', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-Self"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgSelf')"></div>
+                    <div id="src-drive-Self" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgSelf')"></div>
+                </div>
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Connection to Others:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-Others" onclick="togglePhotoSource('Others', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-Others" onclick="togglePhotoSource('Others', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-Others"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgOthers')"></div>
+                    <div id="src-drive-Others" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgOthers')"></div>
+                </div>
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Connection to Nature:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-Nature" onclick="togglePhotoSource('Nature', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-Nature" onclick="togglePhotoSource('Nature', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-Nature"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgNature')"></div>
+                    <div id="src-drive-Nature" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgNature')"></div>
+                </div>
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Rational:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-Rational" onclick="togglePhotoSource('Rational', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-Rational" onclick="togglePhotoSource('Rational', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-Rational"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgRational')"></div>
+                    <div id="src-drive-Rational" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgRational')"></div>
+                </div>
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Imaginal:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-Imaginal" onclick="togglePhotoSource('Imaginal', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-Imaginal" onclick="togglePhotoSource('Imaginal', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-Imaginal"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgImaginal')"></div>
+                    <div id="src-drive-Imaginal" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgImaginal')"></div>
+                </div>
+                <div class="photo-card-input">
+                    <div class="photo-card-header">
+                        <span>Physical:</span>
+                        <div class="source-tabs">
+                            <button class="tab-btn active" id="tab-file-Physical" onclick="togglePhotoSource('Physical', 'file')">File</button>
+                            <button class="tab-btn" id="tab-drive-Physical" onclick="togglePhotoSource('Physical', 'drive')">GDrive Link</button>
+                        </div>
+                    </div>
+                    <div id="src-file-Physical"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgPhysical')"></div>
+                    <div id="src-drive-Physical" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgPhysical')"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN REPORT WRAPPER -->
+        <div class="report-wrapper" id="reportWrapper">
+            <div class="page-sheet page-1">
+                <div class="washi-tape-corner"></div>
+
+                <div class="school-header">
+                    <img src="https://lh3.googleusercontent.com/d/1FgT-82Q6Vn6g-cm_4ExJKv8lAsIUBMp2" class="logo-img" alt="Millennia Logo">
+                    <div class="main-recap-title">
+                        <h1 class="recap-big-heading">WEEKLY RECAP</h1>
+                        <div class="recap-theme-subtitle">Theme: <span id="displayThemeTitle">ALL ABOUT ME</span></div>
+                    </div>
+                </div>
+
+                <div class="hero-student-cover">
+                    <div class="canva-sticker-badge">STUDENT OF THE WEEK</div>
+                    <div class="student-main-photo-box">
+                        <div class="tape-top"></div>
+                        <div class="student-main-photo-placeholder" id="phProfile">Upload Main Photo</div>
+                        <img id="imgProfile" style="display:none;" alt="Student Profile Photo">
+                    </div>
+                    <div class="student-details-box">
+                        <h2 class="student-nickname-big" id="displayNick">ANNA</h2>
+                        <div class="student-fullname-text" id="displayFullName">Aelianna Madeena Mecca</div>
+                        <div class="meta-tags-row">
+                            <span class="meta-tag" id="displayGrade">Grade: Pre K</span>
+                            <span class="meta-tag secondary" id="displayClass">Class: MAUNA KEA</span>
+                            <span class="meta-tag secondary" id="displayPeriod">Period: Week 3, Term 1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="domain-section-banner">SPIRITUALITY</div>
+
+                <div class="cards-column-layout">
+                    <div class="section-card gold">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Connection to God</div>
+                        <div class="card-body-horizontal">
+                            <div class="photo-box-left">
+                                <div class="photo-placeholder" id="phGod">Activity Photo</div>
+                                <img id="imgGod" style="display:none;" alt="God Photo">
+                            </div>
+                            <div class="narrative-box-right">
+                                <textarea id="txtGod" oninput="syncTextToMirrors()" placeholder="Morning prayers, gratitude, moral values..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtGod"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card pink">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Connection to Self</div>
+                        <div class="card-body-horizontal">
+                            <div class="photo-box-left">
+                                <div class="photo-placeholder" id="phSelf">Activity Photo</div>
+                                <img id="imgSelf" style="display:none;" alt="Self Photo">
+                            </div>
+                            <div class="narrative-box-right">
+                                <textarea id="txtSelf" oninput="syncTextToMirrors()" placeholder="Independence, self-awareness..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtSelf"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-sheet page-2">
+                <div class="washi-tape-corner"></div>
+
+                <div class="cards-column-layout">
+                    <div class="section-card blue">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Connection to Others</div>
+                        <div class="card-body-horizontal">
+                            <div class="photo-box-left">
+                                <div class="photo-placeholder" id="phOthers">Activity Photo</div>
+                                <img id="imgOthers" style="display:none;" alt="Others Photo">
+                            </div>
+                            <div class="narrative-box-right">
+                                <textarea id="txtOthers" oninput="syncTextToMirrors()" placeholder="Social interactions, sharing..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtOthers"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card green">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Connection to Nature</div>
+                        <div class="card-body-horizontal">
+                            <div class="photo-box-left">
+                                <div class="photo-placeholder" id="phNature">Activity Photo</div>
+                                <img id="imgNature" style="display:none;" alt="Nature Photo">
+                            </div>
+                            <div class="narrative-box-right">
+                                <textarea id="txtNature" oninput="syncTextToMirrors()" placeholder="Caring for plants, environmental..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtNature"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="domain-section-banner">DOMAINS OF DEVELOPMENT</div>
+
+                    <div class="section-card purple">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Rational</div>
+                        <div class="card-body-horizontal">
+                            <div class="photo-box-left">
+                                <div class="photo-placeholder" id="phRational">Activity Photo</div>
+                                <img id="imgRational" style="display:none;" alt="Rational Photo">
+                            </div>
+                            <div class="narrative-box-right">
+                                <textarea id="txtRational" oninput="syncTextToMirrors()" placeholder="Logical thinking, problem solving, literacy & numeracy..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtRational"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-sheet page-3">
+                <div class="washi-tape-corner"></div>
+
+                <div class="cards-column-layout">
+                    <div class="section-card cyan">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Imaginal</div>
+                        <div class="card-body-horizontal">
+                            <div class="photo-box-left">
+                                <div class="photo-placeholder" id="phImaginal">Activity Photo</div>
+                                <img id="imgImaginal" style="display:none;" alt="Imaginal Photo">
+                            </div>
+                            <div class="narrative-box-right">
+                                <textarea id="txtImaginal" oninput="syncTextToMirrors()" placeholder="Creative expression, art, music, imaginative play..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtImaginal"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card amber">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Physical</div>
+                        <div class="card-body-horizontal">
+                            <div class="photo-box-left">
+                                <div class="photo-placeholder" id="phPhysical">Activity Photo</div>
+                                <img id="imgPhysical" style="display:none;" alt="Physical Photo">
+                            </div>
+                            <div class="narrative-box-right">
+                                <textarea id="txtPhysical" oninput="syncTextToMirrors()" placeholder="Gross motor, fine motor skills, outdoor activities..."></textarea>
+                                <div class="print-text-mirror" id="mirrorTxtPhysical"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card orange">
+                        <div class="card-washi"></div>
+                        <div class="card-badge-header">Teacher's Notes</div>
+                        <div class="teacher-notes-full">
+                            <textarea id="txtTeacher" oninput="syncTextToMirrors()" placeholder="Overall notes, milestones, and encouragement for the week..."></textarea>
+                            <div class="print-text-mirror" id="mirrorTxtTeacher"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        function openGoogleAuthModal() {
+            document.getElementById('modalErrorBanner').style.display = 'none';
+            document.getElementById('googleModal').style.display = 'flex';
+        }
+
+        function closeGoogleAuthModal() {
+            document.getElementById('modalErrorBanner').style.display = 'none';
+            document.getElementById('googleModal').style.display = 'none';
+        }
+
+        function confirmGoogleLogin() {
+            const nameInput = document.getElementById('inputTeacherName');
+            const emailInput = document.getElementById('inputTeacherEmail');
+            const errorBanner = document.getElementById('modalErrorBanner');
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim().toLowerCase();
+
+            // Clear previous errors
+            errorBanner.style.display = 'none';
+
+            // Validation 1: Blank Name
+            if (!name) {
+                errorBanner.textContent = "Please enter name of teacher.";
+                errorBanner.style.display = 'block';
+                nameInput.focus();
+                return;
+            }
+
+            // Validation 2: Blank Email
+            if (!email) {
+                errorBanner.textContent = "Please enter your school email address.";
+                errorBanner.style.display = 'block';
+                emailInput.focus();
+                return;
+            }
+
+            // Validation 3: Must end with @millennia21.id
+            if (!email.endsWith('@millennia21.id')) {
+                errorBanner.textContent = "Access Denied: You must use an official @millennia21.id email address.";
+                errorBanner.style.display = 'block';
+                emailInput.focus();
+                return;
+            }
+
+            // Success: Unlock App View
+            document.getElementById('userNameDisplay').textContent = name;
+            document.getElementById('googleModal').style.display = 'none';
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('appView').style.display = 'block';
+
+            onClassChange();
+        }
+
+        function logoutGoogle() {
+            // Reset modal inputs and error state
+            document.getElementById('inputTeacherName').value = '';
+            document.getElementById('inputTeacherEmail').value = '';
+            document.getElementById('modalErrorBanner').style.display = 'none';
+
+            document.getElementById('appView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'flex';
+        }
+
+        const studentDatabase = {
+            "MAUNA KEA": [
+                { full: "Aelianna Madeena Mecca", grade: "Pre K", nick: "Anna" },
+                { full: "Chellua Inaya Limma", grade: "Pre K", nick: "Ua" },
+                { full: "Zayyan Archie Wibowo", grade: "Pre K", nick: "Zayyan" },
+                { full: "Ken Lyon Amranareswara", grade: "Pre K", nick: "Ken" },
+                { full: "Sashika Leina Savrinadeya", grade: "K1", nick: "Ecik" },
+                { full: "Gamila Rastika Shazani", grade: "K1", nick: "Gamila" },
+                { full: "Janna Alnaira Li Adami", grade: "K1", nick: "Janna" },
+                { full: "Ganesha Cipta Maheswara", grade: "K1", nick: "Ganesha" },
+                { full: "Cavero Aydan Ranindra", grade: "K1", nick: "Cavero" },
+                { full: "Rajendra Malaka Nawasena", grade: "K1", nick: "Rajendra" },
+                { full: "Tavisha Lee Moxie", grade: "K1", nick: "Cici" },
+                { full: "Luzio Satoru Hanan", grade: "K2", nick: "Zio" },
+                { full: "Marco Tama Anderson Simanjutak", grade: "K2", nick: "Marco" },
+                { full: "Zavier Akhtar Rayyan", grade: "K2", nick: "Zavier" },
+                { full: "Alisha Kalyani Rahelia", grade: "K2", nick: "Sha" },
+                { full: "Chloe Adhel Tersya", grade: "K2", nick: "Chloe" },
+                { full: "Belvrysa Dawanas", grade: "K2", nick: "Icha" },
+                { full: "Assa Putra Wicaksono", grade: "K2", nick: "Assa" },
+                { full: "Sharif Mohamed Ayad", grade: "K2", nick: "Sharif" },
+                { full: "Muhammad Raffasya Adhryan Alfarizi", grade: "K2", nick: "Raffasya" },
+                { full: "Xerianne Kyara Siddiq", grade: "K2", nick: "Xerianne" },
+                { full: "Marisa Khaylaysa Basri", grade: "K2", nick: "Marisa" }
+            ],
+            "SNOWDON": [
+                { full: "Muhammad Shaka Paramatha Pandita", grade: "Pre K", nick: "Shaka" },
+                { full: "Marilla Una", grade: "Pre K", nick: "Una" },
+                { full: "Reiga Akmanata Pulungan", grade: "Pre K", nick: "Reiga" },
+                { full: "Megumi Putri", grade: "Pre K", nick: "Megumi" },
+                { full: "Sanvi Gia Hosea", grade: "K1", nick: "Sanvi" },
+                { full: "Jahan Yuvraag", grade: "K1", nick: "Jahan" },
+                { full: "Nafesia Faizah Fihir", grade: "K1", nick: "Nafesia" },
+                { full: "Arkatama Misha Alsaki", grade: "K1", nick: "Arka" },
+                { full: "Elshanum Xavia Arruvi", grade: "K1", nick: "Shanum" },
+                { full: "Eshma Difatya Aqila", grade: "K1", nick: "Eshma" },
+                { full: "Rainnara Maliq Akamai", grade: "K1", nick: "Rain" },
+                { full: "Harsha Daniyal Hanendra", grade: "K1", nick: "Harsha" },
+                { full: "Arellyn Raizelle Sibuea", grade: "K2", nick: "Arellyn" },
+                { full: "Serenata Svara Hati", grade: "K2", nick: "Rena" },
+                { full: "Galan Ajda Fayyadh", grade: "K2", nick: "Galan" },
+                { full: "Halwatuzahra Queen Rahma Alesha", grade: "K2", nick: "Zahra" },
+                { full: "Filippo Kennovara Subagyo", grade: "K2", nick: "Filippo" },
+                { full: "Aleena Anaviya Alfaiz", grade: "K2", nick: "Aleena" },
+                { full: "Shaqeena Aresha Athar", grade: "K2", nick: "Shaqeena" },
+                { full: "Brielle Calandra Sinulingga", grade: "K2", nick: "Brielle" },
+                { full: "Emilia Saira Asril", grade: "K2", nick: "Emilia" },
+                { full: "Lavanya Divya Jabar", grade: "K2", nick: "Lavanya" }
+            ],
+            "DJEBEL CHELIA": [
+                { full: "Arvand Arkhanza Adam", grade: "Pre K", nick: "Arvand" },
+                { full: "Raifa Yumna Hidayat", grade: "Pre K", nick: "Raifa" },
+                { full: "Daaniyaal Eiji Jabr", grade: "Pre K", nick: "Niyaal" },
+                { full: "Aisyah Shailene Hardian", grade: "K1", nick: "Aisyah" },
+                { full: "Falah Davanka Rusyid", grade: "K1", nick: "Falah" },
+                { full: "Rafalea Nasheka Hasna", grade: "K1", nick: "Lea" },
+                { full: "Inaya Mahira Hasna", grade: "K1", nick: "Naya" },
+                { full: "Alisha Amaranara Hidayat", grade: "K1", nick: "Alisha" },
+                { full: "Shaqir Mohamed Ayed", grade: "K1", nick: "Shiko" },
+                { full: "Muhammad Kaiandra Zayn Rahman", grade: "K1", nick: "Kai" },
+                { full: "Malaka Askara Rumi", grade: "K1", nick: "Kazu" },
+                { full: "Atharrazka Muhammad Adzafa", grade: "K2", nick: "Razka" },
+                { full: "Indah Nyala Aruna", grade: "K2", nick: "Nyala" },
+                { full: "Elliana Uli Sitorus", grade: "K2", nick: "Nana" },
+                { full: "Michaela Stacy Botshaft Lubis", grade: "K2", nick: "Michaela" },
+                { full: "Najma Haza Li Adami", grade: "K2", nick: "Najma" },
+                { full: "Milikena Kalani Maryam", grade: "K2", nick: "Mina" },
+                { full: "Isvara Kinandari", grade: "K2", nick: "Isvara" },
+                { full: "Skylar Raelia Effans", grade: "K2", nick: "Skylar" },
+                { full: "Nolan Ezekiel Wiratomo", grade: "K2", nick: "Nolan" },
+                { full: "Bhre Redana Kertabhumi", grade: "K2", nick: "Bhumi" },
+                { full: "Kyra Amarantine Saphira", grade: "K2", nick: "Kyra" }
+            ]
+        };
+
+        let currentStudent = {};
+
+        function onClassChange() {
+            const classSelect = document.getElementById('classSelect');
+            const studentSelect = document.getElementById('studentSelect');
+            const selectedClass = classSelect.value;
+            
+            studentSelect.innerHTML = '';
+            const list = studentDatabase[selectedClass] || [];
+            list.forEach((st, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `${st.full} (${st.grade}) - ${st.nick}`;
+                studentSelect.appendChild(opt);
+            });
+            onStudentSelect();
+        }
+
+        function onStudentSelect() {
+            const selectedClass = document.getElementById('classSelect').value;
+            const idx = document.getElementById('studentSelect').value;
+            const list = studentDatabase[selectedClass] || [];
+            
+            if (list[idx]) {
+                currentStudent = list[idx];
+                document.getElementById('displayNick').textContent = currentStudent.nick;
+                document.getElementById('displayFullName').textContent = currentStudent.full;
+                document.getElementById('displayGrade').textContent = `Grade: ${currentStudent.grade}`;
+                document.getElementById('displayClass').textContent = `Class: ${selectedClass}`;
+                document.getElementById('displayPeriod').textContent = `Period: ${document.getElementById('weekTerm').value}`;
+                
+                applyMasterNarrations();
+            }
+        }
+
+        function updateThemeTitle() { document.getElementById('displayThemeTitle').textContent = (document.getElementById('themeInput').value || 'ALL ABOUT ME').toUpperCase(); }
+        function updateMetaInfo() { document.getElementById('displayPeriod').textContent = `Period: ${document.getElementById('weekTerm').value}`; }
+
+        function togglePhotoSource(key, mode) {
+            document.getElementById(`tab-file-${key}`).classList.toggle('active', mode === 'file');
+            document.getElementById(`tab-drive-${key}`).classList.toggle('active', mode === 'drive');
+            document.getElementById(`src-file-${key}`).style.display = mode === 'file' ? 'block' : 'none';
+            document.getElementById(`src-drive-${key}`).style.display = mode === 'drive' ? 'block' : 'none';
+        }
+
+        function handleFileSelect(event, targetImgId) {
+            const img = document.getElementById(targetImgId);
+            const phId = 'ph' + targetImgId.replace('img', '');
+            if (event.target.files && event.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result; img.style.display = 'block';
+                    document.getElementById(phId).style.display = 'none';
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        function handleDriveUrl(event, targetImgId) {
+            const url = event.target.value.trim();
+            const img = document.getElementById(targetImgId);
+            const phId = 'ph' + targetImgId.replace('img', '');
+            if (!url) return;
+            let directUrl = url;
+            const driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+            if (driveMatch && driveMatch[1]) directUrl = `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+            img.src = directUrl; img.style.display = 'block'; document.getElementById(phId).style.display = 'none';
+        }
+
+        function applyMasterNarrations() {
+            const nick = currentStudent.nick || 'Student';
+            const keys = [
+                { master: 'masterGod', target: 'txtGod' },
+                { master: 'masterSelf', target: 'txtSelf' }, 
+                { master: 'masterOthers', target: 'txtOthers' },
+                { master: 'masterNature', target: 'txtNature' }, 
+                { master: 'masterRational', target: 'txtRational' }, 
+                { master: 'masterImaginal', target: 'txtImaginal' }, 
+                { master: 'masterPhysical', target: 'txtPhysical' }, 
+                { master: 'masterTeacher', target: 'txtTeacher' }
+            ];
+            
+            keys.forEach(k => {
+                const masterText = document.getElementById(k.master).value;
+                if (masterText !== "") {
+                    document.getElementById(k.target).value = masterText.replace(/\{name\}/gi, nick);
+                }
+            });
+            syncTextToMirrors();
+        }
+
+        function syncTextToMirrors() {
+            const textIds = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
+            textIds.forEach(id => {
+                const val = document.getElementById(id).value;
+                const mirror = document.getElementById('mirror' + id.charAt(0).toUpperCase() + id.slice(1));
+                if (mirror) mirror.textContent = val;
+            });
+        }
+
+        function prepareAndPrint() {
+            syncTextToMirrors();
+            window.print();
+        }
+
+        function downloadParentHTML() {
+            syncTextToMirrors();
+
+            const studentNick = currentStudent.nick || 'Student';
+            const className = document.getElementById('classSelect').value;
+            const fileName = `Weekly_Recap_${studentNick}_${className.replace(/\s+/g, '_')}.html`;
+
+            const reportClone = document.getElementById('reportWrapper').cloneNode(true);
+
+            const textareas = reportClone.querySelectorAll('textarea');
+            textareas.forEach(ta => {
+                const mirrorDiv = document.createElement('div');
+                mirrorDiv.className = 'print-text-mirror';
+                mirrorDiv.style.display = 'block';
+                mirrorDiv.style.border = '1.5px solid rgba(0,0,0,0.08)';
+                mirrorDiv.style.borderRadius = '12px';
+                mirrorDiv.style.padding = '12px 14px';
+                mirrorDiv.style.fontSize = '14px';
+                mirrorDiv.style.lineHeight = '1.45';
+                mirrorDiv.style.whiteSpace = 'pre-wrap';
+                mirrorDiv.textContent = ta.value;
+                ta.parentNode.replaceChild(mirrorDiv, ta);
+            });
+
+            const parentPageHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Millennia World School - Weekly Recap (${studentNick})</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        ${document.querySelector('style').innerHTML}
+        body { background-color: #F8FAFC; padding: 20px 10px; }
+        .control-panel, .login-wrapper { display: none !important; }
+        #appView { display: block !important; }
+        .report-wrapper { margin: 0 auto; }
+    </style>
+</head>
+<body>
+    ${reportClone.outerHTML}
+</body>
+</html>`;
+
+            const blob = new Blob([parentPageHTML], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
