@@ -200,13 +200,13 @@
         }
         .btn-ai-gen:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.45); }
 
-        /* DELETE PHOTO BUTTON STYLES */
+        /* DELETE PHOTO BUTTON STYLES (UPPER PANEL CONTROL ONLY) */
         .btn-delete-photo {
-            background: #EF4444; color: #FFFFFF; border: none; padding: 3px 8px;
-            border-radius: 6px; font-size: 10.5px; font-weight: 700; cursor: pointer;
-            transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 3px;
+            background: #EF4444; color: #FFFFFF; border: none; padding: 4px 10px;
+            border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
+            transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 4px;
         }
-        .btn-delete-photo:hover { background: #DC2626; transform: scale(1.05); }
+        .btn-delete-photo:hover { background: #DC2626; transform: scale(1.03); }
 
         /* CONTINUOUS SEAMLESS FLEXIBLE REPORT WRAPPER */
         .report-wrapper { max-width: 1000px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 20px; }
@@ -325,13 +325,13 @@
 
         .photo-placeholder { text-align: center; font-size: 13px; color: #888; font-weight: 700; padding: 8px; }
 
-        /* MINI PHOTO ADJUSTMENT CONTROL SLIDER PANEL */
+        /* REFINED CLEAN ZOOM CONTROL BAR (WITHOUT DUPLICATE DELETE BUTTON) */
         .photo-controls-bar {
-            display: flex; align-items: center; justify-content: space-between;
-            background: #FFFFFF; border: 1px solid #CBD5E0; padding: 4px 10px;
-            border-radius: 10px; font-size: 10px; font-weight: bold; color: #475569;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: #FFFFFF; border: 1px solid #CBD5E0; padding: 5px 12px;
+            border-radius: 10px; font-size: 11px; font-weight: bold; color: #475569;
         }
-        .photo-controls-bar input[type="range"] { width: 80px; height: 4px; accent-color: var(--mws-maroon); cursor: pointer; }
+        .photo-controls-bar input[type="range"] { width: 110px; height: 4px; accent-color: var(--mws-maroon); cursor: pointer; }
 
         .narrative-box-right { flex-grow: 1; display: flex; flex-direction: column; gap: 4px; }
         .card-inline-header { display: flex; justify-content: space-between; align-items: center; }
@@ -644,11 +644,7 @@
             <div class="input-grid">
                 <div class="input-group">
                     <label>Select Class:</label>
-                    <select id="classSelect" onchange="onClassChange();">
-                        <option value="MAUNA KEA">MAUNA KEA Class (Diya & Yunda)</option>
-                        <option value="SNOWDON">SNOWDON Class (Widya & Sindy)</option>
-                        <option value="DJEBEL CHELIA">DJEBEL CHELIA Class (Afi & Nanda)</option>
-                    </select>
+                    <select id="classSelect" onchange="onClassChange();"></select>
                 </div>
                 <div class="input-group">
                     <label>Select Student:</label>
@@ -737,7 +733,7 @@
                 </div>
             </div>
 
-            <!-- UPLOAD STUDENT ACTIVITY PHOTOS (COLLAPSIBLE) -->
+            <!-- UPLOAD STUDENT ACTIVITY PHOTOS (COLLAPSIBLE - PRIMARY CLEAR PHOTO CONTROLS) -->
             <div class="section-subtitle-bar" onclick="toggleAccordion('photoGridContainer', 'iconPhotoGrid')">
                 <span>Upload Student Activity Photos</span>
                 <span class="collapse-icon" id="iconPhotoGrid">▼</span>
@@ -874,9 +870,8 @@
                                 <img id="imgProfile" class="adjustable-photo-img" style="display:none;" alt="Student Profile Photo">
                             </div>
                             <div class="photo-controls-bar" style="width: 145px;">
-                                <span>Zoom:</span>
+                                <span>🔍 Zoom:</span>
                                 <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgProfile', this.value)">
-                                <button class="btn-delete-photo" onclick="deletePhoto('imgProfile')">🗑️</button>
                             </div>
                         </div>
 
@@ -907,7 +902,6 @@
                                     <div class="photo-controls-bar">
                                         <span>🔍 Zoom:</span>
                                         <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgGod', this.value)">
-                                        <button class="btn-delete-photo" onclick="deletePhoto('imgGod')">🗑️ Delete</button>
                                     </div>
                                 </div>
                                 <div class="narrative-box-right">
@@ -936,7 +930,6 @@
                                     <div class="photo-controls-bar">
                                         <span>🔍 Zoom:</span>
                                         <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgSelf', this.value)">
-                                        <button class="btn-delete-photo" onclick="deletePhoto('imgSelf')">🗑️ Delete</button>
                                     </div>
                                 </div>
                                 <div class="narrative-box-right">
@@ -965,7 +958,6 @@
                                     <div class="photo-controls-bar">
                                         <span>🔍 Zoom:</span>
                                         <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgOthers', this.value)">
-                                        <button class="btn-delete-photo" onclick="deletePhoto('imgOthers')">🗑️ Delete</button>
                                     </div>
                                 </div>
                                 <div class="narrative-box-right">
@@ -994,7 +986,6 @@
                                     <div class="photo-controls-bar">
                                         <span>🔍 Zoom:</span>
                                         <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgNature', this.value)">
-                                        <button class="btn-delete-photo" onclick="deletePhoto('imgNature')">🗑️ Delete</button>
                                     </div>
                                 </div>
                                 <div class="narrative-box-right">
@@ -1025,7 +1016,6 @@
                                     <div class="photo-controls-bar">
                                         <span>🔍 Zoom:</span>
                                         <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgRational', this.value)">
-                                        <button class="btn-delete-photo" onclick="deletePhoto('imgRational')">🗑️ Delete</button>
                                     </div>
                                 </div>
                                 <div class="narrative-box-right">
@@ -1054,7 +1044,6 @@
                                     <div class="photo-controls-bar">
                                         <span>🔍 Zoom:</span>
                                         <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgImaginal', this.value)">
-                                        <button class="btn-delete-photo" onclick="deletePhoto('imgImaginal')">🗑️ Delete</button>
                                     </div>
                                 </div>
                                 <div class="narrative-box-right">
@@ -1083,7 +1072,6 @@
                                     <div class="photo-controls-bar">
                                         <span>🔍 Zoom:</span>
                                         <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgPhysical', this.value)">
-                                        <button class="btn-delete-photo" onclick="deletePhoto('imgPhysical')">🗑️ Delete</button>
                                     </div>
                                 </div>
                                 <div class="narrative-box-right">
@@ -1195,6 +1183,23 @@
             "anggie@millennia21.id": "anggie",
             "ikarahayu@millennia21.id": "ika",
             "hana.sajidah@millennia21.id": "ana"
+        };
+
+        /* CLASS AUTHORIZATION MATRIX (ROLE-BASED CLASS ACCESS RESTRICTIONS) */
+        const teacherClassAccessMap = {
+            "diya@millennia21.id": ["MAUNA KEA"],
+            "aprimaputri@millennia21.id": ["MAUNA KEA"],
+            "ikarahayu@millennia21.id": ["MAUNA KEA"],
+
+            "widya@millennia21.id": ["SNOWDON"],
+            "sindy@millennia21.id": ["SNOWDON"],
+            "anggie@millennia21.id": ["SNOWDON"],
+
+            "afiyanti.hardiansari@millennia21.id": ["DJEBEL CHELIA"],
+            "nanda@millennia21.id": ["DJEBEL CHELIA"],
+            "hana.sajidah@millennia21.id": ["DJEBEL CHELIA"],
+
+            "latifah@millennia21.id": ["MAUNA KEA", "SNOWDON", "DJEBEL CHELIA"] // Fallback/Admin Teacher
         };
 
         /* OFFICIAL DIRECTOR CONFIDENTIAL CREDENTIALS */
@@ -1366,7 +1371,7 @@
             const cleanClass = className.replace(/\s+/g, '_');
             const weekVal = document.getElementById('weekTerm') ? document.getElementById('weekTerm').value : 'default_week';
             const cleanWeek = weekVal.replace(/[^a-zA-Z0-9]/g, '_');
-            return `mws_recap_v39_${cleanClass}_std${studentIndex}_${cleanWeek}`;
+            return `mws_recap_v41_${cleanClass}_std${studentIndex}_${cleanWeek}`;
         }
 
         /* SAVE & RESTORE GEMINI API KEY */
@@ -1385,6 +1390,34 @@
             } else {
                 const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
                 window.open(gmailUrl, '_blank');
+            }
+        }
+
+        /* DYNAMIC CLASS DROPDOWN POPULATION ACCORDING TO TEACHER AUTHORIZATION */
+        function setupClassDropdownForUser(teacherEmail) {
+            const classSelect = document.getElementById('classSelect');
+            if (!classSelect) return;
+
+            classSelect.innerHTML = '';
+            const allowedClasses = teacherClassAccessMap[teacherEmail] || ["MAUNA KEA", "SNOWDON", "DJEBEL CHELIA"];
+
+            const classDisplayNames = {
+                "MAUNA KEA": "MAUNA KEA Class (Diya, Yunda & Ika)",
+                "SNOWDON": "SNOWDON Class (Widya, Sindy & Anggie)",
+                "DJEBEL CHELIA": "DJEBEL CHELIA Class (Afi, Nanda & Ana)"
+            };
+
+            allowedClasses.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.textContent = classDisplayNames[c] || `${c} Class`;
+                classSelect.appendChild(opt);
+            });
+
+            if (allowedClasses.length === 1) {
+                classSelect.disabled = true;
+            } else {
+                classSelect.disabled = false;
             }
         }
 
@@ -1416,6 +1449,7 @@
                         document.getElementById('userEmailDisplay').textContent = session.email;
                         document.getElementById('teacherAppView').style.display = 'block';
                         renderPaperBgCollages();
+                        setupClassDropdownForUser(currentTeacherEmail);
                         onClassChange();
                     }
                     showToast(`Session Restored: Welcome back, ${session.name}!`, "🔓");
@@ -1501,7 +1535,7 @@
             }
         }
 
-        /* DELETE / CLEAR UPLOADED PHOTO FUNCTION */
+        /* DELETE / CLEAR UPLOADED PHOTO FUNCTION (PRIMARY CALL FROM PANEL) */
         function deletePhoto(imgId) {
             const img = document.getElementById(imgId);
             const phId = 'ph' + imgId.replace('img', '');
@@ -1652,6 +1686,7 @@
                 document.getElementById('userEmailDisplay').textContent = email;
                 document.getElementById('teacherAppView').style.display = 'block';
                 renderPaperBgCollages();
+                setupClassDropdownForUser(email);
                 onClassChange();
             }
             showToast(`Welcome back, ${name}!`);
