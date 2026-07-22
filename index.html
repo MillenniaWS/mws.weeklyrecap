@@ -157,6 +157,11 @@
         .btn-submit-director { background: #9333EA; }
         .btn-submit-director:hover { background: #7E22CE; transform: translateY(-2px); }
 
+        .btn-save-recap { background: #2563EB; font-size: 14px; padding: 10px 20px; }
+        .btn-save-recap:hover { background: #1D4ED8; transform: translateY(-2px); }
+        .btn-edit-recap { background: #D97706; font-size: 14px; padding: 10px 20px; }
+        .btn-edit-recap:hover { background: #B45309; transform: translateY(-2px); }
+
         .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 18px; }
         .input-group { display: flex; flex-direction: column; gap: 5px; }
         .input-group label { font-weight: 700; font-size: 12.5px; color: var(--mws-maroon); }
@@ -195,6 +200,14 @@
         }
         .btn-ai-gen:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.45); }
 
+        /* DELETE PHOTO BUTTON STYLES */
+        .btn-delete-photo {
+            background: #EF4444; color: #FFFFFF; border: none; padding: 3px 8px;
+            border-radius: 6px; font-size: 10.5px; font-weight: 700; cursor: pointer;
+            transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 3px;
+        }
+        .btn-delete-photo:hover { background: #DC2626; transform: scale(1.05); }
+
         /* CONTINUOUS SEAMLESS FLEXIBLE REPORT WRAPPER */
         .report-wrapper { max-width: 1000px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 20px; }
         
@@ -205,7 +218,7 @@
             position: relative; overflow: hidden; height: auto; min-height: fit-content;
         }
 
-        /* REPEATING ABSTRACT NATURAL ASPECT RATIO MICRO-PHOTO WALLPAPER (NO DISTORTION / ANTI-GEPENG) */
+        /* REPEATING ABSTRACT NATURAL ASPECT RATIO MICRO-PHOTO WALLPAPER */
         .sheet-collage-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100%;
             pointer-events: none; opacity: 0.14; z-index: 0; overflow: hidden;
@@ -213,7 +226,6 @@
             align-content: flex-start; justify-content: space-around;
         }
 
-        /* PROPORTIONAL MICRO PHOTOS WITH FRAMES THAT FIT INTRINSIC IMAGE RATIO */
         .sp-photo-micro {
             width: 88px; height: auto;
             object-fit: cover; border-radius: 10px; background: #FFFFFF;
@@ -221,7 +233,6 @@
             transition: transform 0.2s; box-sizing: border-box;
         }
 
-        /* ABSTRACT SLANTED ROTATIONS FOR SCRAPBOOK FEEL */
         .sp-photo-micro:nth-child(2n) { transform: rotate(-6deg) translateY(3px); }
         .sp-photo-micro:nth-child(3n) { transform: rotate(5deg) scale(0.95); }
         .sp-photo-micro:nth-child(5n) { transform: rotate(-4deg) translateX(-2px); }
@@ -243,9 +254,14 @@
         .recap-theme-subtitle { font-size: 14.5px; font-weight: 700; color: #555; margin-top: 4px; }
 
         .hero-student-cover { background: #FFF0F2; border: 2.5px solid #F8B4B4; border-radius: 20px; padding: 18px 25px; margin-bottom: 22px; display: flex; align-items: center; gap: 25px; position: relative; }
-        .student-main-photo-box { width: 145px; height: 145px; border-radius: 20px; background-color: #FFFFFF; border: 4px dashed var(--mws-maroon); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
-        .tape-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 85px; height: 20px; background: #FFE680; border: 1px dashed #E6C200; z-index: 5; }
-        .student-main-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* STUDENT MAIN PHOTO CONTAINER */
+        .student-main-photo-box { 
+            width: 145px; height: 145px; border-radius: 20px; background-color: #F8FAFC; 
+            border: 4px dashed var(--mws-maroon); display: flex; align-items: center; 
+            justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; cursor: grab;
+        }
+        .tape-top { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 85px; height: 20px; background: #FFE680; border: 1px dashed #E6C200; z-index: 5; pointer-events: none; }
         .student-main-photo-placeholder { text-align: center; font-size: 12px; color: var(--mws-maroon); font-weight: 700; padding: 6px; }
 
         .student-details-box { display: flex; flex-direction: column; gap: 4px; flex-grow: 1; }
@@ -291,9 +307,31 @@
         .card-washi { position: absolute; top: -10px; right: 20px; width: 70px; height: 18px; background: #FFFFFF; border: 1px dashed #999; transform: rotate(-3deg); }
         .card-body-horizontal { display: flex; gap: 18px; align-items: stretch; width: 100%; }
 
-        .photo-box-left { width: 260px; height: 170px; border-radius: 16px; background-color: #FFFFFF; border: 3px dashed #CBD5E0; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
-        .photo-box-left img { width: 100%; height: 100%; object-fit: cover; }
+        /* INTERACTIVE ADJUSTABLE PHOTO BOX (CORRECTED NATURAL ASPECT FIT) */
+        .photo-box-container { display: flex; flex-direction: column; gap: 6px; width: 260px; flex-shrink: 0; }
+        .photo-box-left { 
+            width: 260px; height: 175px; border-radius: 16px; 
+            background-color: #F8FAFC; border: 3px dashed #CBD5E0; 
+            display: flex; align-items: center; justify-content: center; 
+            overflow: hidden; position: relative; cursor: grab; user-select: none;
+        }
+        .photo-box-left:active { cursor: grabbing; }
+
+        .adjustable-photo-img {
+            width: 100%; height: 100%; object-fit: contain;
+            position: absolute; transform-origin: center center;
+            transition: transform 0.05s ease-out; pointer-events: none;
+        }
+
         .photo-placeholder { text-align: center; font-size: 13px; color: #888; font-weight: 700; padding: 8px; }
+
+        /* MINI PHOTO ADJUSTMENT CONTROL SLIDER PANEL */
+        .photo-controls-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #FFFFFF; border: 1px solid #CBD5E0; padding: 4px 10px;
+            border-radius: 10px; font-size: 10px; font-weight: bold; color: #475569;
+        }
+        .photo-controls-bar input[type="range"] { width: 80px; height: 4px; accent-color: var(--mws-maroon); cursor: pointer; }
 
         .narrative-box-right { flex-grow: 1; display: flex; flex-direction: column; gap: 4px; }
         .card-inline-header { display: flex; justify-content: space-between; align-items: center; }
@@ -306,6 +344,13 @@
 
         .user-sync-status {
             font-size: 11px; font-weight: 700; color: #16A34A; background: #EFE; padding: 4px 8px; border-radius: 6px; border: 1px solid #86EFAC; display: inline-flex; align-items: center; gap: 4px;
+        }
+
+        /* PER-STUDENT BOTTOM SAVE BAR STYLES */
+        .bottom-student-save-bar {
+            background: #FFFFFF; border: 2.5px solid var(--mws-maroon); border-radius: 20px;
+            padding: 16px 24px; margin-top: 25px; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 14px; box-shadow: 0 10px 25px rgba(122,28,28,0.12);
         }
 
         /* DIRECTOR FEEDBACK ALERT BANNER IN TEACHER PORTAL */
@@ -330,7 +375,6 @@
         .director-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2.5px dashed #CBD5E0; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .director-title { font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 24px; color: var(--mws-maroon); margin: 0; text-transform: uppercase; }
         
-        /* DIRECTOR SCREENING MATRIX SUMMARY BOX */
         .director-summary-box {
             background: #FFFFFF; border: 2px dashed #CBD5E0; border-radius: 18px;
             padding: 18px; margin-bottom: 22px; display: flex; flex-direction: column; gap: 12px;
@@ -351,7 +395,6 @@
         .student-status-chip.red   { background: #FEE2E2; color: #B91C1C; border-color: #FCA5A5; }
         .student-status-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
 
-        /* CLICKABLE SCREENING STATUS TOGGLE BUTTON */
         .btn-status-toggle {
             font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 12px; cursor: pointer;
             border: 1.5px solid; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 5px;
@@ -424,11 +467,14 @@
         }
         .editable-preview-textarea:focus { border-color: var(--mws-maroon); background: #FFFFFF; }
 
-        /* PDF EXPORT MODE STYLES (PRESERVE ROUNDED CORNERS & FLEXIBLE POSTER LENGTH) */
+        /* PDF EXPORT MODE STYLES */
         body.pdf-export-active { padding: 15px !important; margin: 0 !important; background: #CBD5E1 !important; }
         body.pdf-export-active .bg-collage-container,
         body.pdf-export-active .control-panel,
         body.pdf-export-active .btn-ai-gen,
+        body.pdf-export-active .btn-delete-photo,
+        body.pdf-export-active .photo-controls-bar,
+        body.pdf-export-active .bottom-student-save-bar,
         body.pdf-export-active .director-feedback-banner,
         body.pdf-export-active textarea { display: none !important; }
         
@@ -456,7 +502,7 @@
             .student-nickname-big { font-size: 32px; }
             .meta-tags-row { justify-content: center; }
             .card-body-horizontal { flex-direction: column; }
-            .photo-box-left { width: 100%; height: 210px; }
+            .photo-box-container, .photo-box-left { width: 100%; height: 210px; }
             textarea { min-height: 120px; }
         }
     </style>
@@ -564,7 +610,7 @@
             <textarea id="submitPreviewText" class="editable-preview-textarea"></textarea>
 
             <div style="display: flex; gap: 10px;">
-                <button class="btn-modal-submit" style="background: #16A34A;" onclick="executeGmailSubmission()">Open Gmail Web & Send</button>
+                <button class="btn-modal-submit" style="background: #16A34A;" onclick="executeGmailSubmission()">Open Gmail & Send</button>
                 <button class="btn-modal-submit" style="background: #64748B;" onclick="closeConfirmSubmitModal()">Cancel</button>
             </div>
         </div>
@@ -578,6 +624,7 @@
                 <div>
                     <h2 class="panel-title">Millennia World School - Teacher Portal</h2>
                     <span class="user-sync-status" id="syncStatusTag">Draft Synced</span>
+                    <span class="user-sync-status" id="modeStatusTag" style="background: #FEF3C7; color: #92400E; border-color: #FDE68A;">✏️ Editing Mode</span>
                 </div>
                 <div class="action-btn-group">
                     <div class="user-profile-badge">
@@ -588,6 +635,7 @@
                         </div>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
+
                     <button class="btn-action btn-download-pdf" onclick="downloadPDFDirect()">📥 Download PDF Report</button>
                     <button class="btn-action btn-submit-director" onclick="openSubmitConfirmModal()">Submit Class Narrations to Director</button>
                 </div>
@@ -611,12 +659,16 @@
                     <input type="text" id="themeInput" value="ALL ABOUT ME" oninput="updateThemeTitle(); saveActiveStudentDraft();">
                 </div>
                 <div class="input-group">
-                    <label>Pick Date (Auto-Calculate):</label>
+                    <label>Pick Date (Auto-Switch Week):</label>
                     <input type="date" id="datePicker" onchange="autoCalculateWeekTerm()">
                 </div>
                 <div class="input-group">
                     <label>Week / Term Output:</label>
-                    <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo(); saveActiveStudentDraft();">
+                    <input type="text" id="weekTerm" value="Week 3, Term 1 (July 2026)" oninput="updateMetaInfo(); onStudentSelect();">
+                </div>
+                <div class="input-group">
+                    <label>🔑 Gemini API Key (Optional for Real AI):</label>
+                    <input type="password" id="geminiApiKeyInput" placeholder="Paste Gemini API Key..." onchange="saveGeminiApiKey()">
                 </div>
             </div>
 
@@ -700,9 +752,11 @@
                             <button class="tab-btn" id="tab-drive-Profile" onclick="togglePhotoSource('Profile', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-Profile"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgProfile')"></div>
+                    <div id="src-file-Profile"><input type="file" id="file_imgProfile" accept="image/*" onchange="handleFileSelect(event, 'imgProfile')"></div>
                     <div id="src-drive-Profile" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgProfile')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgProfile')">🗑️ Clear Photo</button>
                 </div>
+
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Connection to God:</span>
@@ -711,9 +765,11 @@
                             <button class="tab-btn" id="tab-drive-God" onclick="togglePhotoSource('God', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-God"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgGod')"></div>
+                    <div id="src-file-God"><input type="file" id="file_imgGod" accept="image/*" onchange="handleFileSelect(event, 'imgGod')"></div>
                     <div id="src-drive-God" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgGod')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgGod')">🗑️ Clear Photo</button>
                 </div>
+
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Connection to Self:</span>
@@ -722,9 +778,11 @@
                             <button class="tab-btn" id="tab-drive-Self" onclick="togglePhotoSource('Self', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-Self"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgSelf')"></div>
+                    <div id="src-file-Self"><input type="file" id="file_imgSelf" accept="image/*" onchange="handleFileSelect(event, 'imgSelf')"></div>
                     <div id="src-drive-Self" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgSelf')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgSelf')">🗑️ Clear Photo</button>
                 </div>
+
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Connection to Others:</span>
@@ -733,9 +791,11 @@
                             <button class="tab-btn" id="tab-drive-Others" onclick="togglePhotoSource('Others', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-Others"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgOthers')"></div>
+                    <div id="src-file-Others"><input type="file" id="file_imgOthers" accept="image/*" onchange="handleFileSelect(event, 'imgOthers')"></div>
                     <div id="src-drive-Others" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgOthers')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgOthers')">🗑️ Clear Photo</button>
                 </div>
+
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Connection to Nature:</span>
@@ -744,9 +804,11 @@
                             <button class="tab-btn" id="tab-drive-Nature" onclick="togglePhotoSource('Nature', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-Nature"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgNature')"></div>
+                    <div id="src-file-Nature"><input type="file" id="file_imgNature" accept="image/*" onchange="handleFileSelect(event, 'imgNature')"></div>
                     <div id="src-drive-Nature" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgNature')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgNature')">🗑️ Clear Photo</button>
                 </div>
+
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Rational:</span>
@@ -755,9 +817,11 @@
                             <button class="tab-btn" id="tab-drive-Rational" onclick="togglePhotoSource('Rational', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-Rational"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgRational')"></div>
+                    <div id="src-file-Rational"><input type="file" id="file_imgRational" accept="image/*" onchange="handleFileSelect(event, 'imgRational')"></div>
                     <div id="src-drive-Rational" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgRational')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgRational')">🗑️ Clear Photo</button>
                 </div>
+
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Imaginal:</span>
@@ -766,9 +830,11 @@
                             <button class="tab-btn" id="tab-drive-Imaginal" onclick="togglePhotoSource('Imaginal', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-Imaginal"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgImaginal')"></div>
+                    <div id="src-file-Imaginal"><input type="file" id="file_imgImaginal" accept="image/*" onchange="handleFileSelect(event, 'imgImaginal')"></div>
                     <div id="src-drive-Imaginal" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgImaginal')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgImaginal')">🗑️ Clear Photo</button>
                 </div>
+
                 <div class="photo-card-input">
                     <div class="photo-card-header">
                         <span>Physical:</span>
@@ -777,8 +843,9 @@
                             <button class="tab-btn" id="tab-drive-Physical" onclick="togglePhotoSource('Physical', 'drive')">GDrive</button>
                         </div>
                     </div>
-                    <div id="src-file-Physical"><input type="file" accept="image/*" onchange="handleFileSelect(event, 'imgPhysical')"></div>
+                    <div id="src-file-Physical"><input type="file" id="file_imgPhysical" accept="image/*" onchange="handleFileSelect(event, 'imgPhysical')"></div>
                     <div id="src-drive-Physical" style="display:none;"><input type="text" placeholder="Paste link..." oninput="handleDriveUrl(event, 'imgPhysical')"></div>
+                    <button class="btn-delete-photo" style="margin-top:4px;" onclick="deletePhoto('imgPhysical')">🗑️ Clear Photo</button>
                 </div>
             </div>
         </div>
@@ -799,11 +866,20 @@
 
                     <div class="hero-student-cover">
                         <div class="approval-stamp-badge" id="approvalStampBadge">✓ APPROVED BY DIRECTOR</div>
-                        <div class="student-main-photo-box">
-                            <div class="tape-top"></div>
-                            <div class="student-main-photo-placeholder" id="phProfile">Upload Main Photo</div>
-                            <img id="imgProfile" style="display:none;" alt="Student Profile Photo">
+                        
+                        <div style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                            <div class="student-main-photo-box" id="box_imgProfile">
+                                <div class="tape-top"></div>
+                                <div class="student-main-photo-placeholder" id="phProfile">Upload Main Photo</div>
+                                <img id="imgProfile" class="adjustable-photo-img" style="display:none;" alt="Student Profile Photo">
+                            </div>
+                            <div class="photo-controls-bar" style="width: 145px;">
+                                <span>Zoom:</span>
+                                <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgProfile', this.value)">
+                                <button class="btn-delete-photo" onclick="deletePhoto('imgProfile')">🗑️</button>
+                            </div>
                         </div>
+
                         <div class="student-details-box">
                             <h2 class="student-nickname-big" id="displayNick">ANNA</h2>
                             <div class="student-fullname-text" id="displayFullName">Aelianna Madeena Mecca</div>
@@ -818,13 +894,21 @@
                     <div class="domain-section-banner">SPIRITUALITY</div>
 
                     <div class="cards-column-layout">
+                        <!-- CONNECTION TO GOD -->
                         <div class="section-card gold">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Connection to God</div>
                             <div class="card-body-horizontal">
-                                <div class="photo-box-left">
-                                    <div class="photo-placeholder" id="phGod">Activity Photo</div>
-                                    <img id="imgGod" style="display:none;" alt="God Photo">
+                                <div class="photo-box-container">
+                                    <div class="photo-box-left" id="box_imgGod">
+                                        <div class="photo-placeholder" id="phGod">Activity Photo</div>
+                                        <img id="imgGod" class="adjustable-photo-img" style="display:none;" alt="God Photo">
+                                    </div>
+                                    <div class="photo-controls-bar">
+                                        <span>🔍 Zoom:</span>
+                                        <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgGod', this.value)">
+                                        <button class="btn-delete-photo" onclick="deletePhoto('imgGod')">🗑️ Delete</button>
+                                    </div>
                                 </div>
                                 <div class="narrative-box-right">
                                     <div class="director-feedback-banner" id="fb_txtGod"></div>
@@ -839,13 +923,21 @@
                             </div>
                         </div>
 
+                        <!-- CONNECTION TO SELF -->
                         <div class="section-card pink">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Connection to Self</div>
                             <div class="card-body-horizontal">
-                                <div class="photo-box-left">
-                                    <div class="photo-placeholder" id="phSelf">Activity Photo</div>
-                                    <img id="imgSelf" style="display:none;" alt="Self Photo">
+                                <div class="photo-box-container">
+                                    <div class="photo-box-left" id="box_imgSelf">
+                                        <div class="photo-placeholder" id="phSelf">Activity Photo</div>
+                                        <img id="imgSelf" class="adjustable-photo-img" style="display:none;" alt="Self Photo">
+                                    </div>
+                                    <div class="photo-controls-bar">
+                                        <span>🔍 Zoom:</span>
+                                        <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgSelf', this.value)">
+                                        <button class="btn-delete-photo" onclick="deletePhoto('imgSelf')">🗑️ Delete</button>
+                                    </div>
                                 </div>
                                 <div class="narrative-box-right">
                                     <div class="director-feedback-banner" id="fb_txtSelf"></div>
@@ -860,13 +952,21 @@
                             </div>
                         </div>
 
+                        <!-- CONNECTION TO OTHERS -->
                         <div class="section-card blue">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Connection to Others</div>
                             <div class="card-body-horizontal">
-                                <div class="photo-box-left">
-                                    <div class="photo-placeholder" id="phOthers">Activity Photo</div>
-                                    <img id="imgOthers" style="display:none;" alt="Others Photo">
+                                <div class="photo-box-container">
+                                    <div class="photo-box-left" id="box_imgOthers">
+                                        <div class="photo-placeholder" id="phOthers">Activity Photo</div>
+                                        <img id="imgOthers" class="adjustable-photo-img" style="display:none;" alt="Others Photo">
+                                    </div>
+                                    <div class="photo-controls-bar">
+                                        <span>🔍 Zoom:</span>
+                                        <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgOthers', this.value)">
+                                        <button class="btn-delete-photo" onclick="deletePhoto('imgOthers')">🗑️ Delete</button>
+                                    </div>
                                 </div>
                                 <div class="narrative-box-right">
                                     <div class="director-feedback-banner" id="fb_txtOthers"></div>
@@ -881,13 +981,21 @@
                             </div>
                         </div>
 
+                        <!-- CONNECTION TO NATURE -->
                         <div class="section-card green">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Connection to Nature</div>
                             <div class="card-body-horizontal">
-                                <div class="photo-box-left">
-                                    <div class="photo-placeholder" id="phNature">Activity Photo</div>
-                                    <img id="imgNature" style="display:none;" alt="Nature Photo">
+                                <div class="photo-box-container">
+                                    <div class="photo-box-left" id="box_imgNature">
+                                        <div class="photo-placeholder" id="phNature">Activity Photo</div>
+                                        <img id="imgNature" class="adjustable-photo-img" style="display:none;" alt="Nature Photo">
+                                    </div>
+                                    <div class="photo-controls-bar">
+                                        <span>🔍 Zoom:</span>
+                                        <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgNature', this.value)">
+                                        <button class="btn-delete-photo" onclick="deletePhoto('imgNature')">🗑️ Delete</button>
+                                    </div>
                                 </div>
                                 <div class="narrative-box-right">
                                     <div class="director-feedback-banner" id="fb_txtNature"></div>
@@ -904,13 +1012,21 @@
 
                         <div class="domain-section-banner">DOMAINS OF DEVELOPMENT</div>
 
+                        <!-- RATIONAL -->
                         <div class="section-card purple">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Rational</div>
                             <div class="card-body-horizontal">
-                                <div class="photo-box-left">
-                                    <div class="photo-placeholder" id="phRational">Activity Photo</div>
-                                    <img id="imgRational" style="display:none;" alt="Rational Photo">
+                                <div class="photo-box-container">
+                                    <div class="photo-box-left" id="box_imgRational">
+                                        <div class="photo-placeholder" id="phRational">Activity Photo</div>
+                                        <img id="imgRational" class="adjustable-photo-img" style="display:none;" alt="Rational Photo">
+                                    </div>
+                                    <div class="photo-controls-bar">
+                                        <span>🔍 Zoom:</span>
+                                        <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgRational', this.value)">
+                                        <button class="btn-delete-photo" onclick="deletePhoto('imgRational')">🗑️ Delete</button>
+                                    </div>
                                 </div>
                                 <div class="narrative-box-right">
                                     <div class="director-feedback-banner" id="fb_txtRational"></div>
@@ -925,13 +1041,21 @@
                             </div>
                         </div>
 
+                        <!-- IMAGINAL -->
                         <div class="section-card cyan">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Imaginal</div>
                             <div class="card-body-horizontal">
-                                <div class="photo-box-left">
-                                    <div class="photo-placeholder" id="phImaginal">Activity Photo</div>
-                                    <img id="imgImaginal" style="display:none;" alt="Imaginal Photo">
+                                <div class="photo-box-container">
+                                    <div class="photo-box-left" id="box_imgImaginal">
+                                        <div class="photo-placeholder" id="phImaginal">Activity Photo</div>
+                                        <img id="imgImaginal" class="adjustable-photo-img" style="display:none;" alt="Imaginal Photo">
+                                    </div>
+                                    <div class="photo-controls-bar">
+                                        <span>🔍 Zoom:</span>
+                                        <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgImaginal', this.value)">
+                                        <button class="btn-delete-photo" onclick="deletePhoto('imgImaginal')">🗑️ Delete</button>
+                                    </div>
                                 </div>
                                 <div class="narrative-box-right">
                                     <div class="director-feedback-banner" id="fb_txtImaginal"></div>
@@ -946,13 +1070,21 @@
                             </div>
                         </div>
 
+                        <!-- PHYSICAL -->
                         <div class="section-card amber">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Physical</div>
                             <div class="card-body-horizontal">
-                                <div class="photo-box-left">
-                                    <div class="photo-placeholder" id="phPhysical">Activity Photo</div>
-                                    <img id="imgPhysical" style="display:none;" alt="Physical Photo">
+                                <div class="photo-box-container">
+                                    <div class="photo-box-left" id="box_imgPhysical">
+                                        <div class="photo-placeholder" id="phPhysical">Activity Photo</div>
+                                        <img id="imgPhysical" class="adjustable-photo-img" style="display:none;" alt="Physical Photo">
+                                    </div>
+                                    <div class="photo-controls-bar">
+                                        <span>🔍 Zoom:</span>
+                                        <input type="range" min="1" max="2.5" step="0.05" value="1" oninput="updatePhotoZoom('imgPhysical', this.value)">
+                                        <button class="btn-delete-photo" onclick="deletePhoto('imgPhysical')">🗑️ Delete</button>
+                                    </div>
                                 </div>
                                 <div class="narrative-box-right">
                                     <div class="director-feedback-banner" id="fb_txtPhysical"></div>
@@ -967,6 +1099,7 @@
                             </div>
                         </div>
 
+                        <!-- PARENTAL SUPPORT -->
                         <div class="section-card orange">
                             <div class="card-washi"></div>
                             <div class="card-badge-header">Parental Support</div>
@@ -982,6 +1115,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- DEDICATED PER-STUDENT BOTTOM SAVE BAR -->
+                    <div class="bottom-student-save-bar">
+                        <div>
+                            <div style="font-size: 15px; font-weight: bold; color: var(--mws-maroon);" id="studentSaveBarTitle">Save Recap for Student</div>
+                            <div style="font-size: 12px; color: #64748B;">Click save once you finish filling or adjusting photos for this student.</div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <button class="btn-action btn-save-recap" id="btnSaveMode" onclick="toggleSaveEditMode(false)">💾 Save Student Recap</button>
+                            <button class="btn-action btn-edit-recap" id="btnEditMode" style="display: none;" onclick="toggleSaveEditMode(true)">✏️ Edit Student Recap</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -1001,6 +1147,9 @@
                         <span id="directorNameDisplay">Director</span>
                         <button class="btn-logout" onclick="logoutGoogle()">Sign Out</button>
                     </div>
+                    <button class="btn-action" style="background: #0284C7;" onclick="renderDirectorReviewList(); showToast('Director Portal Synced!', '🔄');">
+                        🔄 Refresh / Sync Data
+                    </button>
                     <button class="btn-action btn-submit-director" onclick="sendAllDirectorCommentsToTeacher()">
                         Send Class Feedback to Homeroom Teachers
                     </button>
@@ -1052,19 +1201,20 @@
         const DIRECTOR_EMAIL = "mahrukh@millennia21.id";
         const DIRECTOR_PIN_SECRET = "8888";
 
+        /* UPDATED STUDENT DATABASE WITH LATEST NICKNAMES */
         const studentDatabase = {
             "MAUNA KEA": [
                 { full: "Aelianna Madeena Mecca", grade: "Pre K", nick: "Anna" },
                 { full: "Chellua Inaya Limma", grade: "Pre K", nick: "Ua" },
-                { full: "Zayyan Archie Wibowo", grade: "Pre K", nick: "Zayyan" },
-                { full: "Ken Lyon Amranareswara", grade: "Pre K", nick: "Ken" },
+                { full: "Zayyan Archie Wibowo", grade: "Pre K", nick: "Archie" },
+                { full: "Ken Lyon Amranareswara", grade: "Pre K", nick: "Lyon" },
                 { full: "Sashika Leina Savrinadeya", grade: "K1", nick: "Ecik" },
-                { full: "Gamila Rastika Shazani", grade: "K1", nick: "Gamila" },
+                { full: "Gamila Rastika Shazani", grade: "K1", nick: "Gami" },
                 { full: "Janna Alnaira Li Adami", grade: "K1", nick: "Janna" },
                 { full: "Ganesha Cipta Maheswara", grade: "K1", nick: "Ganesha" },
-                { full: "Cavero Aydan Ranindra", grade: "K1", nick: "Cavero" },
-                { full: "Rajendra Malaka Nawasena", grade: "K1", nick: "Rajendra" },
-                { full: "Tavisha Lee Moxie", grade: "K1", nick: "Cici" },
+                { full: "Cavero Aydan Ranindra", grade: "K1", nick: "Aydan" },
+                { full: "Rajendra Malaka Nawasena", grade: "K1", nick: "Jendra" },
+                { full: "Tavisha Lee Moxie", grade: "K1", nick: "Tavisha" },
                 { full: "Luzio Satoru Hanan", grade: "K2", nick: "Zio" },
                 { full: "Marco Tama Anderson Simanjutak", grade: "K2", nick: "Marco" },
                 { full: "Zavier Akhtar Rayyan", grade: "K2", nick: "Zavier" },
@@ -1073,8 +1223,8 @@
                 { full: "Belvrysa Dawanas", grade: "K2", nick: "Icha" },
                 { full: "Assa Putra Wicaksono", grade: "K2", nick: "Assa" },
                 { full: "Sharif Mohamed Ayad", grade: "K2", nick: "Sharif" },
-                { full: "Muhammad Raffasya Adhryan Alfarizi", grade: "K2", nick: "Raffasya" },
-                { full: "Xerianne Kyara Siddiq", grade: "K2", nick: "Xerianne" },
+                { full: "Muhammad Raffasya Adhryan Alfarizi", grade: "K2", nick: "Raffa" },
+                { full: "Xerianne Kyara Siddiq", grade: "K2", nick: "Xerin" },
                 { full: "Marisa Khaylaysa Basri", grade: "K2", nick: "Marisa" }
             ],
             "SNOWDON": [
@@ -1082,9 +1232,9 @@
                 { full: "Marilla Una", grade: "Pre K", nick: "Una" },
                 { full: "Reiga Akmanata Pulungan", grade: "Pre K", nick: "Reiga" },
                 { full: "Megumi Putri", grade: "Pre K", nick: "Megumi" },
-                { full: "Sanvi Gia Hosea", grade: "K1", nick: "Sanvi" },
+                { full: "Sanvi Gia Hosea", grade: "K1", nick: "Gia" },
                 { full: "Jahan Yuvraag", grade: "K1", nick: "Jahan" },
-                { full: "Nafesia Faizah Fihir", grade: "K1", nick: "Nafesia" },
+                { full: "Nafesia Faizah Fihir", grade: "K1", nick: "Nafe" },
                 { full: "Arkatama Misha Alsaki", grade: "K1", nick: "Arka" },
                 { full: "Elshanum Xavia Arruvi", grade: "K1", nick: "Shanum" },
                 { full: "Eshma Difatya Aqila", grade: "K1", nick: "Eshma" },
@@ -1093,8 +1243,8 @@
                 { full: "Arellyn Raizelle Sibuea", grade: "K2", nick: "Arellyn" },
                 { full: "Serenata Svara Hati", grade: "K2", nick: "Rena" },
                 { full: "Galan Ajda Fayyadh", grade: "K2", nick: "Galan" },
-                { full: "Halwatuzahra Queen Rahma Alesha", grade: "K2", nick: "Zahra" },
-                { full: "Filippo Kennovara Subagyo", grade: "K2", nick: "Filippo" },
+                { full: "Halwatuzahra Queen Rahma Alesha", grade: "K2", nick: "Alesha" },
+                { full: "Filippo Kennovara Subagyo", grade: "K2", nick: "Kenno" },
                 { full: "Aleena Anaviya Alfaiz", grade: "K2", nick: "Aleena" },
                 { full: "Shaqeena Aresha Athar", grade: "K2", nick: "Shaqeena" },
                 { full: "Brielle Calandra Sinulingga", grade: "K2", nick: "Brielle" },
@@ -1103,24 +1253,24 @@
             ],
             "DJEBEL CHELIA": [
                 { full: "Arvand Arkhanza Adam", grade: "Pre K", nick: "Arvand" },
-                { full: "Raifa Yumna Hidayat", grade: "Pre K", nick: "Raifa" },
+                { full: "Raifa Yumna Hidayat", grade: "Pre K", nick: "Yumna" },
                 { full: "Daaniyaal Eiji Jabr", grade: "Pre K", nick: "Niyaal" },
                 { full: "Aisyah Shailene Hardian", grade: "K1", nick: "Aisyah" },
-                { full: "Falah Davanka Rusyid", grade: "K1", nick: "Falah" },
+                { full: "Falah Davanka Rusyid", grade: "K1", nick: "Davan" },
                 { full: "Rafalea Nasheka Hasna", grade: "K1", nick: "Lea" },
                 { full: "Inaya Mahira Hasna", grade: "K1", nick: "Naya" },
                 { full: "Alisha Amaranara Hidayat", grade: "K1", nick: "Alisha" },
-                { full: "Shaqir Mohamed Ayed", grade: "K1", nick: "Shiko" },
-                { full: "Muhammad Kaiandra Zayn Rahman", grade: "K1", nick: "Kai" },
+                { full: "Shaqir Mohamed Ayed", grade: "K1", nick: "Shaqir" },
+                { full: "Muhammad Kaiandra Zayn Rahman", grade: "K1", nick: "Andra" },
                 { full: "Malaka Askara Rumi", grade: "K1", nick: "Kazu" },
                 { full: "Atharrazka Muhammad Adzafa", grade: "K2", nick: "Razka" },
                 { full: "Indah Nyala Aruna", grade: "K2", nick: "Nyala" },
                 { full: "Elliana Uli Sitorus", grade: "K2", nick: "Nana" },
-                { full: "Michaela Stacy Botshaft Lubis", grade: "K2", nick: "Michaela" },
+                { full: "Michaela Stacy Botshaft Lubis", grade: "K2", nick: "Micha" },
                 { full: "Najma Haza Li Adami", grade: "K2", nick: "Najma" },
                 { full: "Milikena Kalani Maryam", grade: "K2", nick: "Mina" },
-                { full: "Isvara Kinandari", grade: "K2", nick: "Isvara" },
-                { full: "Skylar Raelia Effans", grade: "K2", nick: "Skylar" },
+                { full: "Isvara Kinandari", grade: "K2", nick: "Kinan" },
+                { full: "Skylar Raelia Effans", grade: "K2", nick: "Sky" },
                 { full: "Nolan Ezekiel Wiratomo", grade: "K2", nick: "Nolan" },
                 { full: "Bhre Redana Kertabhumi", grade: "K2", nick: "Bhumi" },
                 { full: "Kyra Amarantine Saphira", grade: "K2", nick: "Kyra" }
@@ -1149,7 +1299,10 @@
         let activePortalMode = "TEACHER";
         let activeSelectedTarget = null;
         let toastTimeout = null;
-        
+        let isEditMode = true;
+
+        /* PHOTO TRANSFORM STATE (SCALE & SHIFT POSITIONS) */
+        const photoTransformStates = {};
         const lastTemplateIndices = {};
 
         /* ACCORDION TOGGLE HELPER */
@@ -1175,7 +1328,7 @@
             toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
-        /* FLEXIBLE POSTER PDF GENERATOR (ROUNDED CORNERS + DYNAMIC EXTENDED HEIGHT) */
+        /* FLEXIBLE POSTER PDF GENERATOR */
         function downloadPDFDirect() {
             syncTextToMirrors();
             document.body.classList.add('pdf-export-active');
@@ -1208,26 +1361,171 @@
             });
         }
 
-        /* UNIFIED CLASS DRAFT KEY */
+        /* MULTI-WEEK DYNAMIC STORAGE KEY (PER STUDENT + PER WEEK/DATE ARCHIVE) */
         function getStudentStorageKey(className, studentIndex) {
             const cleanClass = className.replace(/\s+/g, '_');
-            return `mws_recap_v35_${cleanClass}_std${studentIndex}`;
+            const weekVal = document.getElementById('weekTerm') ? document.getElementById('weekTerm').value : 'default_week';
+            const cleanWeek = weekVal.replace(/[^a-zA-Z0-9]/g, '_');
+            return `mws_recap_v39_${cleanClass}_std${studentIndex}_${cleanWeek}`;
         }
 
-        /* GMAIL WEB DIRECT LAUNCHER */
+        /* SAVE & RESTORE GEMINI API KEY */
+        function saveGeminiApiKey() {
+            const key = document.getElementById('geminiApiKeyInput').value.trim();
+            localStorage.setItem('mws_gemini_api_key', key);
+            if (key) showToast("Gemini API Key saved! Live AI activated.", "🔑");
+        }
+
+        /* SMART GMAIL LAUNCHER (MOBILE / DESKTOP) */
         function openGmailWebCompose(recipientEmail, subjectText, bodyText) {
-            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
-            window.open(gmailUrl, '_blank');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                const mailtoUrl = `mailto:${encodeURIComponent(recipientEmail)}?subject=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
+                window.location.href = mailtoUrl;
+            } else {
+                const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
+                window.open(gmailUrl, '_blank');
+            }
         }
 
-        /* ALWAYS START AT LOGIN VIEW UPON OPENING LINK */
+        /* AUTO-RESTORE ACTIVE SESSION */
         window.onload = function() {
+            document.addEventListener('selectionchange', handleTextSelection);
+            setupPhotoDragEvents();
+
+            const savedGeminiKey = localStorage.getItem('mws_gemini_api_key');
+            if (savedGeminiKey && document.getElementById('geminiApiKeyInput')) {
+                document.getElementById('geminiApiKeyInput').value = savedGeminiKey;
+            }
+
+            const savedSessionRaw = localStorage.getItem('mws_active_session');
+            if (savedSessionRaw) {
+                try {
+                    const session = JSON.parse(savedSessionRaw);
+                    currentTeacherEmail = session.email;
+                    activePortalMode = session.role;
+
+                    document.getElementById('loginView').style.display = 'none';
+
+                    if (session.role === 'DIRECTOR') {
+                        document.getElementById('directorNameDisplay').textContent = session.name;
+                        document.getElementById('directorAppView').style.display = 'block';
+                        renderDirectorReviewList();
+                    } else {
+                        document.getElementById('userNameDisplay').textContent = session.name;
+                        document.getElementById('userEmailDisplay').textContent = session.email;
+                        document.getElementById('teacherAppView').style.display = 'block';
+                        renderPaperBgCollages();
+                        onClassChange();
+                    }
+                    showToast(`Session Restored: Welcome back, ${session.name}!`, "🔓");
+                    return;
+                } catch(e) {
+                    localStorage.removeItem('mws_active_session');
+                }
+            }
+
             document.getElementById('teacherAppView').style.display = 'none';
             document.getElementById('directorAppView').style.display = 'none';
             document.getElementById('loginView').style.display = 'flex';
-
-            document.addEventListener('selectionchange', handleTextSelection);
         };
+
+        /* INTERACTIVE PHOTO DRAG & ZOOM CONTROLLER SYSTEM */
+        function setupPhotoDragEvents() {
+            const photoIds = ['imgProfile', 'imgGod', 'imgSelf', 'imgOthers', 'imgNature', 'imgRational', 'imgImaginal', 'imgPhysical'];
+            
+            photoIds.forEach(id => {
+                photoTransformStates[id] = { scale: 1, x: 0, y: 0 };
+                const box = document.getElementById('box_' + id);
+                const img = document.getElementById(id);
+                if (!box || !img) return;
+
+                let isDragging = false;
+                let startX, startY, initialX, initialY;
+
+                const startDrag = (e) => {
+                    if (img.style.display === 'none') return;
+                    isDragging = true;
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    startX = clientX;
+                    startY = clientY;
+                    initialX = photoTransformStates[id].x;
+                    initialY = photoTransformStates[id].y;
+                    box.style.cursor = 'grabbing';
+                };
+
+                const doDrag = (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    const deltaX = clientX - startX;
+                    const deltaY = clientY - startY;
+
+                    photoTransformStates[id].x = initialX + deltaX;
+                    photoTransformStates[id].y = initialY + deltaY;
+                    applyPhotoTransform(id);
+                };
+
+                const endDrag = () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        box.style.cursor = 'grab';
+                        saveActiveStudentDraft();
+                    }
+                };
+
+                box.addEventListener('mousedown', startDrag);
+                window.addEventListener('mousemove', doDrag);
+                window.addEventListener('mouseup', endDrag);
+
+                box.addEventListener('touchstart', startDrag, { passive: false });
+                window.addEventListener('touchmove', doDrag, { passive: false });
+                window.addEventListener('touchend', endDrag);
+            });
+        }
+
+        function updatePhotoZoom(imgId, scaleValue) {
+            if (!photoTransformStates[imgId]) photoTransformStates[imgId] = { scale: 1, x: 0, y: 0 };
+            photoTransformStates[imgId].scale = parseFloat(scaleValue);
+            applyPhotoTransform(imgId);
+            saveActiveStudentDraft();
+        }
+
+        function applyPhotoTransform(imgId) {
+            const img = document.getElementById(imgId);
+            const st = photoTransformStates[imgId] || { scale: 1, x: 0, y: 0 };
+            if (img) {
+                img.style.transform = `translate(${st.x}px, ${st.y}px) scale(${st.scale})`;
+            }
+        }
+
+        /* DELETE / CLEAR UPLOADED PHOTO FUNCTION */
+        function deletePhoto(imgId) {
+            const img = document.getElementById(imgId);
+            const phId = 'ph' + imgId.replace('img', '');
+            const fileInput = document.getElementById('file_' + imgId);
+
+            if (img) {
+                img.src = '';
+                img.style.display = 'none';
+            }
+
+            if (fileInput) {
+                fileInput.value = '';
+            }
+
+            if (document.getElementById(phId)) {
+                document.getElementById(phId).style.display = 'block';
+            }
+
+            photoTransformStates[imgId] = { scale: 1, x: 0, y: 0 };
+            applyPhotoTransform(imgId);
+
+            saveActiveStudentDraft();
+            showToast("Photo cleared!", "🗑️");
+        }
 
         function openAuthModal(role) {
             activePortalMode = role;
@@ -1252,11 +1550,7 @@
 
             if (role === 'DIRECTOR') {
                 pinGroup.style.display = 'block';
-                if (isRemembered) {
-                    pinInput.value = localStorage.getItem('mws_saved_director_pin') || '';
-                } else {
-                    pinInput.value = '';
-                }
+                pinInput.value = isRemembered ? (localStorage.getItem('mws_saved_director_pin') || '') : '';
             } else {
                 pinGroup.style.display = 'none';
                 pinInput.value = '';
@@ -1302,7 +1596,6 @@
                     return;
                 }
 
-                // CHECK CONFIDENTIAL PIN FOR DIRECTOR
                 const enterPin = document.getElementById('inputDirectorPin').value.trim();
                 if (enterPin !== DIRECTOR_PIN_SECRET) {
                     errorBanner.textContent = "Access Denied: Incorrect Director Security PIN!";
@@ -1319,7 +1612,6 @@
                 }
             }
 
-            // HANDLE REMEMBER CREDENTIALS PREFERENCE (BOTH TEACHER & DIRECTOR)
             const isRememberChecked = document.getElementById('rememberCredentialsCheckbox').checked;
             
             if (isRememberChecked) {
@@ -1338,9 +1630,11 @@
                 }
             }
 
+            const activeSession = { role: activePortalMode, name: name, email: email };
+            localStorage.setItem('mws_active_session', JSON.stringify(activeSession));
+
             localStorage.setItem('mws_teacher_name', name);
             localStorage.setItem('mws_teacher_email', email);
-            localStorage.setItem('mws_user_role', activePortalMode);
             
             currentTeacherEmail = email;
 
@@ -1365,6 +1659,7 @@
 
         function logoutGoogle() {
             currentTeacherEmail = "";
+            localStorage.removeItem('mws_active_session');
             resetFormFieldsOnly();
 
             document.getElementById('teacherAppView').style.display = 'none';
@@ -1372,7 +1667,45 @@
             document.getElementById('loginView').style.display = 'flex';
         }
 
-        /* REPEATING ABSTRACT NATURAL ASPECT-RATIO MICRO-PHOTO WALLPAPER GENERATOR */
+        /* TOGGLE SAVE / EDIT MODE LOCK FOR TEACHER PORTAL */
+        function toggleSaveEditMode(forceState) {
+            isEditMode = forceState !== undefined ? forceState : !isEditMode;
+            
+            const modeStatusTag = document.getElementById('modeStatusTag');
+            const btnsSave = document.querySelectorAll('.btn-save-recap');
+            const btnsEdit = document.querySelectorAll('.btn-edit-recap');
+            
+            const formElements = document.querySelectorAll('#teacherAppView textarea, #teacherAppView input[type="text"], #teacherAppView input[type="date"]');
+            
+            if (!isEditMode) {
+                saveActiveStudentDraft();
+                formElements.forEach(el => el.disabled = true);
+
+                if (modeStatusTag) {
+                    modeStatusTag.textContent = "🔒 Locked (Saved)";
+                    modeStatusTag.style.background = "#DCFCE7";
+                    modeStatusTag.style.color = "#15803D";
+                    modeStatusTag.style.borderColor = "#86EFAC";
+                }
+                btnsSave.forEach(b => b.style.display = 'none');
+                btnsEdit.forEach(b => b.style.display = 'inline-flex');
+                showToast(`Recap for ${currentStudent.nick || 'Student'} Saved & Locked!`, "💾");
+            } else {
+                formElements.forEach(el => el.disabled = false);
+
+                if (modeStatusTag) {
+                    modeStatusTag.textContent = "✏️ Editing Mode";
+                    modeStatusTag.style.background = "#FEF3C7";
+                    modeStatusTag.style.color = "#92400E";
+                    modeStatusTag.style.borderColor = "#FDE68A";
+                }
+                btnsSave.forEach(b => b.style.display = 'inline-flex');
+                btnsEdit.forEach(b => b.style.display = 'none');
+                showToast("Edit mode enabled.", "✏️");
+            }
+        }
+
+        /* REPEATING BACKGROUND WALLPAPER */
         function handleMultiplePaperBgFiles(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
@@ -1381,17 +1714,15 @@
             let loadedCount = 0;
 
             Array.from(files).forEach((file) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    activePaperPhotos.push(e.target.result);
+                compressImageFile(file, 600, 0.7, (compressedBase64) => {
+                    activePaperPhotos.push(compressedBase64);
                     loadedCount++;
                     if (loadedCount === files.length) {
                         renderPaperBgCollages();
                         saveActiveStudentDraft();
-                        showToast(`${files.length} photos generated into Full Page Wallpaper!`, "🖼️");
+                        showToast(`${files.length} photos generated into Wallpaper!`, "🖼️");
                     }
-                }
-                reader.readAsDataURL(file);
+                });
             });
         }
 
@@ -1439,7 +1770,7 @@
 
             document.getElementById('weekTerm').value = formattedString;
             updateMetaInfo();
-            saveActiveStudentDraft();
+            onStudentSelect(); // AUTO LOAD/RESET FOR THIS SPECIFIC WEEK
         }
 
         function onClassChange() {
@@ -1473,6 +1804,7 @@
                 document.getElementById('displayGrade').textContent = `Grade: ${currentStudent.grade}`;
                 document.getElementById('displayClass').textContent = `Class: ${selectedClass}`;
                 document.getElementById('displayPeriod').textContent = `Period: ${document.getElementById('weekTerm').value}`;
+                document.getElementById('studentSaveBarTitle').textContent = `Save Recap for ${currentStudent.nick}`;
                 
                 loadStudentDraft(selectedClass, activeStudentIndex);
             }
@@ -1488,17 +1820,56 @@
             document.getElementById(`src-drive-${key}`).style.display = mode === 'drive' ? 'block' : 'none';
         }
 
+        /* INSTANT HIGH-EFFICIENCY IMAGE COMPRESSOR TO PREVENT MEMORY QUOTA LOSS */
+        function compressImageFile(file, maxDimension, quality, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxDimension) {
+                            height = Math.round((height * maxDimension) / width);
+                            width = maxDimension;
+                        }
+                    } else {
+                        if (height > maxDimension) {
+                            width = Math.round((width * maxDimension) / height);
+                            height = maxDimension;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+                    callback(compressedBase64);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         function handleFileSelect(event, targetImgId) {
             const img = document.getElementById(targetImgId);
             const phId = 'ph' + targetImgId.replace('img', '');
             if (event.target.files && event.target.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    img.src = e.target.result; img.style.display = 'block';
-                    document.getElementById(phId).style.display = 'none';
+                compressImageFile(event.target.files[0], 800, 0.75, (compressedBase64) => {
+                    img.src = compressedBase64;
+                    img.style.display = 'block';
+                    if (document.getElementById(phId)) document.getElementById(phId).style.display = 'none';
+                    
+                    // RESET TRANSFORM ON NEW PHOTO TO NATURAL ASPECT RATIO
+                    photoTransformStates[targetImgId] = { scale: 1, x: 0, y: 0 };
+                    applyPhotoTransform(targetImgId);
+
                     saveActiveStudentDraft();
-                }
-                reader.readAsDataURL(event.target.files[0]);
+                });
             }
         }
 
@@ -1510,7 +1881,11 @@
             let directUrl = url;
             const driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
             if (driveMatch && driveMatch[1]) directUrl = `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
-            img.src = directUrl; img.style.display = 'block'; document.getElementById(phId).style.display = 'none';
+            img.src = directUrl; img.style.display = 'block'; if (document.getElementById(phId)) document.getElementById(phId).style.display = 'none';
+            
+            photoTransformStates[targetImgId] = { scale: 1, x: 0, y: 0 };
+            applyPhotoTransform(targetImgId);
+            
             saveActiveStudentDraft();
         }
 
@@ -1550,8 +1925,8 @@
             syncTextToMirrors();
         }
 
-        /* AUTO-FILL ALL DOMAINS AT ONCE */
-        function autoFillAllDomainsAI() {
+        /* AUTO-FILL ALL DOMAINS AT ONCE WITH LIVE OR DYNAMIC LOCAL AI */
+        async function autoFillAllDomainsAI() {
             const studentNick = currentStudent.nick || 'Student';
             const domains = [
                 { masterId: 'masterGod', targetId: 'txtGod', category: 'Connection to God', defaultNote: 'participating in morning prayers and quiet reflection' },
@@ -1564,20 +1939,21 @@
                 { masterId: 'masterTeacher', targetId: 'txtTeacher', category: 'Parental Support', defaultNote: 'practicing daily home reading and independent routines' }
             ];
 
-            domains.forEach(d => {
+            showToast(`Generating AI Narrations for ${studentNick}...`, "⚡");
+
+            for (const d of domains) {
                 const masterEl = document.getElementById(d.masterId);
                 const targetEl = document.getElementById(d.targetId);
                 
                 let rawNote = masterEl.value.trim() || d.defaultNote;
                 rawNote = rawNote.replace(/\{name\}/gi, studentNick);
-                
                 if (!masterEl.value.trim()) masterEl.value = rawNote;
 
-                const generated = generateDynamicProse(d.category, studentNick, rawNote, d.targetId);
+                const generated = await generateSmartEducationalProse(d.category, studentNick, rawNote, d.targetId);
                 targetEl.value = generated;
                 targetEl.dataset.isAiGenerated = "true";
                 targetEl.dataset.rawKeywords = rawNote;
-            });
+            }
 
             syncTextToMirrors();
             saveActiveStudentDraft();
@@ -1593,8 +1969,8 @@
             });
         }
 
-        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE */
-        function triggerAIGenerate(targetFieldId, categoryName) {
+        /* LIVE GEMINI API + SMART FLEXIBLE NLP ENGINE */
+        async function triggerAIGenerate(targetFieldId, categoryName) {
             const studentNick = currentStudent.nick || 'the student';
             const textarea = document.getElementById(targetFieldId);
             let currentVal = textarea.value.trim();
@@ -1611,7 +1987,9 @@
                 textarea.dataset.rawKeywords = baseKeywords.trim();
             }
 
-            const generatedProse = generateDynamicProse(categoryName, studentNick, textarea.dataset.rawKeywords, targetFieldId);
+            showToast(`Crafting AI text for ${categoryName}...`, "✨");
+
+            const generatedProse = await generateSmartEducationalProse(categoryName, studentNick, textarea.dataset.rawKeywords, targetFieldId);
             
             textarea.value = generatedProse;
             textarea.dataset.isAiGenerated = "true";
@@ -1622,13 +2000,44 @@
                 syncTextToMirrors();
             }
             saveActiveStudentDraft();
-            showToast(`✨ Generated fresh variation for ${categoryName}!`);
+            showToast(`✨ Fresh narration generated!`);
         }
 
-        function generateDynamicProse(category, name, rawNotes, fieldId) {
+        async function generateSmartEducationalProse(category, name, rawNotes, fieldId) {
             if (!rawNotes || !rawNotes.trim()) return "";
 
+            const apiKey = localStorage.getItem('mws_gemini_api_key');
+
+            // OPTION 1: IF USER PROVIDED GEMINI API KEY, CALL LIVE GOOGLE GEMINI API
+            if (apiKey) {
+                try {
+                    const prompt = `You are a professional early childhood educator at Millennia World School. Write a warm, professional 2-3 sentence weekly recap narration for a kindergarten student named '${name}' in the category '${category}'. Based on these teacher notes: '${rawNotes}'. Rules: Use encouraging, strengths-based educational language. Do not use extreme superlatives (e.g. perfect, best ever). Make it sound natural and fluent without rigid templates.`;
+                    
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }]
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (resultText) return resultText.trim();
+                    }
+                } catch (e) {
+                    console.warn("Gemini API call failed, falling back to local Engine:", e);
+                }
+            }
+
+            // OPTION 2: HIGHLY Dynamic Contextual Local NLP Engine
             let cleanKW = rawNotes.trim().replace(/\{name\}/gi, name);
+            cleanKW = cleanKW.replace(/\b(she|he)\s+likes\s+to\s+/gi, "enjoys ")
+                             .replace(/\b(she|he)\s+likes\s+/gi, "shows great enthusiasm for ")
+                             .replace(/\b(she|he)\s+draws\b/gi, "engages in drawing")
+                             .replace(/\bdraw\b/gi, "drawing activities");
+
             const superlativesPattern = /\b(super|best|most|perfect|flawless|outstanding|exceptional|amazing|extreme|unbeatable)\b/gi;
             cleanKW = cleanKW.replace(superlativesPattern, "").replace(/\s+/g, ' ').trim();
 
@@ -1653,119 +2062,84 @@
                         `${name} engaged thoughtfully during spiritual reflection, particularly while ${kw}.`,
                         `It was encouraging to observe ${name} participating in morning prayers and quiet reflection as ${name} ${kw}.`,
                         `${name} demonstrated a calm and respectful presence this week through ${kw}.`,
-                        `During moments of gratitude and quiet devotion, ${name} showed meaningful involvement as ${name} ${kw}.`,
-                        `In our daily spiritual routines, ${name} displayed a gentle mindfulness, especially when ${kw}.`
+                        `During moments of gratitude and quiet devotion, ${name} showed meaningful involvement as ${name} ${kw}.`
                     ],
                     closers: [
                         `This quiet focus supports ${name}'s emotional grounding and spiritual awareness.`,
                         `${name} continues to nurture a reverent and peaceful attitude in class activities.`,
-                        `We appreciate ${name}'s respectful participation and calm presence during these routines.`,
-                        `This mindful engagement fosters ${name}'s personal connection and inner quietude.`
+                        `We appreciate ${name}'s respectful participation and calm presence during these routines.`
                     ]
                 },
                 "Connection to Self": {
                     openers: [
                         `${name} showed positive self-reliance and personal growth this week by ${kw}.`,
                         `It was wonderful to see ${name} taking active ownership of daily routines, especially while ${kw}.`,
-                        `${name} demonstrated growing self-awareness and independence as ${name} ${kw}.`,
-                        `Building healthy habits of personal autonomy, ${name} focused on ${kw}.`,
-                        `Taking pride in individual tasks, ${name} actively practiced ${kw}.`
+                        `${name} demonstrated growing self-awareness and independence as ${name} ${kw}.`
                     ],
                     closers: [
                         `This consistent effort helps ${name} build confidence and strong self-management skills.`,
-                        `${name} is developing a healthy sense of independence in the classroom.`,
-                        `Continued daily practice will further solidify ${name}'s personal confidence.`,
-                        `We celebrate ${name}'s steady growth in managing personal responsibilities.`
+                        `${name} is developing a healthy sense of independence in the classroom.`
                     ]
                 },
                 "Connection to Others": {
                     openers: [
                         `${name} contributed positively to group interactions and social harmony by ${kw}.`,
                         `${name} demonstrated thoughtful cooperation with peers this week, particularly while ${kw}.`,
-                        `In collaborative group play, ${name} practiced empathy and sharing through ${kw}.`,
-                        `It was lovely to observe ${name} interacting warmly with classmates as ${name} ${kw}.`,
-                        `Fostering positive social connections, ${name} joined friends in ${kw}.`
+                        `In collaborative group play, ${name} practiced empathy and sharing through ${kw}.`
                     ],
                     closers: [
                         `${name}'s considerate behavior helps cultivate a supportive classroom community.`,
-                        `These positive social habits enable ${name} to form meaningful friendships.`,
-                        `${name} continues to learn the value of active teamwork and kindness.`,
-                        `We encourage ${name} to keep sharing and engaging positively with classmates.`
+                        `These positive social habits enable ${name} to form meaningful friendships.`
                     ]
                 },
                 "Connection to Nature": {
                     openers: [
                         `${name} explored our outdoor environment with genuine curiosity, actively ${kw}.`,
-                        `${name} showed a caring and observant attitude toward nature while ${kw}.`,
-                        `During outdoor discovery time, ${name} engaged meaningfully with the surroundings through ${kw}.`,
-                        `Observing the natural world, ${name} participated eagerly in ${kw}.`,
-                        `${name} demonstrated environmental awareness and gentle care as ${name} ${kw}.`
+                        `${name} showed a caring and observant attitude toward nature while ${kw}.`
                     ],
                     closers: [
                         `This hands-on outdoor exploration deepens ${name}'s respect for living things.`,
-                        `${name} is cultivating a thoughtful appreciation for the environment.`,
-                        `Outdoor learning continues to enrich ${name}'s sensory discovery and awareness.`,
-                        `We look forward to seeing ${name}'s curiosity about nature grow even further.`
+                        `${name} is cultivating a thoughtful appreciation for the environment.`
                     ]
                 },
                 "Rational": {
                     openers: [
                         `${name} exercised clear focus and problem-solving skills this week while ${kw}.`,
-                        `In cognitive tasks, ${name} demonstrated active listening and logical thinking, particularly during ${kw}.`,
-                        `${name} processed new learning concepts thoughtfully as ${name} engaged in ${kw}.`,
-                        `Working through structured learning exercises, ${name} showed steady application in ${kw}.`,
-                        `Demonstrating active curiosity, ${name} explored mathematical and language concepts through ${kw}.`
+                        `In cognitive tasks, ${name} demonstrated active listening and logical thinking, particularly during ${kw}.`
                     ],
                     closers: [
                         `This focused approach supports ${name}'s cognitive advancement and critical thinking.`,
-                        `${name} approaches new intellectual tasks with steady effort and curiosity.`,
-                        `Continued practice will further consolidate ${name}'s concept mastery.`,
-                        `We are pleased with ${name}'s structured thinking and learning determination.`
+                        `${name} approaches new intellectual tasks with steady effort and curiosity.`
                     ]
                 },
                 "Imaginal": {
                     openers: [
-                        `${name} expressed creative ideas and artistic effort this week by ${kw}.`,
-                        `During imaginative play and creative expression, ${name} shared original concepts while ${kw}.`,
-                        `${name} brought unique imaginative ideas into project time through ${kw}.`,
-                        `Exploring creative mediums and storytelling, ${name} engaged expressively in ${kw}.`,
-                        `In art and role-play activities, ${name} demonstrated enthusiastic creativity as ${name} ${kw}.`
+                        `${name} expressed creative ideas and artistic effort this week, especially as ${name} ${kw}.`,
+                        `During imaginative play and creative expression, ${name} shared original concepts while ${kw}.`
                     ],
                     closers: [
                         `This creative exploration allows ${name} to communicate ideas with confidence.`,
-                        `${name}'s imaginative spirit adds wonderful energy to our group activities.`,
-                        `We warmly encourage ${name} to keep exploring diverse creative outlets.`,
-                        `Artistic expression helps ${name} convey thoughts and feelings in unique ways.`
+                        `${name}'s imaginative spirit adds wonderful energy to our group activities.`
                     ]
                 },
                 "Physical": {
                     openers: [
                         `${name} displayed active physical movement and motor coordination while ${kw}.`,
-                        `In active play and physical exercises, ${name} practiced strength and balance through ${kw}.`,
-                        `${name} engaged enthusiastically in motor skill development, particularly when ${kw}.`,
-                        `Working on body control and fine motor dexterity, ${name} practiced ${kw}.`,
-                        `${name} participated energetically in movement activities, actively trying ${kw}.`
+                        `In active play and physical exercises, ${name} practiced strength and balance through ${kw}.`
                     ],
                     closers: [
                         `Regular physical play strengthens ${name}'s overall movement confidence.`,
-                        `${name} continues to build refined control in both fine and gross motor tasks.`,
-                        `Active movement keeps ${name} energized, healthy, and focused throughout the day.`,
-                        `This physical practice contributes greatly to ${name}'s body awareness and balance.`
+                        `${name} continues to build refined control in both fine and gross motor tasks.`
                     ]
                 },
                 "Parental Support": {
                     openers: [
                         `To support ${name}'s ongoing journey, parents are encouraged to gently reinforce ${kw} at home.`,
-                        `A simple and effective way to guide ${name} at home is through consistent practice with ${kw}.`,
-                        `At home, parents can partner with us by offering positive encouragement in ${kw}.`,
-                        `Creating predictable daily routines for ${name} around ${kw} will provide great continuity.`,
-                        `Continuing conversations and practice at home regarding ${kw} will wonderfully support ${name}.`
+                        `A simple and effective way to guide ${name} at home is through consistent practice with ${kw}.`
                     ],
                     closers: [
                         `Consistent home routines help strengthen ${name}'s classroom confidence and independence.`,
-                        `Thank you for your warm partnership in nurturing ${name}'s developmental progress.`,
-                        `Gentle home guidance will continue to build ${name}'s comfort and skill mastery.`,
-                        `Your collaboration at home plays an important role in ${name}'s holistic growth.`
+                        `Thank you for your warm partnership in nurturing ${name}'s developmental progress.`
                     ]
                 }
             };
@@ -1790,7 +2164,7 @@
             return sanitize(`${selectedOpener} ${selectedCloser}`);
         }
 
-        /* AUTO-SAVE & LOAD DRAFT PER CLASS */
+        /* AUTO-SAVE & LOAD DRAFT PER STUDENT & CLASS WITH COMPLETE ISOLATION */
         function saveActiveStudentDraft() {
             const className = document.getElementById('classSelect').value;
             const storageKey = getStudentStorageKey(className, activeStudentIndex);
@@ -1818,6 +2192,7 @@
                 datePicker: document.getElementById('datePicker').value,
                 weekTerm: document.getElementById('weekTerm').value,
                 paperPhotos: activePaperPhotos,
+                photoTransforms: photoTransformStates,
                 masterGod: document.getElementById('masterGod').value,
                 masterSelf: document.getElementById('masterSelf').value,
                 masterOthers: document.getElementById('masterOthers').value,
@@ -1841,7 +2216,7 @@
                 localStorage.setItem(storageKey, JSON.stringify(draft));
                 document.getElementById('syncStatusTag').textContent = `Class Synced (${currentStudent.nick || 'Student'})`;
             } catch (e) {
-                console.warn("Storage write limit reached", e);
+                console.warn("Storage write error:", e);
             }
         }
 
@@ -1852,7 +2227,7 @@
             resetFormFieldsOnly();
 
             if (!raw) {
-                document.getElementById('syncStatusTag').textContent = `Workspace Ready (${currentStudent.nick})`;
+                document.getElementById('syncStatusTag').textContent = `Workspace Ready (${currentStudent.nick} - New Week)`;
                 return;
             }
 
@@ -1860,7 +2235,6 @@
                 const draft = JSON.parse(raw);
                 if (draft.themeInput !== undefined) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
                 if (draft.datePicker !== undefined) { document.getElementById('datePicker').value = draft.datePicker; }
-                if (draft.weekTerm !== undefined) { document.getElementById('weekTerm').value = draft.weekTerm; updateMetaInfo(); }
 
                 const stampBadge = document.getElementById('approvalStampBadge');
                 if (stampBadge) {
@@ -1870,6 +2244,13 @@
                 if (draft.paperPhotos && Array.isArray(draft.paperPhotos) && draft.paperPhotos.length > 0) {
                     activePaperPhotos = draft.paperPhotos;
                     renderPaperBgCollages();
+                }
+
+                if (draft.photoTransforms) {
+                    Object.keys(draft.photoTransforms).forEach(id => {
+                        photoTransformStates[id] = draft.photoTransforms[id];
+                        applyPhotoTransform(id);
+                    });
                 }
 
                 const masters = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher'];
@@ -1966,13 +2347,21 @@
             imgIds.forEach(id => {
                 const img = document.getElementById(id);
                 const phId = 'ph' + id.replace('img', '');
-                if (img) { img.src = ''; img.style.display = 'none'; }
+                const fileInput = document.getElementById('file_' + id);
+                
+                if (img) { 
+                    img.src = ''; 
+                    img.style.display = 'none'; 
+                    photoTransformStates[id] = { scale: 1, x: 0, y: 0 };
+                    applyPhotoTransform(id);
+                }
+                if (fileInput) fileInput.value = '';
                 if (document.getElementById(phId)) document.getElementById(phId).style.display = 'block';
             });
             syncTextToMirrors();
         }
 
-        /* EDITABLE CONFIRMATION MODAL & SUBMISSION TO DIRECTOR (VIA GMAIL.COM) */
+        /* EDITABLE CONFIRMATION MODAL & SUBMISSION TO DIRECTOR */
         function openSubmitConfirmModal() {
             saveActiveStudentDraft();
             const teacherName = localStorage.getItem('mws_teacher_name') || 'Teacher';
@@ -1982,7 +2371,7 @@
 
             const defaultMessage = `Dear Director,
 
-I have completed all Weekly Recap narrations for ${className} Class. I have also updated them based on your feedback.
+I have completed all Weekly Recap narrations and photo updates for ${className} Class.
 
 Kindly check the Director Portal to review the class narrations:
 ${portalLink}
