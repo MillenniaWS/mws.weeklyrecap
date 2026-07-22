@@ -200,22 +200,25 @@
         
         .page-sheet { 
             background-color: #FFFFFF; 
-            border-radius: 26px; box-shadow: 0 15px 40px rgba(122, 28, 28, 0.12); 
+            border-radius: 28px; box-shadow: 0 15px 40px rgba(122, 28, 28, 0.12); 
             padding: 35px 38px; box-sizing: border-box; border: 7px solid var(--mws-maroon); 
-            position: relative; overflow: hidden;
+            position: relative; overflow: hidden; height: auto; min-height: fit-content;
         }
 
-        /* REPEATING ABSTRACT NATURAL ASPECT RATIO MICRO-PHOTO WALLPAPER */
+        /* REPEATING ABSTRACT NATURAL ASPECT RATIO MICRO-PHOTO WALLPAPER (NO DISTORTION / ANTI-GEPENG) */
         .sheet-collage-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100%;
             pointer-events: none; opacity: 0.14; z-index: 0; overflow: hidden;
             display: flex; flex-wrap: wrap; gap: 14px; padding: 14px; box-sizing: border-box;
             align-content: flex-start; justify-content: space-around;
         }
+
+        /* PROPORTIONAL MICRO PHOTOS WITH FRAMES THAT FIT INTRINSIC IMAGE RATIO */
         .sp-photo-micro {
-            flex: 1 1 68px; max-width: 110px; height: auto; min-height: 50px; max-height: 85px;
-            border-radius: 10px; object-fit: cover; box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-            filter: contrast(1.08); transition: transform 0.2s;
+            width: 88px; height: auto;
+            object-fit: cover; border-radius: 10px; background: #FFFFFF;
+            padding: 3px; box-shadow: 0 3px 8px rgba(0,0,0,0.12); filter: contrast(1.08);
+            transition: transform 0.2s; box-sizing: border-box;
         }
 
         /* ABSTRACT SLANTED ROTATIONS FOR SCRAPBOOK FEEL */
@@ -251,6 +254,16 @@
         .meta-tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
         .meta-tag { background: var(--mws-maroon); color: white; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 18px; text-transform: uppercase; }
         .meta-tag.secondary { background: #FFFFFF; color: var(--mws-maroon); border: 2px solid var(--mws-maroon); }
+
+        /* DIRECTOR APPROVAL STAMP BADGE ON COVER */
+        .approval-stamp-badge {
+            display: none; position: absolute; top: 12px; right: 14px;
+            background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+            color: #FFFFFF; font-family: 'Fredoka', sans-serif; font-size: 12px;
+            font-weight: 700; padding: 6px 14px; border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3); border: 2px solid #FFFFFF;
+            letter-spacing: 0.5px; text-transform: uppercase; z-index: 10;
+        }
 
         .domain-section-banner { background: linear-gradient(135deg, var(--mws-maroon) 0%, var(--mws-maroon-dark) 100%); color: #FFFFFF; font-family: 'Fredoka', 'Quicksand', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 20px; border-radius: 14px; margin: 18px 0 16px 0; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(122, 28, 28, 0.18); }
 
@@ -309,7 +322,7 @@
         }
         .btn-resolve-feedback:hover { background: #15803D; }
 
-        /* ENHANCED EXECUTIVE DIRECTOR PORTAL STYLES */
+        /* MS MAHRUKH (DIRECTOR) PORTAL STYLES */
         .director-portal-wrapper {
             max-width: 1200px; margin: 0 auto; background: var(--glass-bg); backdrop-filter: blur(16px);
             border-radius: 26px; padding: 30px; border: 3.5px solid var(--mws-maroon); box-shadow: 0 20px 50px rgba(0,0,0,0.2);
@@ -340,7 +353,7 @@
 
         /* CLICKABLE SCREENING STATUS TOGGLE BUTTON */
         .btn-status-toggle {
-            font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 12px; cursor: pointer;
+            font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 12px; cursor: pointer;
             border: 1.5px solid; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 5px;
             user-select: none; outline: none;
         }
@@ -356,7 +369,6 @@
         .review-domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
         .review-domain-box { border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; position: relative; border: 1.5px solid #CBD5E0; }
         
-        /* MATCHING PASTEL COLOURS FOR DIRECTOR SCREENING */
         .review-domain-box.gold   { background-color: var(--pastel-gold-bg); border-color: var(--pastel-gold-border); }
         .review-domain-box.pink   { background-color: var(--pastel-pink-bg); border-color: var(--pastel-pink-border); }
         .review-domain-box.blue   { background-color: var(--pastel-blue-bg); border-color: var(--pastel-blue-border); }
@@ -412,12 +424,21 @@
         }
         .editable-preview-textarea:focus { border-color: var(--mws-maroon); background: #FFFFFF; }
 
-        /* CLEAN PDF DIRECT EXPORT ACTIVE UTILITY STYLES */
+        /* PDF EXPORT MODE STYLES (PRESERVE ROUNDED CORNERS & FLEXIBLE POSTER LENGTH) */
+        body.pdf-export-active { padding: 15px !important; margin: 0 !important; background: #CBD5E1 !important; }
+        body.pdf-export-active .bg-collage-container,
+        body.pdf-export-active .control-panel,
         body.pdf-export-active .btn-ai-gen,
         body.pdf-export-active .director-feedback-banner,
         body.pdf-export-active textarea { display: none !important; }
+        
+        body.pdf-export-active .report-wrapper { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+        body.pdf-export-active .page-sheet { 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12) !important; margin: 0 auto !important; 
+            border-radius: 28px !important;
+            overflow: hidden !important; height: auto !important;
+        }
         body.pdf-export-active .print-text-mirror { display: block !important; }
-        body.pdf-export-active .page-sheet { box-shadow: none !important; margin-bottom: 0 !important; }
 
         @media screen and (max-width: 768px) {
             body { padding: 12px 8px; }
@@ -514,6 +535,18 @@
             
             <label style="font-size: 12px; font-weight: 700; color: #4B5563;">School Google Email (@millennia21.id):</label>
             <input type="email" id="inputTeacherEmail" class="form-input-google" placeholder="name@millennia21.id">
+
+            <!-- DIRECTOR CONFIDENTIAL PIN GROUP (SHOWS ONLY FOR DIRECTOR) -->
+            <div id="directorPinGroup" style="display: none; margin-top: 5px;">
+                <label style="font-size: 12px; font-weight: 700; color: var(--mws-maroon);">Director Security PIN (Confidential):</label>
+                <input type="password" id="inputDirectorPin" class="form-input-google" placeholder="Enter 4-digit PIN..." maxlength="8">
+            </div>
+
+            <!-- UNIVERSAL REMEMBER LOGIN DETAILS CHECKBOX FOR BOTH TEACHERS & DIRECTOR -->
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; margin-top: 4px;">
+                <input type="checkbox" id="rememberCredentialsCheckbox" style="cursor: pointer; width: 16px; height: 16px;">
+                <label for="rememberCredentialsCheckbox" style="font-size: 12.5px; font-weight: 700; color: #475569; cursor: pointer;">Remember my login details on this device</label>
+            </div>
 
             <button class="btn-modal-submit" onclick="confirmGoogleLogin()">Continue to Workspace</button>
         </div>
@@ -765,6 +798,7 @@
                     </div>
 
                     <div class="hero-student-cover">
+                        <div class="approval-stamp-badge" id="approvalStampBadge">✓ APPROVED BY DIRECTOR</div>
                         <div class="student-main-photo-box">
                             <div class="tape-top"></div>
                             <div class="student-main-photo-placeholder" id="phProfile">Upload Main Photo</div>
@@ -953,13 +987,13 @@
         </div>
     </div>
 
-    <!-- VIEW 3: EXECUTIVE DIRECTOR PORTAL -->
+    <!-- VIEW 3: DIRECTOR PORTAL (MS MAHRUKH VIEW) -->
     <div id="directorAppView" style="display: none;">
         <div class="director-portal-wrapper">
             <div class="director-header">
                 <div>
-                    <h2 class="director-title">Executive Director Portal</h2>
-                    <span style="font-size: 13px; color: #64748B;">Highlight text to add inline feedback notes for homeroom teachers.</span>
+                    <h2 class="director-title">Director Portal</h2>
+                    <span style="font-size: 13px; color: #64748B;">Highlight text to add inline feedback notes or manage student weekly recaps status.</span>
                 </div>
                 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                     <div class="user-profile-badge">
@@ -973,7 +1007,7 @@
                 </div>
             </div>
 
-            <!-- EXECUTIVE CONTROL BAR -->
+            <!-- CONTROL BAR -->
             <div class="input-grid" style="margin-bottom: 16px;">
                 <div class="input-group">
                     <label>Select Class for Review:</label>
@@ -989,7 +1023,7 @@
                 </div>
             </div>
 
-            <!-- DIRECTOR EXECUTIVE PROGRESS DASHBOARD MATRIX -->
+            <!-- SUMMARY DASHBOARD MATRIX -->
             <div class="director-summary-box" id="directorSummaryDashboard">
                 <!-- Dynamically Populated Student Nickname Status Chips -->
             </div>
@@ -1014,8 +1048,9 @@
             "hana.sajidah@millennia21.id": "ana"
         };
 
-        /* OFFICIAL DIRECTOR EMAIL ACCESS */
+        /* OFFICIAL DIRECTOR CONFIDENTIAL CREDENTIALS */
         const DIRECTOR_EMAIL = "mahrukh@millennia21.id";
+        const DIRECTOR_PIN_SECRET = "8888";
 
         const studentDatabase = {
             "MAUNA KEA": [
@@ -1140,31 +1175,32 @@
             toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
-        /* DYNAMIC CONTINUOUS SINGLE-PAGE SEAMLESS POSTER PDF DOWNLOADER */
+        /* FLEXIBLE POSTER PDF GENERATOR (ROUNDED CORNERS + DYNAMIC EXTENDED HEIGHT) */
         function downloadPDFDirect() {
             syncTextToMirrors();
             document.body.classList.add('pdf-export-active');
-            showToast("Generating Continuous Poster PDF, please wait...", "⏳");
+            showToast("Generating Flexible Continuous PDF...", "⏳");
 
-            const element = document.getElementById('reportWrapper');
+            const element = document.querySelector('.page-sheet');
             const studentNick = currentStudent.nick || 'Student';
             const fileName = `${studentNick}_Weekly_Recap.pdf`;
 
-            const elementHeightPx = element.scrollHeight;
+            const rect = element.getBoundingClientRect();
             const pxToMm = 0.264583;
-            const customHeightMm = Math.max(297, Math.ceil(elementHeightPx * pxToMm) + 12);
+            const customHeightMm = Math.ceil(rect.height * pxToMm) + 12;
 
             const opt = {
-                margin:       [4, 4, 4, 4],
+                margin:       [6, 6, 6, 6],
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true, logging: false, scrollY: 0 },
-                jsPDF:        { unit: 'mm', format: [210, customHeightMm], orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: [210, customHeightMm], orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all'] }
             };
 
             html2pdf().set(opt).from(element).save().then(() => {
                 document.body.classList.remove('pdf-export-active');
-                showToast("Poster PDF Downloaded successfully!", "✅");
+                showToast("Continuous Flexible PDF Downloaded!", "✅");
             }).catch(err => {
                 document.body.classList.remove('pdf-export-active');
                 console.error("PDF Download error:", err);
@@ -1172,10 +1208,10 @@
             });
         }
 
-        /* UNIFIED CLASS DRAFT KEY FOR CO-HOMEROOM TEACHERS */
+        /* UNIFIED CLASS DRAFT KEY */
         function getStudentStorageKey(className, studentIndex) {
             const cleanClass = className.replace(/\s+/g, '_');
-            return `mws_recap_v29_${cleanClass}_std${studentIndex}`;
+            return `mws_recap_v35_${cleanClass}_std${studentIndex}`;
         }
 
         /* GMAIL WEB DIRECT LAUNCHER */
@@ -1184,30 +1220,11 @@
             window.open(gmailUrl, '_blank');
         }
 
+        /* ALWAYS START AT LOGIN VIEW UPON OPENING LINK */
         window.onload = function() {
-            const savedName = localStorage.getItem('mws_teacher_name');
-            const savedEmail = localStorage.getItem('mws_teacher_email');
-            const savedRole = localStorage.getItem('mws_user_role');
-            const isLoggedIn = localStorage.getItem('mws_is_logged_in');
-
-            if (isLoggedIn === 'true' && savedEmail) {
-                currentTeacherEmail = savedEmail;
-                activePortalMode = savedRole || 'TEACHER';
-
-                if (activePortalMode === 'DIRECTOR') {
-                    document.getElementById('directorNameDisplay').textContent = savedName || 'Director';
-                    document.getElementById('loginView').style.display = 'none';
-                    document.getElementById('directorAppView').style.display = 'block';
-                    renderDirectorReviewList();
-                } else {
-                    document.getElementById('userNameDisplay').textContent = savedName || 'Teacher';
-                    document.getElementById('userEmailDisplay').textContent = savedEmail;
-                    document.getElementById('loginView').style.display = 'none';
-                    document.getElementById('teacherAppView').style.display = 'block';
-                    renderPaperBgCollages();
-                    onClassChange();
-                }
-            }
+            document.getElementById('teacherAppView').style.display = 'none';
+            document.getElementById('directorAppView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'flex';
 
             document.addEventListener('selectionchange', handleTextSelection);
         };
@@ -1216,8 +1233,35 @@
             activePortalMode = role;
             document.getElementById('modalPortalTitle').textContent = role === 'DIRECTOR' ? 'Director Account Sign In' : 'Teacher Account Sign In';
             
-            document.getElementById('inputTeacherName').value = "";
-            document.getElementById('inputTeacherEmail').value = "";
+            const isRemembered = localStorage.getItem(`mws_saved_remember_${role}`) === 'true';
+            const rememberCheckbox = document.getElementById('rememberCredentialsCheckbox');
+            rememberCheckbox.checked = isRemembered;
+
+            const nameInput = document.getElementById('inputTeacherName');
+            const emailInput = document.getElementById('inputTeacherEmail');
+            const pinGroup = document.getElementById('directorPinGroup');
+            const pinInput = document.getElementById('inputDirectorPin');
+
+            if (isRemembered) {
+                nameInput.value = localStorage.getItem(`mws_saved_name_${role}`) || (role === 'DIRECTOR' ? 'Mahrukh Atiq' : '');
+                emailInput.value = localStorage.getItem(`mws_saved_email_${role}`) || (role === 'DIRECTOR' ? DIRECTOR_EMAIL : '');
+            } else {
+                nameInput.value = '';
+                emailInput.value = '';
+            }
+
+            if (role === 'DIRECTOR') {
+                pinGroup.style.display = 'block';
+                if (isRemembered) {
+                    pinInput.value = localStorage.getItem('mws_saved_director_pin') || '';
+                } else {
+                    pinInput.value = '';
+                }
+            } else {
+                pinGroup.style.display = 'none';
+                pinInput.value = '';
+            }
+            
             document.getElementById('modalErrorBanner').style.display = 'none';
             document.getElementById('googleModal').style.display = 'flex';
         }
@@ -1257,6 +1301,15 @@
                     errorBanner.style.display = 'block';
                     return;
                 }
+
+                // CHECK CONFIDENTIAL PIN FOR DIRECTOR
+                const enterPin = document.getElementById('inputDirectorPin').value.trim();
+                if (enterPin !== DIRECTOR_PIN_SECRET) {
+                    errorBanner.textContent = "Access Denied: Incorrect Director Security PIN!";
+                    errorBanner.style.display = 'block';
+                    document.getElementById('inputDirectorPin').focus();
+                    return;
+                }
             } else {
                 const expectedName = allowedTeachersList[email];
                 if (!expectedName || name.toLowerCase() !== expectedName.toLowerCase()) {
@@ -1266,10 +1319,29 @@
                 }
             }
 
+            // HANDLE REMEMBER CREDENTIALS PREFERENCE (BOTH TEACHER & DIRECTOR)
+            const isRememberChecked = document.getElementById('rememberCredentialsCheckbox').checked;
+            
+            if (isRememberChecked) {
+                localStorage.setItem(`mws_saved_remember_${activePortalMode}`, 'true');
+                localStorage.setItem(`mws_saved_name_${activePortalMode}`, name);
+                localStorage.setItem(`mws_saved_email_${activePortalMode}`, email);
+                if (activePortalMode === 'DIRECTOR') {
+                    localStorage.setItem('mws_saved_director_pin', DIRECTOR_PIN_SECRET);
+                }
+            } else {
+                localStorage.setItem(`mws_saved_remember_${activePortalMode}`, 'false');
+                localStorage.removeItem(`mws_saved_name_${activePortalMode}`);
+                localStorage.removeItem(`mws_saved_email_${activePortalMode}`);
+                if (activePortalMode === 'DIRECTOR') {
+                    localStorage.removeItem('mws_saved_director_pin');
+                }
+            }
+
             localStorage.setItem('mws_teacher_name', name);
             localStorage.setItem('mws_teacher_email', email);
             localStorage.setItem('mws_user_role', activePortalMode);
-            localStorage.setItem('mws_is_logged_in', 'true');
+            
             currentTeacherEmail = email;
 
             resetFormFieldsOnly();
@@ -1292,12 +1364,7 @@
         }
 
         function logoutGoogle() {
-            localStorage.setItem('mws_is_logged_in', 'false');
-            localStorage.removeItem('mws_teacher_name');
-            localStorage.removeItem('mws_teacher_email');
-            localStorage.removeItem('mws_user_role');
             currentTeacherEmail = "";
-
             resetFormFieldsOnly();
 
             document.getElementById('teacherAppView').style.display = 'none';
@@ -1483,7 +1550,7 @@
             syncTextToMirrors();
         }
 
-        /* AUTO-FILL ALL DOMAINS AT ONCE WITH RELIABLE FALLBACK TEMPLATES */
+        /* AUTO-FILL ALL DOMAINS AT ONCE */
         function autoFillAllDomainsAI() {
             const studentNick = currentStudent.nick || 'Student';
             const domains = [
@@ -1526,7 +1593,7 @@
             });
         }
 
-        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE (V29) */
+        /* HIGH-POWERED MILLENNIA DYNAMIC NARRATION ENGINE */
         function triggerAIGenerate(targetFieldId, categoryName) {
             const studentNick = currentStudent.nick || 'the student';
             const textarea = document.getElementById(targetFieldId);
@@ -1723,7 +1790,7 @@
             return sanitize(`${selectedOpener} ${selectedCloser}`);
         }
 
-        /* AUTO-SAVE & LOAD DRAFT PER CLASS (SHARED HOMEROOM PAIR) */
+        /* AUTO-SAVE & LOAD DRAFT PER CLASS */
         function saveActiveStudentDraft() {
             const className = document.getElementById('classSelect').value;
             const storageKey = getStudentStorageKey(className, activeStudentIndex);
@@ -1794,6 +1861,11 @@
                 if (draft.themeInput !== undefined) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
                 if (draft.datePicker !== undefined) { document.getElementById('datePicker').value = draft.datePicker; }
                 if (draft.weekTerm !== undefined) { document.getElementById('weekTerm').value = draft.weekTerm; updateMetaInfo(); }
+
+                const stampBadge = document.getElementById('approvalStampBadge');
+                if (stampBadge) {
+                    stampBadge.style.display = draft.directorReviewed === true ? 'block' : 'none';
+                }
 
                 if (draft.paperPhotos && Array.isArray(draft.paperPhotos) && draft.paperPhotos.length > 0) {
                     activePaperPhotos = draft.paperPhotos;
@@ -2035,7 +2107,7 @@ ${teacherName}`;
             localStorage.setItem(storageKey, JSON.stringify(draft));
         }
 
-        /* DIRECTOR STUDENT STATUS TOGGLE FUNCTION */
+        /* DIRECTOR STUDENT APPROVAL STATUS TOGGLE FUNCTION */
         function toggleDirectorStudentStatus(className, studentIdx, event) {
             if (event) event.stopPropagation();
             
@@ -2043,11 +2115,11 @@ ${teacherName}`;
             const raw = localStorage.getItem(storageKey);
             let draft = raw ? JSON.parse(raw) : {};
 
-            const isCurrentReviewed = draft.directorReviewed === true;
-            draft.directorReviewed = !isCurrentReviewed;
+            const isCurrentApproved = draft.directorReviewed === true;
+            draft.directorReviewed = !isCurrentApproved;
 
             localStorage.setItem(storageKey, JSON.stringify(draft));
-            showToast(draft.directorReviewed ? "Screening marked as Completed!" : "Screening marked as Pending.", draft.directorReviewed ? "✅" : "⚪");
+            showToast(draft.directorReviewed ? "Approved & Ready for Parents!" : "Marked as Pending Review.", draft.directorReviewed ? "✅" : "⚪");
             
             renderDirectorReviewList();
         }
@@ -2067,7 +2139,7 @@ ${teacherName}`;
             }
         }
 
-        /* EXECUTIVE DIRECTOR PORTAL REVIEW LIST & MATRIX GENERATOR */
+        /* DIRECTOR PORTAL REVIEW LIST GENERATOR */
         function renderDirectorReviewList() {
             const className = document.getElementById('directorClassSelect').value;
             const list = studentDatabase[className] || [];
@@ -2112,14 +2184,14 @@ ${teacherName}`;
                 
                 if (hasRevisionNotes) {
                     chipClass = 'red';
-                    chipStatusText = 'Revision';
+                    chipStatusText = 'Revision Note';
                 } else if (isReviewed) {
                     chipClass = 'green';
-                    chipStatusText = 'Completed';
+                    chipStatusText = 'Approved';
                 }
 
                 chipsHtml += `
-                    <div class="student-status-chip ${chipClass}" onclick="scrollToDirectorCard(${idx})" title="Click to view ${st.full}">
+                    <div class="student-status-chip ${chipClass}" onclick="scrollToDirectorCard(${idx})" title="Click to inspect ${st.full}">
                         <span>${st.nick}</span>
                         <span style="font-size: 10px; opacity: 0.85;">(${chipStatusText})</span>
                     </div>
@@ -2144,7 +2216,7 @@ ${teacherName}`;
                 });
 
                 const statusBtnClass = isReviewed ? 'green' : 'grey';
-                const statusBtnText = isReviewed ? '✅ Screening Completed' : '⚪ Pending Review';
+                const statusBtnText = isReviewed ? '✅ Approved & Ready' : '⚪ Pending Review';
 
                 const revisionBadge = hasRevisionNotes 
                     ? `<span style="font-size: 11px; background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; padding: 4px 8px; border-radius: 10px; font-weight: bold;">💬 Revision Requested</span>`
@@ -2170,9 +2242,9 @@ ${teacherName}`;
 
             summaryBox.innerHTML = `
                 <div class="summary-dashboard-header">
-                    <span>Executive Class Overview (${className})</span>
+                    <span>Executive Class Screening Progress (${className})</span>
                     <span style="font-size: 12.5px; color: var(--mws-maroon);">
-                        Screening Progress: <strong>${totalReviewed} / ${list.length} Students Completed</strong>
+                        Approved Recaps: <strong>${totalReviewed} / ${list.length} Students Approved</strong>
                     </span>
                 </div>
                 <div class="chips-container">
