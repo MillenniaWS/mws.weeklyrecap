@@ -701,7 +701,7 @@
                     <div>
                         <h2 class="panel-title">Teacher Portal</h2>
                         <div style="display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap;">
-                            <span class="user-sync-status" id="syncStatusTag">Draft Synced</span>
+                            <span class="user-sync-status" id="syncStatusTag">Firestore Synced</span>
                             <span class="user-sync-status" id="modeStatusTag" style="background: #FEF3C7; color: #92400E; border-color: #FDE68A;">Editing</span>
                         </div>
                     </div>
@@ -1277,8 +1277,27 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
+    <!-- FIREBASE FIRESTORE MODULE LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // FIREBASE CONFIGURATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlWTC3tN4uOOyaQCpnv_PLNB7V6fXolSg",
+            authDomain: "weekly-recap-89674.firebaseapp.com",
+            projectId: "weekly-recap-89674",
+            storageBucket: "weekly-recap-89674.firebasestorage.app",
+            messagingSenderId: "452420512539",
+            appId: "1:452420512539:web:8dd5820ec0c9f2244981be",
+            measurementId: "G-1MFL2GM8KV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let activeSnapshotUnsubscribe = null;
+
         const allowedTeachersList = {
             "diya@millennia21.id": "diya",
             "aprimaputri@millennia21.id": "yunda",
@@ -1428,7 +1447,7 @@
         const photoTransformStates = {};
         const lastTemplateIndices = {};
 
-        function toggleAccordion(containerId, iconId) {
+        window.toggleAccordion = function(containerId, iconId) {
             const container = document.getElementById(containerId);
             const icon = document.getElementById(iconId);
             if (container.style.display === 'none') {
@@ -1438,26 +1457,17 @@
                 container.style.display = 'none';
                 if (icon) icon.textContent = '▲';
             }
-        }
+        };
 
-        function showToast(msg) {
+        window.showToast = function(msg) {
             const toast = document.getElementById('toastNotification');
             document.getElementById('toastMessage').textContent = msg;
             toast.classList.add('show');
             if (toastTimeout) clearTimeout(toastTimeout);
             toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        }
+        };
 
-        window.addEventListener('storage', (e) => {
-            if (e.key && e.key.startsWith('mws_recap_v47_')) {
-                if (activePortalMode === 'DIRECTOR') {
-                    renderDirectorReviewList();
-                    showToast("Director Portal Updated in Real-Time!");
-                }
-            }
-        });
-
-        function downloadPDFDirect() {
+        window.downloadPDFDirect = function() {
             syncTextToMirrors();
             document.body.classList.add('pdf-export-active');
             showToast("Generating Continuous PDF...");
@@ -1487,12 +1497,12 @@
                 console.error("PDF Download error:", err);
                 showToast("Download failed, please try again...");
             });
-        }
+        };
 
-        async function downloadBulkPDF() {
+        window.downloadBulkPDF = async function() {
             const className = document.getElementById('classSelect').value;
-            const db = getActiveStudentDatabase();
-            const list = db[className] || [];
+            const dbStudent = getActiveStudentDatabase();
+            const list = dbStudent[className] || [];
 
             if (!confirm(`Are you sure you want to generate and download PDFs for all ${list.length} students in ${className}?`)) return;
 
@@ -1526,20 +1536,20 @@
 
             document.body.classList.remove('pdf-export-active');
             showToast(`All ${list.length} PDFs downloaded successfully!`);
-        }
+        };
 
         function getStudentStorageKey(className, studentIndex, customWeekVal) {
             const cleanClass = className.replace(/\s+/g, '_');
             const weekVal = customWeekVal || (document.getElementById('weekTerm') ? document.getElementById('weekTerm').value : 'default_week');
             const cleanWeek = weekVal.replace(/[^a-zA-Z0-9]/g, '_');
-            return `mws_recap_v47_${cleanClass}_std${studentIndex}_${cleanWeek}`;
+            return `${cleanClass}_std${studentIndex}_${cleanWeek}`;
         }
 
-        function saveGeminiApiKey() {
+        window.saveGeminiApiKey = function() {
             const key = document.getElementById('geminiApiKeyInput').value.trim();
             localStorage.setItem('mws_gemini_api_key', key);
             if (key) showToast("Gemini API Key saved! Live AI activated.");
-        }
+        };
 
         function openGmailWebCompose(recipientEmail, subjectText, bodyText) {
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -1676,12 +1686,12 @@
             });
         }
 
-        function updatePhotoZoom(imgId, scaleValue) {
+        window.updatePhotoZoom = function(imgId, scaleValue) {
             if (!photoTransformStates[imgId]) photoTransformStates[imgId] = { scale: 1, x: 0, y: 0 };
             photoTransformStates[imgId].scale = parseFloat(scaleValue);
             applyPhotoTransform(imgId);
             saveActiveStudentDraft();
-        }
+        };
 
         function applyPhotoTransform(imgId) {
             const img = document.getElementById(imgId);
@@ -1691,7 +1701,7 @@
             }
         }
 
-        function deletePhoto(imgId) {
+        window.deletePhoto = function(imgId) {
             const img = document.getElementById(imgId);
             const phId = 'ph' + imgId.replace('img', '');
             const fileInput = document.getElementById('file_' + imgId);
@@ -1704,9 +1714,9 @@
             applyPhotoTransform(imgId);
             saveActiveStudentDraft();
             showToast("Photo cleared!");
-        }
+        };
 
-        function openAuthModal(role) {
+        window.openAuthModal = function(role) {
             activePortalMode = role;
             document.getElementById('modalPortalTitle').textContent = role === 'DIRECTOR' ? 'Director Account Sign In' : 'Teacher Account Sign In';
             
@@ -1734,14 +1744,14 @@
             
             document.getElementById('modalErrorBanner').style.display = 'none';
             document.getElementById('googleModal').style.display = 'flex';
-        }
+        };
 
-        function closeAuthModal() {
+        window.closeAuthModal = function() {
             document.getElementById('modalErrorBanner').style.display = 'none';
             document.getElementById('googleModal').style.display = 'none';
-        }
+        };
 
-        function confirmGoogleLogin() {
+        window.confirmGoogleLogin = function() {
             const nameInput = document.getElementById('inputTeacherName');
             const emailInput = document.getElementById('inputTeacherEmail');
             const errorBanner = document.getElementById('modalErrorBanner');
@@ -1800,19 +1810,21 @@
                 onClassChange();
             }
             showToast(`Welcome back, ${name}!`);
-        }
+        };
 
-        function logoutGoogle() {
+        window.logoutGoogle = function() {
             currentTeacherEmail = "";
             localStorage.removeItem('mws_active_session');
             resetFormFieldsOnly();
 
+            if (activeSnapshotUnsubscribe) activeSnapshotUnsubscribe();
+
             document.getElementById('teacherAppView').style.display = 'none';
             document.getElementById('directorAppView').style.display = 'none';
             document.getElementById('loginView').style.display = 'flex';
-        }
+        };
 
-        function toggleSaveEditMode(forceState) {
+        window.toggleSaveEditMode = function(forceState) {
             isEditMode = forceState !== undefined ? forceState : !isEditMode;
             
             const modeStatusTag = document.getElementById('modeStatusTag');
@@ -1847,9 +1859,9 @@
                 btnsEdit.forEach(b => b.style.display = 'none');
                 showToast("Edit mode enabled.");
             }
-        }
+        };
 
-        function handleMultiplePaperBgFiles(event) {
+        window.handleMultiplePaperBgFiles = function(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
 
@@ -1867,7 +1879,7 @@
                     }
                 });
             });
-        }
+        };
 
         function renderPaperBgCollages() {
             const list = activePaperPhotos.length > 0 ? activePaperPhotos : defaultPaperPhotos;
@@ -1885,8 +1897,7 @@
             }
         }
 
-        /* ACCURATE MONTHLY CALENDAR WEEK CALCULATION */
-        function autoCalculateWeekTerm() {
+        window.autoCalculateWeekTerm = function() {
             const dateVal = document.getElementById('datePicker').value;
             if (!dateVal) return;
 
@@ -1895,9 +1906,8 @@
 
             const dayOfMonth = selDate.getDate();
             const firstDayOfMonth = new Date(selDate.getFullYear(), selDate.getMonth(), 1);
-            const firstDayOfWeek = firstDayOfMonth.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            const firstDayOfWeek = firstDayOfMonth.getDay(); 
 
-            // Formula to calculate week number of the current month based on calendar
             const weekNum = Math.ceil((dayOfMonth + firstDayOfWeek) / 7);
 
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -1908,9 +1918,9 @@
             document.getElementById('weekTerm').value = formattedString;
             updateMetaInfo();
             onStudentSelect();
-        }
+        };
 
-        function onClassChange() {
+        window.onClassChange = function() {
             const classSelect = document.getElementById('classSelect');
             const studentSelect = document.getElementById('studentSelect');
             const selectedClass = classSelect.value;
@@ -1921,8 +1931,8 @@
             }
 
             studentSelect.innerHTML = '';
-            const db = getActiveStudentDatabase();
-            const list = db[selectedClass] || [];
+            const dbStudent = getActiveStudentDatabase();
+            const list = dbStudent[selectedClass] || [];
 
             list.forEach((st, idx) => {
                 const opt = document.createElement('option');
@@ -1932,15 +1942,15 @@
             });
             activeStudentIndex = 0;
             onStudentSelect();
-        }
+        };
 
-        function onStudentSelect() {
+        window.onStudentSelect = function() {
             const selectedClass = document.getElementById('classSelect').value;
             const idx = document.getElementById('studentSelect').value;
             activeStudentIndex = idx;
 
-            const db = getActiveStudentDatabase();
-            const list = db[selectedClass] || [];
+            const dbStudent = getActiveStudentDatabase();
+            const list = dbStudent[selectedClass] || [];
             
             if (list[idx]) {
                 currentStudent = list[idx];
@@ -1953,17 +1963,17 @@
                 
                 loadStudentDraft(selectedClass, activeStudentIndex);
             }
-        }
+        };
 
-        function updateThemeTitle() { document.getElementById('displayThemeTitle').textContent = (document.getElementById('themeInput').value || 'ALL ABOUT ME').toUpperCase(); }
-        function updateMetaInfo() { document.getElementById('displayPeriod').textContent = `Period: ${document.getElementById('weekTerm').value}`; }
+        window.updateThemeTitle = function() { document.getElementById('displayThemeTitle').textContent = (document.getElementById('themeInput').value || 'ALL ABOUT ME').toUpperCase(); };
+        window.updateMetaInfo = function() { document.getElementById('displayPeriod').textContent = `Period: ${document.getElementById('weekTerm').value}`; };
 
-        function togglePhotoSource(key, mode) {
+        window.togglePhotoSource = function(key, mode) {
             document.getElementById(`tab-file-${key}`).classList.toggle('active', mode === 'file');
             document.getElementById(`tab-drive-${key}`).classList.toggle('active', mode === 'drive');
             document.getElementById(`src-file-${key}`).style.display = mode === 'file' ? 'block' : 'none';
             document.getElementById(`src-drive-${key}`).style.display = mode === 'drive' ? 'block' : 'none';
-        }
+        };
 
         function compressImageFile(file, maxDimension, quality, callback) {
             const reader = new FileReader();
@@ -1990,7 +2000,7 @@
             reader.readAsDataURL(file);
         }
 
-        function handleFileSelect(event, targetImgId) {
+        window.handleFileSelect = function(event, targetImgId) {
             const img = document.getElementById(targetImgId);
             const phId = 'ph' + targetImgId.replace('img', '');
             if (event.target.files && event.target.files[0]) {
@@ -2004,9 +2014,9 @@
                     saveActiveStudentDraft();
                 });
             }
-        }
+        };
 
-        function handleDriveUrl(event, targetImgId) {
+        window.handleDriveUrl = function(event, targetImgId) {
             const url = event.target.value.trim();
             const img = document.getElementById(targetImgId);
             const phId = 'ph' + targetImgId.replace('img', '');
@@ -2019,17 +2029,17 @@
             photoTransformStates[targetImgId] = { scale: 1, x: 0, y: 0 };
             applyPhotoTransform(targetImgId);
             saveActiveStudentDraft();
-        }
+        };
 
-        function handleUserTextInput(fieldId) {
+        window.handleUserTextInput = function(fieldId) {
             const el = document.getElementById(fieldId);
             if (el) {
                 el.dataset.isAiGenerated = "false";
                 el.dataset.rawKeywords = el.value.trim();
             }
-        }
+        };
 
-        function applyMasterNarrations() {
+        window.applyMasterNarrations = function() {
             const nick = currentStudent.nick || 'Student';
             const keys = [
                 { master: 'masterGod', target: 'txtGod' },
@@ -2055,9 +2065,9 @@
                 }
             });
             syncTextToMirrors();
-        }
+        };
 
-        async function autoFillAllDomainsAI() {
+        window.autoFillAllDomainsAI = async function() {
             const studentNick = currentStudent.nick || 'Student';
             const domains = [
                 { masterId: 'masterGod', targetId: 'txtGod', category: 'Connection to God', defaultNote: 'participating in morning prayers and quiet reflection' },
@@ -2089,7 +2099,7 @@
             syncTextToMirrors();
             saveActiveStudentDraft();
             showToast(`Generated All 8 Narrations for ${studentNick}!`);
-        }
+        };
 
         function syncTextToMirrors() {
             const textIds = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
@@ -2100,7 +2110,7 @@
             });
         }
 
-        async function triggerAIGenerate(targetFieldId, categoryName) {
+        window.triggerAIGenerate = async function(targetFieldId, categoryName) {
             const studentNick = currentStudent.nick || 'the student';
             const textarea = document.getElementById(targetFieldId);
             let currentVal = textarea.value.trim();
@@ -2130,7 +2140,7 @@
             }
             saveActiveStudentDraft();
             showToast(`Fresh narration generated!`);
-        }
+        };
 
         async function generateSmartEducationalProse(category, name, rawNotes, fieldId) {
             if (!rawNotes || !rawNotes.trim()) return "";
@@ -2228,7 +2238,8 @@
             return sanitize(`${selectedOpener} ${selectedCloser}`);
         }
 
-        function saveActiveStudentDraft() {
+        /* SYNCED FIRESTORE SAVE FUNCTION */
+        window.saveActiveStudentDraft = async function() {
             const className = document.getElementById('classSelect').value;
             const storageKey = getStudentStorageKey(className, activeStudentIndex);
 
@@ -2241,11 +2252,7 @@
                 }
             });
 
-            const existingRaw = localStorage.getItem(storageKey);
-            let existingDraft = existingRaw ? JSON.parse(existingRaw) : {};
-
             const draft = {
-                ...existingDraft,
                 teacherEmail: currentTeacherEmail,
                 teacherName: localStorage.getItem('mws_teacher_name') || 'Teacher',
                 studentIndex: activeStudentIndex,
@@ -2276,120 +2283,133 @@
             };
 
             try {
-                localStorage.setItem(storageKey, JSON.stringify(draft));
+                // Save to Firebase Firestore Cloud
+                await setDoc(doc(db, "recaps", storageKey), draft, { merge: true });
+                localStorage.setItem(`mws_recap_v49_${storageKey}`, JSON.stringify(draft));
                 
                 const now = new Date();
                 const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} WIB`;
                 const tag = document.getElementById('syncStatusTag');
                 if (tag) {
-                    tag.textContent = `Draft Saved (${timeStr})`;
+                    tag.textContent = `Firestore Synced (${timeStr})`;
                     tag.style.background = "#DCFCE7";
                     tag.style.color = "#15803D";
                     tag.style.borderColor = "#86EFAC";
                 }
             } catch (e) {
-                console.warn("Storage write error:", e);
+                console.warn("Firestore sync error, saving locally:", e);
+                localStorage.setItem(`mws_recap_v49_${storageKey}`, JSON.stringify(draft));
             }
-        }
+        };
 
+        /* SYNCED FIRESTORE LOAD & REAL-TIME LISTENER */
         function loadStudentDraft(className, studentIndex) {
             const storageKey = getStudentStorageKey(className, studentIndex);
-            const raw = localStorage.getItem(storageKey);
+
+            if (activeSnapshotUnsubscribe) {
+                activeSnapshotUnsubscribe();
+            }
 
             resetFormFieldsOnly();
 
-            if (!raw) {
-                document.getElementById('syncStatusTag').textContent = `Ready (${currentStudent.nick})`;
-                return;
-            }
+            const docRef = doc(db, "recaps", storageKey);
 
-            try {
-                const draft = JSON.parse(raw);
-                if (draft.themeInput !== undefined) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
-                if (draft.datePicker !== undefined) { document.getElementById('datePicker').value = draft.datePicker; }
-
-                const stampBadge = document.getElementById('approvalStampBadge');
-                if (stampBadge) {
-                    stampBadge.style.display = draft.directorReviewed === true ? 'block' : 'none';
-                }
-
-                if (draft.paperPhotos && Array.isArray(draft.paperPhotos) && draft.paperPhotos.length > 0) {
-                    activePaperPhotos = draft.paperPhotos;
-                    renderPaperBgCollages();
-                }
-
-                if (draft.photoTransforms) {
-                    Object.keys(draft.photoTransforms).forEach(id => {
-                        photoTransformStates[id] = draft.photoTransforms[id];
-                        applyPhotoTransform(id);
-                    });
-                }
-
-                const masters = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher'];
-                masters.forEach(m => { 
-                    if (draft[m] !== undefined) {
-                        const el = document.getElementById(m);
-                        if (el) { el.value = draft[m]; el.dataset.rawKeywords = draft[m]; }
-                    } 
-                });
-
-                const texts = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
-                texts.forEach(t => { 
-                    if (draft[t] !== undefined) {
-                        const el = document.getElementById(t);
-                        if (el) { el.value = draft[t]; el.dataset.rawKeywords = draft[t]; }
+            activeSnapshotUnsubscribe = onSnapshot(docRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const draft = docSnap.data();
+                    renderDraftToUI(draft);
+                    document.getElementById('syncStatusTag').textContent = `Live Synced (${currentStudent.nick})`;
+                } else {
+                    const localRaw = localStorage.getItem(`mws_recap_v49_${storageKey}`);
+                    if (localRaw) {
+                        renderDraftToUI(JSON.parse(localRaw));
                     }
-                    
-                    const fbBanner = document.getElementById('fb_' + t);
-                    const inlineHtml = draft[t + '_inlineHtml'];
-                    
-                    if (fbBanner && inlineHtml && inlineHtml.includes('doc-comment-bubble')) {
-                        fbBanner.innerHTML = `
-                            <strong>Director Revision Note:</strong>
-                            <div style="margin-top: 4px;">${inlineHtml}</div>
-                            <button class="btn-resolve-feedback" onclick="resolveDirectorFeedback('${t}')">Mark as Resolved</button>
-                        `;
-                        fbBanner.style.display = 'block';
-                    } else if (fbBanner) {
-                        fbBanner.style.display = 'none'; fbBanner.innerHTML = '';
-                    }
-                });
-
-                if (draft.images) {
-                    Object.keys(draft.images).forEach(id => {
-                        const img = document.getElementById(id);
-                        const phId = 'ph' + id.replace('img', '');
-                        if (img && draft.images[id]) {
-                            img.src = draft.images[id];
-                            img.style.display = 'block';
-                            if (document.getElementById(phId)) document.getElementById(phId).style.display = 'none';
-                        }
-                    });
+                    document.getElementById('syncStatusTag').textContent = `Ready (${currentStudent.nick})`;
                 }
-
-                syncTextToMirrors();
-                document.getElementById('syncStatusTag').textContent = `Loaded Draft (${currentStudent.nick})`;
-            } catch (e) {
-                console.error("Error loading student draft:", e);
-            }
+            }, (err) => {
+                console.warn("Firestore listener fallback to localStorage:", err);
+                const localRaw = localStorage.getItem(`mws_recap_v49_${storageKey}`);
+                if (localRaw) renderDraftToUI(JSON.parse(localRaw));
+            });
         }
 
-        function resolveDirectorFeedback(domainKey) {
+        function renderDraftToUI(draft) {
+            if (draft.themeInput !== undefined) { document.getElementById('themeInput').value = draft.themeInput; updateThemeTitle(); }
+            if (draft.datePicker !== undefined) { document.getElementById('datePicker').value = draft.datePicker; }
+
+            const stampBadge = document.getElementById('approvalStampBadge');
+            if (stampBadge) {
+                stampBadge.style.display = draft.directorReviewed === true ? 'block' : 'none';
+            }
+
+            if (draft.paperPhotos && Array.isArray(draft.paperPhotos) && draft.paperPhotos.length > 0) {
+                activePaperPhotos = draft.paperPhotos;
+                renderPaperBgCollages();
+            }
+
+            if (draft.photoTransforms) {
+                Object.keys(draft.photoTransforms).forEach(id => {
+                    photoTransformStates[id] = draft.photoTransforms[id];
+                    applyPhotoTransform(id);
+                });
+            }
+
+            const masters = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher'];
+            masters.forEach(m => { 
+                if (draft[m] !== undefined) {
+                    const el = document.getElementById(m);
+                    if (el) { el.value = draft[m]; el.dataset.rawKeywords = draft[m]; }
+                } 
+            });
+
+            const texts = ['txtGod', 'txtSelf', 'txtOthers', 'txtNature', 'txtRational', 'txtImaginal', 'txtPhysical', 'txtTeacher'];
+            texts.forEach(t => { 
+                if (draft[t] !== undefined) {
+                    const el = document.getElementById(t);
+                    if (el) { el.value = draft[t]; el.dataset.rawKeywords = draft[t]; }
+                }
+                
+                const fbBanner = document.getElementById('fb_' + t);
+                const inlineHtml = draft[t + '_inlineHtml'];
+                
+                if (fbBanner && inlineHtml && inlineHtml.includes('doc-comment-bubble')) {
+                    fbBanner.innerHTML = `
+                        <strong>Director Revision Note:</strong>
+                        <div style="margin-top: 4px;">${inlineHtml}</div>
+                        <button class="btn-resolve-feedback" onclick="resolveDirectorFeedback('${t}')">Mark as Resolved</button>
+                    `;
+                    fbBanner.style.display = 'block';
+                } else if (fbBanner) {
+                    fbBanner.style.display = 'none'; fbBanner.innerHTML = '';
+                }
+            });
+
+            if (draft.images) {
+                Object.keys(draft.images).forEach(id => {
+                    const img = document.getElementById(id);
+                    const phId = 'ph' + id.replace('img', '');
+                    if (img && draft.images[id]) {
+                        img.src = draft.images[id];
+                        img.style.display = 'block';
+                        if (document.getElementById(phId)) document.getElementById(phId).style.display = 'none';
+                    }
+                });
+            }
+
+            syncTextToMirrors();
+        }
+
+        window.resolveDirectorFeedback = async function(domainKey) {
             const className = document.getElementById('classSelect').value;
             const storageKey = getStudentStorageKey(className, activeStudentIndex);
             
-            const raw = localStorage.getItem(storageKey);
-            if (raw) {
-                let draft = JSON.parse(raw);
-                delete draft[domainKey + '_inlineHtml'];
-                localStorage.setItem(storageKey, JSON.stringify(draft));
-            }
+            await setDoc(doc(db, "recaps", storageKey), { [domainKey + '_inlineHtml']: "" }, { merge: true });
 
             const fbBanner = document.getElementById('fb_' + domainKey);
             if (fbBanner) { fbBanner.style.display = 'none'; fbBanner.innerHTML = ''; }
             saveActiveStudentDraft();
             showToast("Revision note marked as resolved!");
-        }
+        };
 
         function resetFormFieldsOnly() {
             const fields = ['masterGod', 'masterSelf', 'masterOthers', 'masterNature', 'masterRational', 'masterImaginal', 'masterPhysical', 'masterTeacher',
@@ -2418,21 +2438,21 @@
             syncTextToMirrors();
         }
 
-        function openRosterModal() {
+        window.openRosterModal = function() {
             const className = document.getElementById('classSelect').value;
             renderRosterTable(className);
             document.getElementById('rosterModal').style.display = 'flex';
-        }
+        };
 
-        function closeRosterModal() {
+        window.closeRosterModal = function() {
             document.getElementById('rosterModal').style.display = 'none';
-        }
+        };
 
         function renderRosterTable(className) {
             const tbody = document.getElementById('rosterTableBody');
             tbody.innerHTML = '';
-            const db = getActiveStudentDatabase();
-            const list = db[className] || [];
+            const dbStudent = getActiveStudentDatabase();
+            const list = dbStudent[className] || [];
 
             list.forEach((st, idx) => {
                 const tr = document.createElement('tr');
@@ -2447,7 +2467,7 @@
             });
         }
 
-        function addNewStudentToRoster() {
+        window.addNewStudentToRoster = function() {
             const className = document.getElementById('classSelect').value;
             const full = document.getElementById('newStudentFull').value.trim();
             const nick = document.getElementById('newStudentNick').value.trim();
@@ -2458,32 +2478,32 @@
                 return;
             }
 
-            const db = getActiveStudentDatabase();
-            if (!db[className]) db[className] = [];
-            db[className].push({ full: full, nick: nick, grade: grade });
+            const dbStudent = getActiveStudentDatabase();
+            if (!dbStudent[className]) dbStudent[className] = [];
+            dbStudent[className].push({ full: full, nick: nick, grade: grade });
 
-            localStorage.setItem('mws_custom_student_db', JSON.stringify(db));
+            localStorage.setItem('mws_custom_student_db', JSON.stringify(dbStudent));
             document.getElementById('newStudentFull').value = '';
             document.getElementById('newStudentNick').value = '';
 
             renderRosterTable(className);
             onClassChange();
             showToast(`Student ${nick} added to roster!`);
-        }
+        };
 
-        function deleteStudentFromRoster(className, idx) {
+        window.deleteStudentFromRoster = function(className, idx) {
             if (!confirm("Are you sure you want to delete this student from the class roster?")) return;
-            const db = getActiveStudentDatabase();
-            if (db[className]) {
-                db[className].splice(idx, 1);
-                localStorage.setItem('mws_custom_student_db', JSON.stringify(db));
+            const dbStudent = getActiveStudentDatabase();
+            if (dbStudent[className]) {
+                dbStudent[className].splice(idx, 1);
+                localStorage.setItem('mws_custom_student_db', JSON.stringify(dbStudent));
                 renderRosterTable(className);
                 onClassChange();
                 showToast("Student deleted from roster.");
             }
-        }
+        };
 
-        function openSubmitConfirmModal() {
+        window.openSubmitConfirmModal = function() {
             saveActiveStudentDraft();
             const teacherName = localStorage.getItem('mws_teacher_name') || 'Teacher';
             const className = document.getElementById('classSelect').value;
@@ -2504,34 +2524,33 @@ ${teacherName}`;
 
             document.getElementById('submitPreviewText').value = defaultMessage;
             document.getElementById('confirmSubmitModal').style.display = 'flex';
-        }
+        };
 
-        function closeConfirmSubmitModal() {
+        window.closeConfirmSubmitModal = function() {
             document.getElementById('confirmSubmitModal').style.display = 'none';
-        }
+        };
 
-        function executeGmailSubmission() {
+        window.executeGmailSubmission = async function() {
             const editedText = document.getElementById('submitPreviewText').value;
             const className = document.getElementById('classSelect').value;
             const weekVal = document.getElementById('weekTerm').value;
             closeConfirmSubmitModal();
 
-            const db = getActiveStudentDatabase();
-            const list = db[className] || [];
+            const dbStudent = getActiveStudentDatabase();
+            const list = dbStudent[className] || [];
             
             for (let i = 0; i < list.length; i++) {
                 const storageKey = getStudentStorageKey(className, i, weekVal);
-                const raw = localStorage.getItem(storageKey);
-                let draft = raw ? JSON.parse(raw) : {};
-                draft.submittedToDirector = true;
-                draft.submittedAt = new Date().toISOString();
-                localStorage.setItem(storageKey, JSON.stringify(draft));
+                await setDoc(doc(db, "recaps", storageKey), { 
+                    submittedToDirector: true, 
+                    submittedAt: new Date().toISOString() 
+                }, { merge: true });
             }
 
             showToast(`Class narrations for ${weekVal} submitted to Director Portal!`);
             const emailSubject = `Weekly Recap Completed - ${className} Class (${weekVal})`;
             openGmailWebCompose(DIRECTOR_EMAIL, emailSubject, editedText);
-        }
+        };
 
         function handleTextSelection() {
             if (activePortalMode !== 'DIRECTOR') return;
@@ -2560,7 +2579,7 @@ ${teacherName}`;
             }
         }
 
-        function addInlineComment() {
+        window.addInlineComment = async function() {
             if (!activeSelectedTarget) return;
 
             const commentNote = prompt("Enter your revision note for this highlighted phrase:");
@@ -2595,12 +2614,12 @@ ${teacherName}`;
             
             const weekVal = `${document.getElementById('directorWeekSelect').value}, ${document.getElementById('directorMonthSelect').value}`;
 
-            saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML, weekVal);
-            showToast("Inline comment saved!");
+            await saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML, weekVal);
+            showToast("Inline comment saved to cloud!");
             renderDirectorReviewList();
-        }
+        };
 
-        function deleteInlineComment(btnElement) {
+        window.deleteInlineComment = async function(btnElement) {
             const bubble = btnElement.closest('.doc-comment-bubble');
             const box = btnElement.closest('.review-selectable-text');
 
@@ -2619,54 +2638,53 @@ ${teacherName}`;
                 const studentIdx = box.dataset.studentIdx;
                 const domainKey = box.dataset.domainKey;
                 const weekVal = `${document.getElementById('directorWeekSelect').value}, ${document.getElementById('directorMonthSelect').value}`;
-                saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML, weekVal);
+                await saveDirectorInlineHtml(className, studentIdx, domainKey, box.innerHTML, weekVal);
             }
             renderDirectorReviewList();
-        }
+        };
 
-        function saveDirectorInlineHtml(className, studentIndex, domainKey, htmlContent, weekVal) {
+        async function saveDirectorInlineHtml(className, studentIndex, domainKey, htmlContent, weekVal) {
             const storageKey = getStudentStorageKey(className, studentIndex, weekVal);
-            const raw = localStorage.getItem(storageKey);
-            let draft = raw ? JSON.parse(raw) : {};
-            draft[domainKey + '_inlineHtml'] = htmlContent;
-            localStorage.setItem(storageKey, JSON.stringify(draft));
+            await setDoc(doc(db, "recaps", storageKey), { [domainKey + '_inlineHtml']: htmlContent }, { merge: true });
         }
 
-        function toggleDirectorStudentStatus(className, studentIdx, event) {
+        window.toggleDirectorStudentStatus = async function(className, studentIdx, event) {
             if (event) event.stopPropagation();
             
             const weekVal = `${document.getElementById('directorWeekSelect').value}, ${document.getElementById('directorMonthSelect').value}`;
             const storageKey = getStudentStorageKey(className, studentIdx, weekVal);
-            const raw = localStorage.getItem(storageKey);
-            let draft = raw ? JSON.parse(raw) : {};
+
+            const docRef = doc(db, "recaps", storageKey);
+            const docSnap = await getDoc(docRef);
+            let draft = docSnap.exists() ? docSnap.data() : {};
 
             const isCurrentApproved = draft.directorReviewed === true;
-            draft.directorReviewed = !isCurrentApproved;
+            const nextState = !isCurrentApproved;
 
-            localStorage.setItem(storageKey, JSON.stringify(draft));
-            showToast(draft.directorReviewed ? "Approved & Ready for Parents!" : "Marked as Pending Review.");
+            await setDoc(docRef, { directorReviewed: nextState }, { merge: true });
+            showToast(nextState ? "Approved & Ready for Parents!" : "Marked as Pending Review.");
             renderDirectorReviewList();
-        }
+        };
 
-        function scrollToDirectorCard(studentIdx) {
+        window.scrollToDirectorCard = function(studentIdx) {
             const card = document.getElementById(`dirStudentCard_${studentIdx}`);
             const body = document.getElementById(`dirCardBody_${studentIdx}`);
             const icon = document.getElementById(`dirCardIcon_${studentIdx}`);
             
             if (body && icon) { body.style.display = 'grid'; icon.textContent = '▲'; }
             if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        }
+        };
 
-        function setDirectorFilter(filterMode) {
+        window.setDirectorFilter = function(filterMode) {
             currentDirectorFilter = filterMode;
             const pills = document.querySelectorAll('.btn-filter-pill');
             pills.forEach(p => p.classList.remove('active'));
             const activePill = document.getElementById(`btnFilter_${filterMode}`);
             if (activePill) activePill.classList.add('active');
             renderDirectorReviewList();
-        }
+        };
 
-        function renderDirectorReviewList() {
+        window.renderDirectorReviewList = async function() {
             const className = document.getElementById('directorClassSelect').value;
             const selectedMonth = document.getElementById('directorMonthSelect').value;
             const selectedWeek = document.getElementById('directorWeekSelect').value;
@@ -2678,8 +2696,8 @@ ${teacherName}`;
                 infoTag.textContent = homeroomTeachersInfoMap[className] || "";
             }
 
-            const db = getActiveStudentDatabase();
-            const list = db[className] || [];
+            const dbStudent = getActiveStudentDatabase();
+            const list = dbStudent[className] || [];
             const container = document.getElementById('directorReviewContainer');
             const summaryBox = document.getElementById('directorSummaryDashboard');
 
@@ -2687,10 +2705,17 @@ ${teacherName}`;
             let totalReviewed = 0;
             let chipsHtml = '';
 
-            list.forEach((st, idx) => {
+            for (let idx = 0; idx < list.length; idx++) {
+                const st = list[idx];
                 const storageKey = getStudentStorageKey(className, idx, weekVal);
-                const raw = localStorage.getItem(storageKey);
-                let draft = raw ? JSON.parse(raw) : {};
+                
+                let draft = {};
+                try {
+                    const docSnap = await getDoc(doc(db, "recaps", storageKey));
+                    if (docSnap.exists()) draft = docSnap.data();
+                } catch(e) {
+                    console.warn("Error fetching Firestore recap:", e);
+                }
 
                 const isReviewed = draft.directorReviewed === true;
                 let hasRevisionNotes = false;
@@ -2715,9 +2740,9 @@ ${teacherName}`;
 
                 if (isReviewed) totalReviewed++;
 
-                if (currentDirectorFilter === 'APPROVED' && !isReviewed) return;
-                if (currentDirectorFilter === 'REVISION' && !hasRevisionNotes) return;
-                if (currentDirectorFilter === 'PENDING' && (isReviewed || hasRevisionNotes)) return;
+                if (currentDirectorFilter === 'APPROVED' && !isReviewed) continue;
+                if (currentDirectorFilter === 'REVISION' && !hasRevisionNotes) continue;
+                if (currentDirectorFilter === 'PENDING' && (isReviewed || hasRevisionNotes)) continue;
 
                 let chipClass = 'grey';
                 let chipStatusText = 'Pending';
@@ -2772,7 +2797,7 @@ ${teacherName}`;
                     </div>
                 `;
                 container.appendChild(card);
-            });
+            }
 
             summaryBox.innerHTML = `
                 <div class="summary-dashboard-header">
@@ -2785,16 +2810,16 @@ ${teacherName}`;
                     ${chipsHtml}
                 </div>
             `;
-        }
+        };
 
-        function toggleDirectorCardBody(idx) {
+        window.toggleDirectorCardBody = function(idx) {
             const body = document.getElementById(`dirCardBody_${idx}`);
             const icon = document.getElementById(`dirCardIcon_${idx}`);
             if (body.style.display === 'none') { body.style.display = 'grid'; icon.textContent = '▲'; }
             else { body.style.display = 'none'; icon.textContent = '▼'; }
-        }
+        };
 
-        function toggleAllDirectorCards(shouldExpand) {
+        window.toggleAllDirectorCards = function(shouldExpand) {
             const cards = document.querySelectorAll('.student-review-card');
             cards.forEach((_, idx) => {
                 const body = document.getElementById(`dirCardBody_${idx}`);
@@ -2804,9 +2829,9 @@ ${teacherName}`;
                     icon.textContent = shouldExpand ? '▲' : '▼';
                 }
             });
-        }
+        };
 
-        function sendAllDirectorCommentsToTeacher() {
+        window.sendAllDirectorCommentsToTeacher = function() {
             const className = document.getElementById('directorClassSelect').value;
             const selectedMonth = document.getElementById('directorMonthSelect').value;
             const selectedWeek = document.getElementById('directorWeekSelect').value;
@@ -2826,7 +2851,7 @@ Warm regards,
 Ms. Mahrukh`;
 
             openGmailWebCompose("", subject, body);
-        }
+        };
     </script>
 </body>
 </html>
